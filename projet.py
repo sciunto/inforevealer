@@ -20,7 +20,7 @@ class Command:
 
 	def write(self):
 		write_header(self.command)
-		os.system(self.command)
+		#os.system(self.command)
 
 
 
@@ -32,7 +32,7 @@ class File:
 
 	def write(self):
 		write_header(self.file)
-		if (exists(self.file)):
+		if (os.path.isfile(self.file)):
 			fhandler= open(self.file,'r')
 			t = fhandler.read()
 			print(t)
@@ -76,18 +76,33 @@ print("uname: "+str(uname))
 
 # detect linux distribution
 
-if(exists(/etc/fedora-release):
-	os=fedora
-else if(exists(/etc/SuSe-release):
-	os=suse
-else if(exists(/etc/mandriva-release):
-	os=mandriva
-else if(exists(/etc/readhat-release):
-	os=redhat
-else if(exists(/etc/debian_version)):
-	os=debian
+if(os.path.isfile("/etc/fedora-release")):
+	os='fedora'
+	fhandler=open("/etc/fedora-release")
+	print(fhandler.read())
+	fhandler.close()
+elif(os.path.isfile("/etc/SuSe-release")):
+	os='suse'
+	fhandler=open("/etc/SuSe-release")
+	print(fhandler.read())
+	fhandler.close()
+elif(os.path.isfile("/etc/mandriva-release")):
+	os='mandriva'
+	fhandler=open("/etc/mandriva-release")
+	print(fhandler.read())
+	fhandler.close()
+elif(os.path.isfile("/etc/readhat-release")):
+	os='redhat'
+	fhandler=open("/etc/mandriva-release")
+	print(fhandler.read())
+	fhandler.close()
+elif(os.path.isfile("/etc/debian_version")):
+	os='debian'
+	fhandler=open("/etc/debian_version")
+	print(fhandler.read())
+	fhandler.close()
 else:
-	os=unknown
+	os='unknown'
 
 
 
