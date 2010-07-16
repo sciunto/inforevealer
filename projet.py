@@ -48,6 +48,17 @@ disk = (Command("df -h"),
 		Command("blkid",True))
 
 
+
+
+
+
+
+#####################
+#Main part
+####################
+
+
+
 print('''
 		Software title
 		licence
@@ -57,30 +68,26 @@ print('''
 
 write_header('General information')
 
-
 time = time.gmtime()
-
 print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
 
 uname = Popen(args=["uname","-a"],stdout=PIPE).communicate()[0]
 print("uname: "+str(uname))
 
-
-
-
-
-
-
-
-
 # detect linux distribution
 
-#/etc/fedora-release
-#/etc/SuSe-release
-#/etc/mandrake-release
-#/etc/readhat-release
-
-#/etc/debian_version
+if(exists(/etc/fedora-release):
+	os=fedora
+else if(exists(/etc/SuSe-release):
+	os=suse
+else if(exists(/etc/mandriva-release):
+	os=mandriva
+else if(exists(/etc/readhat-release):
+	os=redhat
+else if(exists(/etc/debian_version)):
+	os=debian
+else:
+	os=unknown
 
 
 
