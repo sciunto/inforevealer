@@ -32,7 +32,7 @@ class File:
 
 	def write(self):
 		write_header(self.file)
-		if (os.path.isfile(self.file)):
+		if (True): # FIXME
 			fhandler= open(self.file,'r')
 			t = fhandler.read()
 			print(t)
@@ -40,16 +40,27 @@ class File:
 		else:
 			print("the file self.file does not exist!")
 		
-
+###########
+# FILES & COMMANDS
+###########
 
 
 disk = (Command("df -h"),
 		Command("fdisk -l",True),
+		File("/etc/fstab"),
 		Command("blkid",True))
 
+#lspci -vvv  Display  VGA
+display = (File("/etc/X11/xorg.conf")
+		)
 
 
+#lspci -vvv Audio
+sound = ()
 
+bootloader= (File("/boot/grub/menu.lst",True),
+		File("/etc/default/grub",True),
+		)+ disk
 
 
 
@@ -107,7 +118,7 @@ else:
 
 
 
-for i in disk:
+for i in bootloader:
 	i.write()
 
 
