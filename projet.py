@@ -18,28 +18,37 @@ class Command:
 		self.command=com
 		self.root=root
 
-	def write(self):
+	def write(self,filename='output.log'):
+		import os
 		write_header(self.command)
-		#os.system(self.command)
-
+		if(os.getuid() == 0):
+			#os.system(self.command)
+			print("TODO")
+		else:
+			print("To get this, run the script as root")
 
 
 class File:
 	"get a file"
-	def __init__(self, file="uname", root=False):
+	def __init__(self, file="/dev/null", root=False):
 		self.file=file
 		self.root=root
 
-	def write(self):
+	def write(self,filename='output.log'):
+		import os
+		#import pdb; pdb.set_trace()
+
 		write_header(self.file)
-		if (True): # FIXME
-			fhandler= open(self.file,'r')
-			t = fhandler.read()
-			print(t)
-			fhandler.close()
+		if(os.getuid() == 0):
+			if os.path.isfile(self.file): # FIXME
+				fhandler= open(self.file,'r')
+				t = fhandler.read()
+				print(t)
+				fhandler.close()
+			else:
+				print("the file self.file does not exist!")
 		else:
-			print("the file self.file does not exist!")
-		
+			print("To get this, run the script as root")
 ###########
 # FILES & COMMANDS
 ###########
@@ -58,10 +67,13 @@ display = (File("/etc/X11/xorg.conf")
 #lspci -vvv Audio
 sound = ()
 
-bootloader= (File("/boot/grub/menu.lst",True),
+bootloader= (File('/boot/grub/menu.lst',True),
 		File("/etc/default/grub",True),
 		)+ disk
 
+#lspci
+internet = (Command('ifconfig',True),
+		Command('iwconfig',True))
 
 
 #####################
