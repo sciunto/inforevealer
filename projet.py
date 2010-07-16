@@ -1,5 +1,7 @@
 
 import os
+import time
+from subprocess import PIPE,Popen
 
 
 def write_header(string):
@@ -34,15 +36,53 @@ class File:
 			fhandler= open(self.file,'r')
 			t = fhandler.read()
 			print(t)
+			fhandler.close()
 		else:
 			print("the file self.file does not exist!")
-
+		
 
 
 
 disk = (Command("df -h"),
 		Command("fdisk -l",True),
 		Command("blkid",True))
+
+
+print('''
+		Software title
+		licence
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
+		''')
+
+write_header('General information')
+
+
+time = time.gmtime()
+
+print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
+
+uname = Popen(args=["uname","-a"],stdout=PIPE).communicate()[0]
+print("uname: "+str(uname))
+
+
+
+
+
+
+
+
+
+# detect linux distribution
+
+#/etc/fedora-release
+#/etc/SuSe-release
+#/etc/mandrake-release
+#/etc/readhat-release
+
+#/etc/debian_version
+
+
 
 
 for i in disk:
