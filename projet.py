@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-#TODO
-#distrib specific
 
 
 import os
@@ -33,7 +31,7 @@ List:
 	* sound
 	* bootloader
 	* internet
-	
+	* package
 Reminder: 
 	sys.argv[0] -c internet
 	""")
@@ -49,50 +47,56 @@ def write_header(string,output):
 
 class Command:
 	"get a command output"
-	def __init__(self, com=["uname"], root=False,verb=False):
+	def __init__(self, com=["uname"], root=False,verb=False,linux=None):
 		self.command=com
 		self.root=root
 		self.verb=verb
+		self.linux_dependant=linux
 
-	def write(self,output='output.log'):
+	def write(self,os,output='output.log'):
 		import os
 		import subprocess
-		write_header(self.command,output)
-		if(os.getuid() == 0):
-			proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-			proc.wait()
-			foo = proc.stdout.read()
-			print(foo)
-			output.write(foo)
-		else:
-			print("To get this, run the script as root")
-			output.write("To get this, run the script as root\n")
-
+		# correct OS or this info does not dependant on distrib ?
+		if self.linux_dependant == os or self.linux_dependant == None:
+			write_header(self.command,output)
+			if(not os.getuid() == 0 and self.root):
+				print("To get this, run the script as root")
+				output.write("To get this, run the script as root\n")
+			else:
+				proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
+				proc.wait()
+				foo = proc.stdout.read()
+				print(foo)
+				output.write(foo)
 
 class File:
 	"get a file"
-	def __init__(self, file="/dev/null", root=False,verb=False):
+	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
 		self.file=file
 		self.root=root
 		self.verb=verb
-	def write(self,output='output.log'):
+		self.linux_dependant=linux
+
+	def write(self,os,output='output.log'):
 		import os
 		#import pdb; pdb.set_trace()
 
-		write_header(self.file,output)
-		if(os.getuid() == 0):
-			if os.path.isfile(self.file):
-				fhandler= open(self.file,'r')
-				t = fhandler.read()
-				print(t)
-				output.write(t)
-				fhandler.close()
+		# correct OS or this info does not dependant on distrib ?
+		if self.linux_dependant == os or self.linux_dependant == None:
+			write_header(self.file,output)
+			if(not os.getuid() == 0 and self.root):
+				print("To get this, run the script as root")
+				output.write("To get this, run the script as root\n")
 			else:
-				print("The file "+str(self.file)+ " does not exist!")
-				output.write("The file "+str(self.file)+ " does not exist!")
-		else:
-			print("To get this, run the script as root")
-			output.write("To get this, run the script as root\n")
+				if os.path.isfile(self.file):
+					fhandler= open(self.file,'r')
+					t = fhandler.read()
+					print(t)
+					output.write(t)
+					fhandler.close()
+				else:
+					print("The file "+str(self.file)+ " does not exist!")
+					output.write("The file "+str(self.file)+ " does not exist!")
 
 
 def general_info(output):
@@ -186,7 +190,7 @@ def main(argv):
 	###########
 	#wiki.mandriva.com/en/Docs/Hardware
 
-	list_category=('disk','hardware','display','sound','bootloader','internet')
+	list_category=('disk','hardware','display','sound','bootloader','internet','package')
 
 	disk = (Command(["df","-h"]),
 			Command(["fdisk", "-l"],root=True),
@@ -217,6 +221,9 @@ def main(argv):
 	internet = (Command(["ifconfig"],root=True),
 			Command(["iwconfig"],root=True))+hardware
 
+	package = (File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
+			File('/etc/apt/preferences',linux='debian'),
+			File('/etc/apt/source.list',linux='debian'))
 
 	#####################
 	# Write in dumpfile
@@ -240,10 +247,11 @@ def main(argv):
 	if category in list_category:
 		os=general_info(dumpfile_handler)
 		for i in locals()[category]:
-			if verbosity: #user asks verb; print all
-				i.write(output=dumpfile_handler)
-			elif not i.verb: #user not ask ver; print not verb
-				i.write(output=dumpfile_handler)
+			if not (not verbosity and i.verb):
+				i.write(os,output=dumpfile_handler)
+			# is equivalent to
+			# if user asks verbosity, then print all
+			# else print not verb only
 	else:
 		print('Wrong category')
 		usage()
