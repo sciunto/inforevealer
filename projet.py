@@ -19,6 +19,7 @@ options:
 		-h or --help: print this help
 		-l or --list: print a trouble category list
 		-c or --category [arg]: choose a category
+		--verbose: increase verbosity
 		"""
 		)
 		
@@ -48,11 +49,12 @@ def write_header(string):
 
 class Command:
 	"get a command output"
-	def __init__(self, com=["uname"], root=False):
+	def __init__(self, com=["uname"], root=False,verb=False):
 		self.command=com
 		self.root=root
+		self.verb=verb
 
-	def write(self,filename='output.log'):
+	def write(self,output='output.log'):
 		import os
 		import subprocess
 		write_header(self.command)
@@ -66,11 +68,11 @@ class Command:
 
 class File:
 	"get a file"
-	def __init__(self, file="/dev/null", root=False):
+	def __init__(self, file="/dev/null", root=False,verb=False):
 		self.file=file
 		self.root=root
-
-	def write(self,filename='output.log'):
+		self.verb=verb
+	def write(self,output='output.log'):
 		import os
 		#import pdb; pdb.set_trace()
 
@@ -89,12 +91,15 @@ class File:
 
 
 def general_info():
+	import time
+	import os
+	import subprocess
 	write_header('General information')
 
 	time = time.gmtime()
 	print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
 
-	uname = Popen(args=["uname","-a"],stdout=PIPE).communicate()[0]
+	uname = subprocess.Popen(args=["uname","-a"],stdout=subprocess.PIPE).communicate()[0]
 	print("uname: "+str(uname))
 
 
@@ -138,13 +143,13 @@ def general_info():
 #wiki.mandriva.com/en/Docs/Hardware
 
 disk = (Command(["df","-h"]),
-		Command(["fdisk", "-l"],True),
+		Command(["fdisk", "-l"],root=True),
 		File("/etc/fstab"),
-		Command(["blkid"],True))
+		Command(["blkid"],root=True))
 
 
-hardware = (Command(["lsmod"],True),
-	    Command(["lsusb"],True))
+hardware = (Command(["lsmod"],root=True),
+	    Command(["lsusb"],root=True))
 
 #lspci -vvv  Display  VGA
 #display = (File("/etc/X11/xorg.conf")
@@ -152,19 +157,19 @@ hardware = (Command(["lsmod"],True),
 
 
 #lspci -vvv Audio
-sound = (Command(['/sbin/chkconfig','--list', 'sound'],True), #configured runlevel 3 ? checkme
-	 Command(['/sbin/chkconfig','--list', 'alsa'],True),
+sound = (Command(['/sbin/chkconfig','--list', 'sound'],root=True), #configured runlevel 3 ? checkme
+	 Command(['/sbin/chkconfig','--list', 'alsa'],root=True),
 	 Command(['aumix', '-q']), # Volume ?
 	 Command(['/sbin/fuser', '-v', '/dev/dsp']) # what is in use ?
 	 )+hardware
 
-bootloader= (File('/boot/grub/menu.lst',True),
-		File("/etc/default/grub",True),
+bootloader= (File('/boot/grub/menu.lst',root=True),
+		File("/etc/default/grub",root=True),
 		)+ disk
 
 #lspci
-internet = (Command(["ifconfig"],True),
-		Command(["iwconfig"],True))+hardware
+internet = (Command(["ifconfig"],root=True),
+		Command(["iwconfig"],root=True))+hardware
 
 
 #####################
@@ -195,8 +200,11 @@ import sys
 options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:', ['help',
 							   'list',
 							   'category='
+							   'verbosity'
                                                          ])
                                                          
+verbosity=False
+
 for opt, arg in options:
 	if opt in ('-h', '--help'):
 		usage()
@@ -206,32 +214,56 @@ for opt, arg in options:
 		sys.exit()
 	elif opt in ('-c', '--category'):	
 		category=arg
+	elif opt in ('--verbosity'):
+		verbosity=True
+
+#if category in category_list:
+#	globals()[]
+
 
 #might be nicer
 if category=='disk':
 	os=general_info()
-	for i in sound:
-		i.write()
+	for i in disk:
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 elif category=='hardware':
 	os=general_info()
 	for i in hardware:
-		i.write()
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 elif category=='display':
 	os=general_info()
 	for i in display:
-		i.write()
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 elif category=='sound':
 	os=general_info()
 	for i in sound:
-		i.write()
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 elif category=='bootloader':
 	os=general_info()
 	for i in bootloader:
-		i.write()
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 elif category=='internet':
 	os=general_info()
 	for i in internet:
-		i.write()
+		if verbosity: #user asks verb; print all
+			i.write(output='toto.log')
+		elif not i.verb: #user not ask ver; print not verb
+			i.write(output='toto.log')
 else:
 	print('Wrong category')
 	usage()
