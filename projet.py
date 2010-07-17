@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 #TODO
-#verbosity
 #distrib specific
 
 
@@ -26,7 +25,6 @@ options:
 		
 def list():
 	print("""
-	
 List:
 	* disk
 	* hardware
@@ -142,6 +140,8 @@ def general_info():
 ###########
 #wiki.mandriva.com/en/Docs/Hardware
 
+list_category=('disk','hardware','display','sound','bootloader','internet')
+
 disk = (Command(["df","-h"]),
 		Command(["fdisk", "-l"],root=True),
 		File("/etc/fstab"),
@@ -204,6 +204,7 @@ options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:', ['help',
                                                          ])
                                                          
 verbosity=False
+category=None
 
 for opt, arg in options:
 	if opt in ('-h', '--help'):
@@ -217,49 +218,9 @@ for opt, arg in options:
 	elif opt in ('--verbosity'):
 		verbosity=True
 
-#if category in category_list:
-#	globals()[]
-
-
-#might be nicer
-if category=='disk':
+if category in list_category:
 	os=general_info()
-	for i in disk:
-		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
-		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
-elif category=='hardware':
-	os=general_info()
-	for i in hardware:
-		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
-		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
-elif category=='display':
-	os=general_info()
-	for i in display:
-		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
-		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
-elif category=='sound':
-	os=general_info()
-	for i in sound:
-		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
-		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
-elif category=='bootloader':
-	os=general_info()
-	for i in bootloader:
-		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
-		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
-elif category=='internet':
-	os=general_info()
-	for i in internet:
+	for i in locals()[category]:
 		if verbosity: #user asks verb; print all
 			i.write(output='toto.log')
 		elif not i.verb: #user not ask ver; print not verb
@@ -269,7 +230,6 @@ else:
 	usage()
 	list()
 	sys.exit()
-
 
 
 
