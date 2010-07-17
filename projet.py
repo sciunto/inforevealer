@@ -13,7 +13,7 @@ usage:		sys.argv[0] [options]
 options:
 		-h or --help: print this help
 		-l or --list: print a trouble category list
-
+		-c= or --category=: choose a category
 		"""
 		)
 		
@@ -23,13 +23,14 @@ def list():
 	
 List:
 	* disk
+	* hardware
 	* display
 	* sound
 	* bootloader
 	* internet
 	
 Reminder: 
-		
+	sys.argv[0] -c=internet
 	""")
 
 
@@ -89,13 +90,17 @@ disk = (Command(["df","-h"]),
 		File("/etc/fstab"),
 		Command(["blkid"],True))
 
+
+hardware = (Command(["lsmod"],True),
+	    Command(["lsusb"],True))
+
 #lspci -vvv  Display  VGA
 display = (File("/etc/X11/xorg.conf")
-		)
+		)+hardware
 
 
 #lspci -vvv Audio
-sound = ()
+sound = ()+hardware
 
 bootloader= (File('/boot/grub/menu.lst',True),
 		File("/etc/default/grub",True),
@@ -103,7 +108,7 @@ bootloader= (File('/boot/grub/menu.lst',True),
 
 #lspci
 internet = (Command(["ifconfig"],True),
-		Command(["iwconfig"],True))
+		Command(["iwconfig"],True))+hardware
 
 
 #####################
