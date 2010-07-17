@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 import time
@@ -9,10 +11,26 @@ def usage():
 usage:		sys.argv[0] [options]
 
 options:
-
+		-h or --help: print this help
+		-l or --list: print a trouble category list
 
 		"""
 		)
+		
+		
+def list():
+	print("""
+	
+List:
+	* disk
+	* display
+	* sound
+	* bootloader
+	* internet
+	
+Reminder: 
+		
+	""")
 
 
 def write_header(string):
@@ -93,7 +111,23 @@ internet = (Command(["ifconfig"],True),
 ####################
 
 
-#usage()
+
+#http://www.doughellmann.com/PyMOTW/getopt/
+import getopt
+import sys
+
+options, remainder = getopt.gnu_getopt(sys.argv[1:], 'h', ['help'
+                                                         ])
+                                                         
+for opt, arg in options:
+    if opt in ('-h', '--help'):
+        usage()
+        sys.exit()
+    elsif opt in ('-l', '--list'):
+	list_args()
+	sys.exit()
+
+
 
 
 
@@ -117,8 +151,9 @@ print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+
 uname = Popen(args=["uname","-a"],stdout=PIPE).communicate()[0]
 print("uname: "+str(uname))
 
-# detect linux distribution
 
+
+# detect linux distribution
 if(os.path.isfile("/etc/fedora-release")):
 	os='fedora'
 	fhandler=open("/etc/fedora-release")
