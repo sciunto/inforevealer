@@ -40,7 +40,7 @@ Reminder:
 def write_header(string,output):
 	header= '#############################################'
 	header= header + '\n' + '#   ' + str(string) + '\n'
-	header=header+'#############################################'
+	header=header+'#############################################\n'
 	print(header)
 	output.write(header)
 
@@ -49,15 +49,15 @@ class Command:
 	"get a command output"
 	def __init__(self, com=["uname"], root=False,verb=False,linux=None):
 		self.command=com
-		self.root=root
-		self.verb=verb
-		self.linux_dependant=linux
+		self.root=root # need root?
+		self.verb=verb # is it verbose?
+		self.linux_dependant=linux # need a specific os?
 
-	def write(self,os,output='output.log'):
+	def write(self,user_os,output='output.log'):
 		import os
 		import subprocess
 		# correct OS or this info does not dependant on distrib ?
-		if self.linux_dependant == os or self.linux_dependant == None:
+		if self.linux_dependant == user_os or self.linux_dependant == None:
 			write_header(self.command,output)
 			if(not os.getuid() == 0 and self.root):
 				print("To get this, run the script as root")
@@ -73,16 +73,16 @@ class File:
 	"get a file"
 	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
 		self.file=file
-		self.root=root
-		self.verb=verb
-		self.linux_dependant=linux
+		self.root=root # need root?
+		self.verb=verb # is it verbose?
+		self.linux_dependant=linux # need a specific distribution?
 
-	def write(self,os,output='output.log'):
+	def write(self,user_os,output='output.log'):
 		import os
 		#import pdb; pdb.set_trace()
 
 		# correct OS or this info does not dependant on distrib ?
-		if self.linux_dependant == os or self.linux_dependant == None:
+		if self.linux_dependant == user_os or self.linux_dependant == None:
 			write_header(self.file,output)
 			if(not os.getuid() == 0 and self.root):
 				print("To get this, run the script as root")
@@ -106,10 +106,12 @@ def general_info(output):
 	write_header('General information',output)
 
 	time = time.gmtime()
-	print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
+	output.write("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4])+"\n")
+	#print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
 
 	uname = subprocess.Popen(args=["uname","-a"],stdout=subprocess.PIPE).communicate()[0]
-	print("uname: "+str(uname))
+	output.write("uname: "+str(uname)+"\n")
+	#print("uname: "+str(uname))
 
 
 
@@ -117,31 +119,42 @@ def general_info(output):
 	if(os.path.isfile("/etc/fedora-release")):
 		os='fedora'
 		fhandler=open("/etc/fedora-release")
-		print(fhandler.read())
+		foo=fhandler.read()
 		fhandler.close()
+		output.write(foo)
+		#print(fhandler.read())
 	elif(os.path.isfile("/etc/SuSe-release")):
 		os='suse'
 		fhandler=open("/etc/SuSe-release")
-		print(fhandler.read())
+		foo=fhandler.read()
 		fhandler.close()
+		output.write(foo)
+		#print(fhandler.read())
 	elif(os.path.isfile("/etc/mandriva-release")):
 		os='mandriva'
 		fhandler=open("/etc/mandriva-release")
-		print(fhandler.read())
+		foo=fhandler.read()
 		fhandler.close()
+		output.write(foo)
+		#print(fhandler.read())
 	elif(os.path.isfile("/etc/readhat-release")):
 		os='redhat'
 		fhandler=open("/etc/mandriva-release")
-		print(fhandler.read())
+		foo=fhandler.read()
 		fhandler.close()
+		output.write(foo)
+		#print(fhandler.read())
 	elif(os.path.isfile("/etc/debian_version")):
 		os='debian'
 		fhandler=open("/etc/debian_version")
-		print(fhandler.read())
+		foo=fhandler.read()
 		fhandler.close()
+		output.write(foo)
+		#print(fhandler.read())
 	else:
 		os='unknown'
-		print('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
+		#print('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
+		output.write('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
 	return os
 
 
@@ -202,8 +215,9 @@ def main(argv):
 		    Command(["lsusb"],root=True))
 
 	#lspci -vvv  Display  VGA
-	#display = (File("/etc/X11/xorg.conf")
-	#		)+ hardware
+	display = (File("/etc/X11/xorg.conf"),
+			File('/var/log/Xorg.0.log',root=True)
+			)+ hardware
 
 
 	#lspci -vvv Audio
@@ -222,6 +236,9 @@ def main(argv):
 			Command(["iwconfig"],root=True))+hardware
 
 	package = (File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
+			File('/etc/urpmi.skip.list',linux='mandriva'),
+			File('/etc/yum.conf',linux='fedora'),
+			File('/etc/yum.conf',linux='suse'),
 			File('/etc/apt/preferences',linux='debian'),
 			File('/etc/apt/source.list',linux='debian'))
 
@@ -239,8 +256,7 @@ def main(argv):
 			Francois Boulogne <fboulogne at april dot org>
 			https://sourceforge.net/projects/inforevealer/
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			
-			'''
+'''
 	print(header)
 	dumpfile_handler.write(header)	
 
