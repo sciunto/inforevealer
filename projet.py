@@ -38,11 +38,12 @@ Reminder:
 	""")
 
 
-def write_header(string):
+def write_header(string,output):
 	header= '#############################################'
 	header= header + '\n' + '#   ' + str(string) + '\n'
 	header=header+'#############################################'
 	print(header)
+	output.write(header)
 
 
 class Command:
@@ -55,13 +56,16 @@ class Command:
 	def write(self,output='output.log'):
 		import os
 		import subprocess
-		write_header(self.command)
+		write_header(self.command,output)
 		if(os.getuid() == 0):
 			proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 			proc.wait()
-			print(proc.stdout.read())
+			foo = proc.stdout.read()
+			print(foo)
+			output.write(foo)
 		else:
 			print("To get this, run the script as root")
+			output.write("To get this, run the script as root\n")
 
 
 class File:
@@ -74,25 +78,27 @@ class File:
 		import os
 		#import pdb; pdb.set_trace()
 
-		write_header(self.file)
+		write_header(self.file,output)
 		if(os.getuid() == 0):
 			if os.path.isfile(self.file):
 				fhandler= open(self.file,'r')
 				t = fhandler.read()
 				print(t)
+				output.write(t)
 				fhandler.close()
 			else:
 				print("The file "+str(self.file)+ " does not exist!")
+				output.write("The file "+str(self.file)+ " does not exist!")
 		else:
 			print("To get this, run the script as root")
+			output.write("To get this, run the script as root\n")
 
 
-
-def general_info():
+def general_info(output):
 	import time
 	import os
 	import subprocess
-	write_header('General information')
+	write_header('General information',output)
 
 	time = time.gmtime()
 	print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
@@ -176,7 +182,7 @@ internet = (Command(["ifconfig"],root=True),
 #Main part
 ####################
 
-
+dumpfile='/tmp/inforevealer'
 
 print('''
 				~~~~~~~~~~~~~~~
@@ -197,10 +203,11 @@ print('''
 import getopt
 import sys
 
-options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:', ['help',
+options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:f:', ['help',
 							   'list',
-							   'category='
-							   'verbosity'
+							   'category=',
+							   'verbosity',
+							   'file='
                                                          ])
                                                          
 verbosity=False
@@ -217,14 +224,19 @@ for opt, arg in options:
 		category=arg
 	elif opt in ('--verbosity'):
 		verbosity=True
+	elif opt in ('-f','--file'):
+		dumpfile=arg
+
+
+dumpfile_handler= open(dumpfile,'w')
 
 if category in list_category:
-	os=general_info()
+	os=general_info(dumpfile_handler)
 	for i in locals()[category]:
 		if verbosity: #user asks verb; print all
-			i.write(output='toto.log')
+			i.write(output=dumpfile_handler)
 		elif not i.verb: #user not ask ver; print not verb
-			i.write(output='toto.log')
+			i.write(output=dumpfile_handler)
 else:
 	print('Wrong category')
 	usage()
