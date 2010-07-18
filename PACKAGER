@@ -1,0 +1,9 @@
+This file is a help for packagers.
+
+name=inforevealer
+version=devel
+licence=GPLv2
+source=http://github.com/sciunto/inforevealer
+dep=
+build_dep=
+summary=inforevealer provides relevant information easily to solve a problem on Linux
