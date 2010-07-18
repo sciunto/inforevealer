@@ -160,9 +160,9 @@ def general_info(output):
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
-	elif(os.path.isfile("/etc/readhat-release")):
+	elif(os.path.isfile("/etc/redhat-release")):
 		os='redhat'
-		fhandler=open("/etc/mandriva-release")
+		fhandler=open("/etc/redhat-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
