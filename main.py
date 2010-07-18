@@ -200,31 +200,6 @@ def main(argv):
 	verbosity=False
 	category=None
 
-	#####################
-	# GETOPT
-	#####################
-	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:', ['help',
-								   'list',
-								   'category=',
-								   'verbose',
-								   'file='
-								 ])
-								 
-
-	for opt, arg in options:
-		if opt in ('-h', '--help'):
-			usage()
-			sys.exit()
-		elif opt in ('-l', '--list'):
-			list_args()
-			sys.exit()
-		elif opt in ('-c', '--category'):	
-			category=arg
-		elif opt in ('-v','--verbose'):
-			verbosity=True
-		elif opt in ('-f','--file'):
-			dumpfile=arg
-	
 	###########
 	# FILES & COMMANDS
 	###########
@@ -293,6 +268,31 @@ def main(argv):
 			File('/etc/apt/preferences',linux='debian'),
 			File('/etc/apt/source.list',linux='debian'))
 
+	#####################
+	# GETOPT
+	#####################
+	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:', ['help',
+								   'list',
+								   'category=',
+								   'verbose',
+								   'file='
+								 ])
+								 
+
+	for opt, arg in options:
+		if opt in ('-h', '--help'):
+			usage()
+			sys.exit()
+		elif opt in ('-l', '--list'):
+			list(list_category)
+			sys.exit()
+		elif opt in ('-c', '--category'):	
+			category=arg
+		elif opt in ('-v','--verbose'):
+			verbosity=True
+		elif opt in ('-f','--file'):
+			dumpfile=arg
+	
 	#####################
 	# Write in dumpfile
 	#####################
