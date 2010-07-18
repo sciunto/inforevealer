@@ -17,6 +17,7 @@ options:
 		-h or --help: print this help
 		-l or --list: print a trouble category list
 		-c or --category [arg]: choose a category
+		-f or --file [arg]: dump file
 		--verbose: increase verbosity
 		"""
 		)
@@ -41,7 +42,7 @@ def write_header(string,output):
 	header= '#############################################'
 	header= header + '\n' + '#   ' + str(string) + '\n'
 	header=header+'#############################################\n'
-	print(header)
+	#print(header)
 	output.write(header)
 
 
@@ -60,13 +61,13 @@ class Command:
 		if self.linux_dependant == user_os or self.linux_dependant == None:
 			write_header(self.command,output)
 			if(not os.getuid() == 0 and self.root):
-				print("To get this, run the script as root")
+				#print("To get this, run the script as root")
 				output.write("To get this, run the script as root\n")
 			else:
 				proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-				proc.wait()
 				foo = proc.stdout.read()
-				print(foo)
+				proc.wait()
+				#print(foo)
 				output.write(foo)
 
 class File:
@@ -85,17 +86,17 @@ class File:
 		if self.linux_dependant == user_os or self.linux_dependant == None:
 			write_header(self.file,output)
 			if(not os.getuid() == 0 and self.root):
-				print("To get this, run the script as root")
+				#print("To get this, run the script as root")
 				output.write("To get this, run the script as root\n")
 			else:
 				if os.path.isfile(self.file):
 					fhandler= open(self.file,'r')
 					t = fhandler.read()
-					print(t)
+					#print(t)
 					output.write(t)
 					fhandler.close()
 				else:
-					print("The file "+str(self.file)+ " does not exist!")
+					#print("The file "+str(self.file)+ " does not exist!")
 					output.write("The file "+str(self.file)+ " does not exist!")
 
 
@@ -171,15 +172,13 @@ def main(argv):
 	verbosity=False
 	category=None
 
-	#http://www.doughellmann.com/PyMOTW/getopt/
-
 	#####################
 	# GETOPT
 	#####################
-	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:f:', ['help',
+	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:', ['help',
 								   'list',
 								   'category=',
-								   'verbosity',
+								   'verbose',
 								   'file='
 								 ])
 								 
@@ -193,7 +192,7 @@ def main(argv):
 			sys.exit()
 		elif opt in ('-c', '--category'):	
 			category=arg
-		elif opt in ('--verbosity'):
+		elif opt in ('-v','--verbose'):
 			verbosity=True
 		elif opt in ('-f','--file'):
 			dumpfile=arg
@@ -206,13 +205,18 @@ def main(argv):
 	list_category=('disk','hardware','display','sound','bootloader','internet','package')
 
 	disk = (Command(["df","-h"]),
-			Command(["fdisk", "-l"],root=True),
-			File("/etc/fstab"),
-			Command(["blkid"],root=True))
+		Command(["fdisk", "-l"],root=True),
+		File("/etc/fstab"),
+		Command(["blkid"],root=True)
+		)
 
 
 	hardware = (Command(["lsmod"],root=True),
-		    Command(["lsusb"],root=True))
+		    Command(["lsusb"],root=True),
+		    Command(["lscpu"],root=True),
+		    File("/proc/cpuinfo",root=True),
+		    Command(["lshal"],root=True)
+		    )
 
 	#lspci -vvv  Display  VGA
 	display = (File("/etc/X11/xorg.conf"),
@@ -275,6 +279,7 @@ def main(argv):
 		sys.exit()
 
 	dumpfile_handler.close()
+	print("The output has been dumped in "+dumpfile)
 
 
 #####################
