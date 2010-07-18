@@ -26,7 +26,7 @@ from subprocess import PIPE,Popen
 
 def usage():
 	print("""
-usage:		sys.argv[0] [options]
+usage:		"""+sys.argv[0]+""" [options]
 
 options:
 		-h or --help: print this help
@@ -49,7 +49,7 @@ List:
 	* internet
 	* package
 Reminder: 
-	sys.argv[0] -c internet
+	"""+sys.argv[0]+""" -c internet
 	""")
 
 
@@ -273,7 +273,7 @@ def main(argv):
 					~~~~~~~~~~~~~~~
 			Distributed under the GNU GPLv2 licence
 			Francois Boulogne <fboulogne at april dot org>
-			https://sourceforge.net/projects/inforevealer/
+			    http://github.com/sciunto/inforevealer
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 '''
 	print(header)
@@ -288,7 +288,7 @@ def main(argv):
 			# if user asks verbosity, then print all
 			# else print not verb only
 	else:
-		print('Wrong category')
+		print('Error: Wrong category')
 		usage()
 		list()
 		sys.exit()
