@@ -76,22 +76,27 @@ class Command:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific os?
 
-	def write(self,user_os,output='output.log'):
+	def write(self,user_os,verbosity,output='output.log'):
 		import os
 		import subprocess
-		# correct OS or this info does not dependant on distrib ?
-		if self.linux_dependant == user_os or self.linux_dependant == None:
-			write_header(self.command,output)
-			if(not os.getuid() == 0 and self.root):
-				#print("To get this, run the script as root")
-				output.write("To get this, run the script as root\n")
-			else:
-				proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-				foo = proc.stdout.read()
-				proc.wait()
-				#print(foo)
-				output.write(foo)
-
+		write_header(self.command,output)
+			# the following condition is equivalent to
+			# if user asks verbosity, then print all
+			# else print not verb only
+		if not (not verbosity and self.verb):
+			# correct OS or this info does not dependant on distrib ?
+			if self.linux_dependant == user_os or self.linux_dependant == None:
+				if(not os.getuid() == 0 and self.root):
+					#print("To get this, run the script as root")
+					output.write("To get this, run the script as root\n")
+				else:
+					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
+					foo = proc.stdout.read()
+					proc.wait()
+					#print(foo)
+					output.write(foo)
+		else:
+			output.write('Use verbose option (-v) to print this command.')
 class File:
 	"get a file"
 	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
@@ -100,27 +105,32 @@ class File:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 
-	def write(self,user_os,output='output.log'):
+	def write(self,user_os,verbosity,output='output.log'):
 		import os
 		#import pdb; pdb.set_trace()
 
-		# correct OS or this info does not dependant on distrib ?
-		if self.linux_dependant == user_os or self.linux_dependant == None:
-			write_header(self.file,output)
-			if(not os.getuid() == 0 and self.root):
-				#print("To get this, run the script as root")
-				output.write("To get this, run the script as root\n")
-			else:
-				if os.path.isfile(self.file):
-					fhandler= open(self.file,'r')
-					t = fhandler.read()
-					#print(t)
-					output.write(t)
-					fhandler.close()
+			# the following condition is equivalent to
+			# if user asks verbosity, then print all
+			# else print not verb only
+		if not (not verbosity and self.verb):
+			# correct OS or this info does not dependant on distrib ?
+			if self.linux_dependant == user_os or self.linux_dependant == None:
+				write_header(self.file,output)
+				if(not os.getuid() == 0 and self.root):
+					#print("To get this, run the script as root")
+					output.write("To get this, run the script as root\n")
 				else:
-					#print("The file "+str(self.file)+ " does not exist!")
-					output.write("The file "+str(self.file)+ " does not exist!")
-
+					if os.path.isfile(self.file):
+						fhandler= open(self.file,'r')
+						t = fhandler.read()
+						#print(t)
+						output.write(t)
+						fhandler.close()
+					else:
+						#print("The file "+str(self.file)+ " does not exist!")
+						output.write("The file "+str(self.file)+ " does not exist!")
+		else:
+			output.write('Use verbose option (-v) to print this file.')
 
 def general_info(output):
 	import time
@@ -237,7 +247,7 @@ def main(argv):
 		    Command(["lsusb"],root=True),
 		    Command(["lscpu"],root=True),
 		    File("/proc/cpuinfo",root=True),
-		    Command(["lshal"],root=True)
+		    Command(["lshal"],root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
@@ -289,11 +299,7 @@ def main(argv):
 	if category in list_category:
 		os=general_info(dumpfile_handler)
 		for i in locals()[category]:
-			if not (not verbosity and i.verb):
-				i.write(os,output=dumpfile_handler)
-			# is equivalent to
-			# if user asks verbosity, then print all
-			# else print not verb only
+			i.write(os,verbosity,output=dumpfile_handler)
 	else:
 		print('Error: Wrong category')
 		usage()
