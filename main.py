@@ -38,17 +38,13 @@ options:
 		)
 		
 		
-def list():
+def list(categories):
 	print("""
-List:
-	* disk
-	* hardware
-	* display
-	* sound
-	* bootloader
-	* internet
-	* package
-Reminder: 
+List of categories:""")
+
+	for i in categories:
+		print("\t* "+i+" -> "+categories[i])
+	print("""Reminder: 
 	"""+sys.argv[0]+""" -c internet
 	""")
 
@@ -234,7 +230,15 @@ def main(argv):
 	###########
 	#wiki.mandriva.com/en/Docs/Hardware
 
-	list_category=('disk','hardware','display','sound','bootloader','internet','package')
+	list_category={ 'disk':"Volumes, sizes, UUID...",
+			'cpu':"All CPU info",
+			'hardware':"General hardware information which are not included in other items",
+			'display':"",
+			'sound':"",
+			'bootloader':'Everything on grub and partitions (include "disk")',
+			'internet':'Wifi, ethernet...',
+			'package':"List of reprositories..."
+			}
 
 	disk = (Command(["df","-h"]),
 		Command(["fdisk", "-l"],root=True),
@@ -242,34 +246,38 @@ def main(argv):
 		Command(["blkid"],root=True)
 		)
 
+	cpu = (Command(["lscpu"],root=True),
+		File("/proc/cpuinfo",root=True),
+		Command(["cpufred-info"],root=True)
+		)
 
-	hardware = (Command(["lsmod"],root=True),
+	hardware = (Command(["lsmod"],root=True), #hummm
 		    Command(["lsusb"],root=True),
-		    Command(["lscpu"],root=True),
-		    File("/proc/cpuinfo",root=True),
+		    Command(["lspci","-vvv"],root=True,verb=True),
 		    Command(["lshal"],root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
 	display = (File("/etc/X11/xorg.conf"),
 			File('/var/log/Xorg.0.log',root=True)
-			)+ hardware
+			)
 
 
 	#lspci -vvv Audio
-	sound = (Command(['/sbin/chkconfig','--list', 'sound'],root=True), #configured runlevel 3 ? checkme
-		 Command(['/sbin/chkconfig','--list', 'alsa'],root=True),
+	sound = (
 		 Command(['aumix', '-q']), # Volume ?
-		 Command(['/sbin/fuser', '-v', '/dev/dsp']) # what is in use ?
-		 )+hardware
-
+		 Command(['/sbin/fuser', '-v', '/dev/dsp'],root=True) # what is in use ?
+		 )
+#Command(['/sbin/chkconfig','--list', 'sound'],root=True), #configured runlevel 3 ? checkme
+#Command(['/sbin/chkconfig','--list', 'alsa'],root=True),
+	
 	bootloader= (File('/boot/grub/menu.lst',root=True),
 			File("/etc/default/grub",root=True),
 			)+ disk
 
 	#lspci
 	internet = (Command(["ifconfig"],root=True),
-			Command(["iwconfig"],root=True))+hardware
+			Command(["iwconfig"],root=True))
 
 	package = (File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
 			File('/etc/urpmi.skip.list',linux='mandriva'),
@@ -303,7 +311,7 @@ def main(argv):
 	else:
 		print('Error: Wrong category')
 		usage()
-		list()
+		list(list_category)
 		sys.exit()
 
 	dumpfile_handler.close()
