@@ -233,12 +233,15 @@ def main(argv):
 	list_category={ 'disk':"Volumes, sizes, UUID...",
 			'cpu':"All CPU info",
 			'hardware':"General hardware information which are not included in other items",
-			'display':"",
+			'display':"Xorg, monitor info...",
 			'sound':"",
 			'bootloader':'Everything on grub and partitions (include "disk")',
 			'internet':'Wifi, ethernet...',
 			'package':"List of reprositories..."
 			}
+
+# dmesg
+# /var/log/messages
 
 	disk = (Command(["df","-h"]),
 		Command(["fdisk", "-l"],root=True),
@@ -253,13 +256,14 @@ def main(argv):
 
 	hardware = (Command(["lsmod"],root=True), #hummm
 		    Command(["lsusb"],root=True),
-		    Command(["lspci","-vvv"],root=True,verb=True),
+		    Command(["lspci","-v"],root=True),
 		    Command(["lshal"],root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
 	display = (File("/etc/X11/xorg.conf"),
-			File('/var/log/Xorg.0.log',root=True)
+			File('/var/log/Xorg.0.log',root=True),
+			Command("monitor-edid",root=True)
 			)
 
 
@@ -268,16 +272,19 @@ def main(argv):
 		 Command(['aumix', '-q']), # Volume ?
 		 Command(['/sbin/fuser', '-v', '/dev/dsp'],root=True) # what is in use ?
 		 )
-#Command(['/sbin/chkconfig','--list', 'sound'],root=True), #configured runlevel 3 ? checkme
-#Command(['/sbin/chkconfig','--list', 'alsa'],root=True),
 	
 	bootloader= (File('/boot/grub/menu.lst',root=True),
 			File("/etc/default/grub",root=True),
+			File("/etc/lilo.conf",root=True),
 			)+ disk
 
 	#lspci
-	internet = (Command(["ifconfig"],root=True),
-			Command(["iwconfig"],root=True))
+	internet = (Command(["ping","-c","1","www.kernel.org"]),
+		    Command(["ifconfig"],root=True),
+		    Command(["iwconfig"],root=True),
+		    File("/etc/resolv.conf"),	
+		    File("/etc/hosts")	
+	            )
 
 	package = (File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
 			File('/etc/urpmi.skip.list',linux='mandriva'),
@@ -308,6 +315,8 @@ def main(argv):
 		os=general_info(dumpfile_handler)
 		for i in locals()[category]:
 			i.write(os,verbosity,output=dumpfile_handler)
+		write_header("You didn\'t find what you expected?",dumpfile_handler)
+		dumpfile_handler.write('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer')
 	else:
 		print('Error: Wrong category')
 		usage()
