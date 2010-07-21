@@ -229,10 +229,14 @@ def main(argv):
 		Command(["cpufred-info"],root=True)
 		)
 
-	hardware = (Command(["lsmod"],root=True), #hummm
+	#temperature=(Command(["sensors"]))
+
+	hardware = (
+		    Command(["lsmod"],root=True), #hummm
 		    Command(["lsusb"],root=True),
 		    Command(["lspci","-v"],root=True),
-		    Command(["lshal"],root=True,verb=True)
+		    Command(["lshal"],root=True,verb=True),
+		    Command(["lshw"]),root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
