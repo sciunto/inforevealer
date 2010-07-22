@@ -82,8 +82,8 @@ def General_info(output):
 
 	io.write_header('General information',output)
 
-	time = time.gmtime()
-	output.write("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4])+"\n")
+	mytime = time.gmtime()
+	output.write("date: "+ str(mytime[0])+"-"+str(mytime[1])+"-"+str(mytime[2])+" "+str(mytime[3])+ ":"+str(mytime[4])+"\n")
 	#print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
 
 	uname = subprocess.Popen(args=["uname","-a"],stdout=subprocess.PIPE).communicate()[0]
@@ -94,44 +94,44 @@ def General_info(output):
 
 	# detect linux distribution
 	if(os.path.isfile("/etc/fedora-release")):
-		os='fedora'
+		myos='fedora'
 		fhandler=open("/etc/fedora-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
 	elif(os.path.isfile("/etc/SuSe-release")):
-		os='suse'
+		myos='suse'
 		fhandler=open("/etc/SuSe-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
 	elif(os.path.isfile("/etc/mandriva-release")):
-		os='mandriva'
+		myos='mandriva'
 		fhandler=open("/etc/mandriva-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
 	elif(os.path.isfile("/etc/redhat-release")):
-		os='redhat'
+		myos='redhat'
 		fhandler=open("/etc/redhat-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
 	elif(os.path.isfile("/etc/debian_version")):
-		os='debian'
+		myos='debian'
 		fhandler=open("/etc/debian_version")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
 		#print(fhandler.read())
 	else:
-		os='unknown'
+		myos='unknown'
 		#print('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
 		output.write('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
-	return os
+	return myos
 
 
