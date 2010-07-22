@@ -28,8 +28,9 @@ try:
     gettext.textdomain("pastebinit")
 
     defaultPB = "http://pastebin.com" #Default pastebin
-    version = "1.1" #Version number to show in the usage
-    configfile = os.path.expanduser("~/.pastebinit.xml")
+    #TODO remove me
+    #version = "1.1" #Version number to show in the usage
+    #configfile = os.path.expanduser("~/.pastebinit.xml")
 
     # Custom urlopener to handle 401's
     class pasteURLopener(urllib.FancyURLopener):
@@ -141,21 +142,22 @@ try:
     def getFirstNodeText(nodes, title):
         return getText(getFirstNode(nodes, title).childNodes)
 
-    # Display usage instructions
-    def Usage():
-        print "pastebinit v" + version
-        print "Reads on stdin for input or takes a filename as first parameter"
-        print _("Optional arguments:")
-        print _("\t-h This help screen")
-        print _("\t-b <pastebin url:default is '%s'>") % website
-        print _("\t-a <author:default is '%s'>") % user
-        print _("\t-f <format of paste:default is '%s'>") % format
-        print _("\t-r <parent posts ID:defaults to none>")
-#        print _("Optional arguments supported only by 1t2.us:")
-#        print _("\t-j <jabberid for notifications:default is '%s'>") % jabberid
-#        print _("\t-m <permatag for all versions of a post:default is blank>")
-#        print _("\t-t <title of paste:default is blank>")
-#        print _("\t-u <username> -p <password>")
+#TODO: remove me
+#    # Display usage instructions
+#    def Usage():
+#        print "pastebinit v" + version
+#        print "Reads on stdin for input or takes a filename as first parameter"
+#        print _("Optional arguments:")
+#        print _("\t-h This help screen")
+#        print _("\t-b <pastebin url:default is '%s'>") % website
+#        print _("\t-a <author:default is '%s'>") % user
+#        print _("\t-f <format of paste:default is '%s'>") % format
+#        print _("\t-r <parent posts ID:defaults to none>")
+##        print _("Optional arguments supported only by 1t2.us:")
+##        print _("\t-j <jabberid for notifications:default is '%s'>") % jabberid
+##        print _("\t-m <permatag for all versions of a post:default is blank>")
+##        print _("\t-t <title of paste:default is blank>")
+##        print _("\t-u <username> -p <password>")
 
     # Set defaults
     website = defaultPB
@@ -170,97 +172,105 @@ try:
     content = ""
     parentpid = ""
 
-    #Example configuration file string
-    configexample = """\
-<pastebinit>
-<pastebin>http://paste.debian.net</pastebin>
-<author>A pastebinit user</author>
-<jabberid>nobody@nowhere.org</jabberid>
-<format>text</format>
-</pastebinit>
-"""
+#TODO remove me
+#
+#    #Example configuration file string
+#    configexample = """\
+#<pastebinit>
+#<pastebin>http://paste.debian.net</pastebin>
+#<author>A pastebinit user</author>
+#<jabberid>nobody@nowhere.org</jabberid>
+#<format>text</format>
+#</pastebinit>
+#"""
+#
+#    #Open configuration file if it exists
+#    try:
+#        f = open(configfile)
+#        configtext = f.read()
+#        f.close()
+#        gotconfigxml = True
+#    except KeyboardInterrupt:
+#        sys.exit(_("KeyboardInterrupt caught."))
+#    except:
+#        gotconfigxml = False
+#
+#    #Parse configuration file
+#    if gotconfigxml:
+#        try:
+#            configxml = xml.dom.minidom.parseString(configtext)
+#            website = getFirstNodeText(configxml, "pastebin")
+#            user = getFirstNodeText(configxml, "author")
+#            format = getFirstNodeText(configxml, "format")
+#            jabberid = getFirstNodeText(configxml, "jabberid")
+#        except KeyboardInterrupt:
+#            sys.exit(_("KeyboardInterrupt caught."))
+#        except:
+#            raise
+#            print _("Error parsing configuration file!")
+#            print _("Please ensure that your configuration file looks similar to the following:")
+#            print configexample
+#            sys.exit(1)
 
-    #Open configuration file if it exists
-    try:
-        f = open(configfile)
-        configtext = f.read()
-        f.close()
-        gotconfigxml = True
-    except KeyboardInterrupt:
-        sys.exit(_("KeyboardInterrupt caught."))
-    except:
-        gotconfigxml = False
+#TODO remove me
+#    # Get options
+#    try:
+#        optlist, list = getopt.getopt(sys.argv[1:], 'hi:f:b:a:r:j:t:m:u:p:')
+#    except KeyboardInterrupt:
+#        sys.exit(_("KeyboardInterrupt caught."))
+#    except getopt.GetoptError:
+#        print _("Invalid arguments!\n")
+#	#Usage()
+#        sys.exit(1)
+#
+#    # Iterate through options
+#    for opt in optlist:
+#        #if opt[0] == "-h":
+#        #    Usage()
+#        #    sys.exit(1)
+#        if opt[0] == "-i":
+#            filename = opt[1]
+#        elif opt[0] == "-f":
+#            format = opt[1]
+#        elif opt[0] == "-b":
+#            website = opt[1]
+#        elif opt[0] == "-a":
+#            user = opt[1]
+#        elif opt[0] == "-r":
+#            parentpid = opt[1]
+#        elif opt[0] == "-j":
+#            jabberid = opt[1]
+#        elif opt[0] == "-t":
+#            title = opt[1]
+#        elif opt[0] == "-m":
+#            permatag = opt[1]
+#        elif opt[0] == "-u":
+#            username = opt[1]
+#        elif opt[0] == "-p":
+#            password = opt[1]
+#
+#    if filename == "" and len(list) >= 1:
+#        filename = list[0]
+#
+#    #If - is specified as a filename read from stdin, otherwise load the specified file.
+#    if (filename == "" or filename == "-") and content == "":
+#        content = sys.stdin.read()
+#    elif content == "":
+#        try:
+#            f = open(filename)
+#            content = f.read()
+#            f.close()
+#        except KeyboardInterrupt:
+#            sys.exit(_("KeyboardInterrupt caught."))
+#        except:
+#            sys.exit(_("Unable to read from: %s") % filename)
+#    if not content:
+#        sys.exit(_("You are trying to send an empty document, exiting.")) 
 
-    #Parse configuration file
-    if gotconfigxml:
-        try:
-            configxml = xml.dom.minidom.parseString(configtext)
-            website = getFirstNodeText(configxml, "pastebin")
-            user = getFirstNodeText(configxml, "author")
-            format = getFirstNodeText(configxml, "format")
-            jabberid = getFirstNodeText(configxml, "jabberid")
-        except KeyboardInterrupt:
-            sys.exit(_("KeyboardInterrupt caught."))
-        except:
-            raise
-            print _("Error parsing configuration file!")
-            print _("Please ensure that your configuration file looks similar to the following:")
-            print configexample
-            sys.exit(1)
 
-    # Get options
-    try:
-        optlist, list = getopt.getopt(sys.argv[1:], 'hi:f:b:a:r:j:t:m:u:p:')
-    except KeyboardInterrupt:
-        sys.exit(_("KeyboardInterrupt caught."))
-    except getopt.GetoptError:
-        print _("Invalid arguments!\n")
-        Usage()
-        sys.exit(1)
+#This is what we should do
+#content should content the content :)
 
-    # Iterate through options
-    for opt in optlist:
-        if opt[0] == "-h":
-            Usage()
-            sys.exit(1)
-        if opt[0] == "-i":
-            filename = opt[1]
-        elif opt[0] == "-f":
-            format = opt[1]
-        elif opt[0] == "-b":
-            website = opt[1]
-        elif opt[0] == "-a":
-            user = opt[1]
-        elif opt[0] == "-r":
-            parentpid = opt[1]
-        elif opt[0] == "-j":
-            jabberid = opt[1]
-        elif opt[0] == "-t":
-            title = opt[1]
-        elif opt[0] == "-m":
-            permatag = opt[1]
-        elif opt[0] == "-u":
-            username = opt[1]
-        elif opt[0] == "-p":
-            password = opt[1]
-
-    if filename == "" and len(list) >= 1:
-        filename = list[0]
-
-    #If - is specified as a filename read from stdin, otherwise load the specified file.
-    if (filename == "" or filename == "-") and content == "":
-        content = sys.stdin.read()
-    elif content == "":
-        try:
-            f = open(filename)
-            content = f.read()
-            f.close()
-        except KeyboardInterrupt:
-            sys.exit(_("KeyboardInterrupt caught."))
-        except:
-            sys.exit(_("Unable to read from: %s") % filename)
-    if not content:
-        sys.exit(_("You are trying to send an empty document, exiting.")) 
     pastebind = preloadPastebins() #get the config from /etc/pastebin.d/
     params = getParameters(website, pastebind, content, user, jabberid, version, format, parentpid, permatag, title, username, password) #Get the parameters array
 
