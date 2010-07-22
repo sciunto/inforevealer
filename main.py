@@ -16,7 +16,8 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import getinfo
+import io
 
 import os
 import time
@@ -49,90 +50,14 @@ List of categories:""")
 	""")
 
 
-def write_header(string,output):
-	title=""
-	if string.__class__ != str:
-		for i in string:
-			title+= i+" "
-        else:
-		title=string
-
-	header= '#############################################'
-	header= header + '\n' + '#   ' + title + '\n'
-	header=header+'#############################################\n'
-	#print(header)
-	output.write(header)
 
 
-class Command:
-	"get a command output"
-	def __init__(self, com=["uname"], root=False,verb=False,linux=None):
-		self.command=com
-		self.root=root # need root?
-		self.verb=verb # is it verbose?
-		self.linux_dependant=linux # need a specific os?
-
-	def write(self,user_os,verbosity,output='output.log'):
-		import os
-		import subprocess
-		write_header(self.command,output)
-			# the following condition is equivalent to
-			# if user asks verbosity, then print all
-			# else print not verb only
-		if not (not verbosity and self.verb):
-			# correct OS or this info does not dependant on distrib ?
-			if self.linux_dependant == user_os or self.linux_dependant == None:
-				if(not os.getuid() == 0 and self.root):
-					#print("To get this, run the script as root")
-					output.write("To get this, run the script as root\n")
-				else:
-					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-					foo = proc.stdout.read()
-					proc.wait()
-					#print(foo)
-					output.write(foo)
-		else:
-			output.write('Use verbose option (-v) to print this command.')
-class File:
-	"get a file"
-	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
-		self.file=file
-		self.root=root # need root?
-		self.verb=verb # is it verbose?
-		self.linux_dependant=linux # need a specific distribution?
-
-	def write(self,user_os,verbosity,output='output.log'):
-		import os
-		#import pdb; pdb.set_trace()
-
-			# the following condition is equivalent to
-			# if user asks verbosity, then print all
-			# else print not verb only
-		if not (not verbosity and self.verb):
-			# correct OS or this info does not dependant on distrib ?
-			if self.linux_dependant == user_os or self.linux_dependant == None:
-				write_header(self.file,output)
-				if(not os.getuid() == 0 and self.root):
-					#print("To get this, run the script as root")
-					output.write("To get this, run the script as root\n")
-				else:
-					if os.path.isfile(self.file):
-						fhandler= open(self.file,'r')
-						t = fhandler.read()
-						#print(t)
-						output.write(t)
-						fhandler.close()
-					else:
-						#print("The file "+str(self.file)+ " does not exist!")
-						output.write("The file "+str(self.file)+ " does not exist!")
-		else:
-			output.write('Use verbose option (-v) to print this file.')
 
 def general_info(output):
 	import time
 	import os
 	import subprocess
-	write_header('General information',output)
+	io.write_header('General information',output)
 
 	time = time.gmtime()
 	output.write("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4])+"\n")
@@ -218,59 +143,59 @@ def main(argv):
 # dmesg
 # /var/log/messages
 
-	disk = (Command(["df","-h"]),
-		Command(["fdisk", "-l"],root=True),
-		File("/etc/fstab"),
-		Command(["blkid"],root=True)
+	disk = (getinfo.Command(["df","-h"]),
+		getinfo.Command(["fdisk", "-l"],root=True),
+		getinfo.File("/etc/fstab"),
+		getinfo.Command(["blkid"],root=True)
 		)
 
-	cpu = (Command(["lscpu"],root=True),
-		File("/proc/cpuinfo",root=True),
-		Command(["cpufred-info"],root=True)
+	cpu = (getinfo.Command(["lscpu"],root=True),
+		getinfo.File("/proc/cpuinfo",root=True),
+		getinfo.Command(["cpufred-info"],root=True)
 		)
 
-	#temperature=(Command(["sensors"]))
+	#temperature=(getinfo.Command(["sensors"]))
 
 	hardware = (
-		    Command(["lsmod"],root=True), #hummm
-		    Command(["lsusb"],root=True),
-		    Command(["lspci","-v"],root=True),
-		    Command(["lshal"],root=True,verb=True),
-		    Command(["lshw"],root=True,verb=True)
+		    getinfo.Command(["lsmod"],root=True), #hummm
+		    getinfo.Command(["lsusb"],root=True),
+		    getinfo.Command(["lspci","-v"],root=True),
+		    getinfo.Command(["lshal"],root=True,verb=True),
+		    getinfo.Command(["lshw"],root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
-	display = (File("/etc/X11/xorg.conf"),
-			File('/var/log/Xorg.0.log',root=True),
-			Command("monitor-edid",root=True)
+	display = (getinfo.File("/etc/X11/xorg.conf"),
+			getinfo.File('/var/log/Xorg.0.log',root=True),
+			getinfo.Command("monitor-edid",root=True)
 			)
 
 
 	#lspci -vvv Audio
 	sound = (
-		 Command(['aumix', '-q']), # Volume ?
-		 Command(['/sbin/fuser', '-v', '/dev/dsp'],root=True) # what is in use ?
+		 getinfo.Command(['aumix', '-q']), # Volume ?
+		 getinfo.Command(['/sbin/fuser', '-v', '/dev/dsp'],root=True) # what is in use ?
 		 )
 	
-	bootloader= (File('/boot/grub/menu.lst',root=True),
-			File("/etc/default/grub",root=True),
-			File("/etc/lilo.conf",root=True),
+	bootloader= (getinfo.File('/boot/grub/menu.lst',root=True),
+			getinfo.File("/etc/default/grub",root=True),
+			getinfo.File("/etc/lilo.conf",root=True),
 			)+ disk
 
 	#lspci
-	internet = (Command(["ping","-c","1","www.kernel.org"]),
-		    Command(["ifconfig"],root=True),
-		    Command(["iwconfig"],root=True),
-		    File("/etc/resolv.conf"),	
-		    File("/etc/hosts")	
+	internet = (getinfo.Command(["ping","-c","1","www.kernel.org"]),
+		    getinfo.Command(["ifconfig"],root=True),
+		    getinfo.Command(["iwconfig"],root=True),
+		    getinfo.File("/etc/resolv.conf"),	
+		    getinfo.File("/etc/hosts")	
 	            )
 
-	package = (File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
-			File('/etc/urpmi.skip.list',linux='mandriva'),
-			File('/etc/yum.conf',linux='fedora'),
-			File('/etc/yum.conf',linux='suse'),
-			File('/etc/apt/preferences',linux='debian'),
-			File('/etc/apt/source.list',linux='debian'))
+	package = (getinfo.File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
+			getinfo.File('/etc/urpmi.skip.list',linux='mandriva'),
+			getinfo.File('/etc/yum.conf',linux='fedora'),
+			getinfo.File('/etc/yum.conf',linux='suse'),
+			getinfo.File('/etc/apt/preferences',linux='debian'),
+			getinfo.File('/etc/apt/source.list',linux='debian'))
 
 	#####################
 	# GETOPT
@@ -316,10 +241,10 @@ def main(argv):
 	dumpfile_handler.write(header)	
 
 	if category in list_category:
-		os=general_info(dumpfile_handler)
+		linux_distrib=general_info(dumpfile_handler)
 		for i in locals()[category]:
-			i.write(os,verbosity,output=dumpfile_handler)
-		write_header("You didn\'t find what you expected?",dumpfile_handler)
+			i.write(linux_distrib,verbosity,dumpfile_handler)
+		io.write_header("You didn\'t find what you expected?",dumpfile_handler)
 		dumpfile_handler.write('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer')
 	else:
 		print('Error: Wrong category')
