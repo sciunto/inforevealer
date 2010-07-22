@@ -21,7 +21,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-import urllib, os, sys, re, getopt, xml.dom.minidom, gettext
+#xml.dom.minidom, getopt, 
+import urllib, os, sys, re, gettext
 from gettext import gettext as _
 import configobj
 
