@@ -24,13 +24,15 @@ import getinfo
 import io
 import pastebin
 
-import os, sys, time, urllib, re
+import os, sys, time, urllib, re, gettext
 from subprocess import PIPE,Popen
 
+gettext.textdomain('inforevealer')
+_ = gettext.gettext
 
 def usage():
-	print("""
-usage:		"""+sys.argv[0]+""" [options]
+	print (_("""
+usage:		""")+sys.argv[0]+ _(""" [options]
 
 options:
 		-h or --help: print this help
@@ -40,17 +42,17 @@ options:
 		-p or --pastebin: send the report on pastebin
 		-w or --website [arg]: specify pastebin website
 		--verbose: increase verbosity
-		"""
+		""")
 		)
 		
 		
 def list(categories):
-	print("""
+	print _("""
 List of categories:""")
 
 	for i in categories:
-		print("\t* "+i+" -> "+categories[i])
-	print("""Reminder: 
+		print ("\t* "+i+" -> "+categories[i])
+	print(""" _(Reminder:) 
 	"""+sys.argv[0]+""" -c internet
 	""")
 
@@ -82,14 +84,14 @@ def main(argv):
 	###########
 	#wiki.mandriva.com/en/Docs/Hardware
 
-	list_category={ 'disk':"Volumes, sizes, UUID...",
-			'cpu':"All CPU info",
-			'hardware':"General hardware information which are not included in other items",
-			'display':"Xorg, monitor info...",
-			'sound':"",
-			'bootloader':'Everything on grub and partitions (include "disk")',
-			'internet':'Wifi, ethernet...',
-			'package':"List of reprositories..."
+	list_category={ 'disk': _("Volumes, sizes, UUID..."),
+			'cpu': _("All CPU info"),
+			'hardware': _("General hardware information which are not included in other items"),
+			'display': _("Xorg, monitor info..."),
+			'sound': _(""),
+			'bootloader': _('Everything on grub and partitions (include "disk")'),
+			'internet': _('Wifi, ethernet...'),
+			'package': _("List of reprositories...")
 			}
 
 # dmesg
@@ -208,16 +210,16 @@ def main(argv):
 		linux_distrib=getinfo.General_info(dumpfile_handler)
 		for i in locals()[category]:
 			i.write(linux_distrib,verbosity,dumpfile_handler)
-		io.write_header("You didn\'t find what you expected?",dumpfile_handler)
-		dumpfile_handler.write('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer')
+		io.write_header(_("You didn\'t find what you expected?"),dumpfile_handler)
+		dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
 	else:
-		print('Error: Wrong category')
+		print(_('Error: Wrong category'))
 		usage()
 		list(list_category)
 		sys.exit()
 
 	dumpfile_handler.close()
-	print("The output has been dumped in "+dumpfile)
+	print( _("The output has been dumped in ")+dumpfile)
 
 	
 	#####################
@@ -267,7 +269,7 @@ def main(argv):
 					pastelink = website + re.split(reLink, page.read())[1] #Print the result of the Regexp
 			else:
 				pastelink = page.url #Get the final page and show the ur
-			print("Pastebin link: "+pastelink+"\n")
+			print(_("Pastebin link: ")+pastelink+"\n")
 		except KeyboardInterrupt:
 			sys.exit(_("KeyboardInterrupt caught."))
 		except:
