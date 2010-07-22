@@ -167,6 +167,64 @@ def main(argv):
 			dumpfile=arg
 	
 	#####################
+	# PASTEBIN
+	#####################
+#	defaultPB = "http://pastebin.com" #Default pastebin
+#
+#	# Set defaults
+#	website = defaultPB
+#	user = os.environ.get('USER')
+#	jabberid = ""
+#	title = ""
+#	permatag = ""
+#	format = "text"
+#	username = ""
+#	password = ""
+#	filename = ""
+#	content = ""
+#	parentpid = ""
+#
+##This is what we should do
+##content should content the content :)
+#
+#	pastebind = preloadPastebins() #get the config from /etc/pastebin.d/
+#	params = getParameters(website, pastebind, content, user, jabberid, version, format, parentpid, permatag, title, username, password) #Get the parameters array
+#
+#	if not website.endswith("/"):
+#		website += "/"
+#
+#	reLink = None
+#	tmp_page = ""
+#	if "page" in params:
+#		website += params['page']
+#		tmp_page = params['page']
+#		del params["page"]
+#	if "regexp" in params:
+#		reLink = params['regexp']
+#		del params["regexp"]
+#	params = urllib.urlencode(params) #Convert to a format usable with the HTML POST
+#
+#	url_opener = pasteURLopener()
+#	page = url_opener.open(website, params) #Send the informations and be redirected to the final page
+#
+#	try:
+#		if reLink: #Check if we have to apply a regexp
+#			website = website.replace(tmp_page, "")
+#			if reLink == '(.*)':
+#				print page.read().strip()
+#			else:
+#				print website + re.split(reLink, page.read())[1] #Print the result of the Regexp
+#		else:
+#			print page.url #Get the final page and show the ur
+#	except KeyboardInterrupt:
+#		sys.exit(_("KeyboardInterrupt caught."))
+#	except:
+#		raise
+#		sys.exit(_("Unable to read or parse the result page, it could be a server timeout or a change server side, try with another pastebin."))
+#
+#
+
+	#####################
 	# Write in dumpfile
 	#####################
 	dumpfile_handler= open(dumpfile,'w')
