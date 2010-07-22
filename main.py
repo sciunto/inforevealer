@@ -221,7 +221,7 @@ def main(argv):
 
 	
 	#####################
-	# PASTEBIN
+	# PASTEBIN: a part of this § comes from pastebinit
 	#####################
 	if pastebin_choice:
 		user = os.environ.get('USER')
@@ -262,11 +262,12 @@ def main(argv):
 			if reLink: #Check if we have to apply a regexp
 				website = website.replace(tmp_page, "")
 				if reLink == '(.*)':
-					print page.read().strip()
+					pastelink =  page.read().strip()
 				else:
-					print website + re.split(reLink, page.read())[1] #Print the result of the Regexp
+					pastelink = website + re.split(reLink, page.read())[1] #Print the result of the Regexp
 			else:
-				print page.url #Get the final page and show the ur
+				pastelink = page.url #Get the final page and show the ur
+			print("Pastebin link: "+pastelink+"\n")
 		except KeyboardInterrupt:
 			sys.exit(_("KeyboardInterrupt caught."))
 		except:
