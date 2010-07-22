@@ -53,66 +53,6 @@ List of categories:""")
 
 
 
-def general_info(output):
-	import time
-	import os
-	import subprocess
-	io.write_header('General information',output)
-
-	time = time.gmtime()
-	output.write("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4])+"\n")
-	#print("date: "+ str(time[0])+"-"+str(time[1])+"-"+str(time[2])+" "+str(time[3])+ ":"+str(time[4]))
-
-	uname = subprocess.Popen(args=["uname","-a"],stdout=subprocess.PIPE).communicate()[0]
-	output.write("uname: "+str(uname)+"\n")
-	#print("uname: "+str(uname))
-
-
-
-	# detect linux distribution
-	if(os.path.isfile("/etc/fedora-release")):
-		os='fedora'
-		fhandler=open("/etc/fedora-release")
-		foo=fhandler.read()
-		fhandler.close()
-		output.write(foo)
-		#print(fhandler.read())
-	elif(os.path.isfile("/etc/SuSe-release")):
-		os='suse'
-		fhandler=open("/etc/SuSe-release")
-		foo=fhandler.read()
-		fhandler.close()
-		output.write(foo)
-		#print(fhandler.read())
-	elif(os.path.isfile("/etc/mandriva-release")):
-		os='mandriva'
-		fhandler=open("/etc/mandriva-release")
-		foo=fhandler.read()
-		fhandler.close()
-		output.write(foo)
-		#print(fhandler.read())
-	elif(os.path.isfile("/etc/redhat-release")):
-		os='redhat'
-		fhandler=open("/etc/redhat-release")
-		foo=fhandler.read()
-		fhandler.close()
-		output.write(foo)
-		#print(fhandler.read())
-	elif(os.path.isfile("/etc/debian_version")):
-		os='debian'
-		fhandler=open("/etc/debian_version")
-		foo=fhandler.read()
-		fhandler.close()
-		output.write(foo)
-		#print(fhandler.read())
-	else:
-		os='unknown'
-		#print('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
-		output.write('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
-	return os
-
-
-
 
 #####################
 #Main part
@@ -241,7 +181,7 @@ def main(argv):
 	dumpfile_handler.write(header)	
 
 	if category in list_category:
-		linux_distrib=general_info(dumpfile_handler)
+		linux_distrib=getinfo.General_info(dumpfile_handler)
 		for i in locals()[category]:
 			i.write(linux_distrib,verbosity,dumpfile_handler)
 		io.write_header("You didn\'t find what you expected?",dumpfile_handler)
