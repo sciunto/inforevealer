@@ -236,7 +236,7 @@ def main(argv):
 		    Command(["lsusb"],root=True),
 		    Command(["lspci","-v"],root=True),
 		    Command(["lshal"],root=True,verb=True),
-		    Command(["lshw"]),root=True,verb=True)
+		    Command(["lshw"],root=True,verb=True)
 		    )
 
 	#lspci -vvv  Display  VGA
