@@ -1,9 +1,28 @@
+
+##################################################
 inforevealer
 by Francois Boulogne <fboulogne at april dot org>
 under the GNU GPL v2 licence
+##################################################
 
 The last version of this software could be found at
 http://github.com/sciunto/inforevealer
 
 
+##################################################
+Description
+##################################################
+
 The goal of this software is to provide easily a check-up of useful commands, logfiles or configuration files through categories. This check-up might be used by people who experiences some troubles on Linux on forums, IRC, jabber... Thus, contributors could identify quickly problems thanks to relevant information. 
+
+
+
+
+##################################################
+Acknowledgments
+##################################################
+I deeply thanks
+* Stephane Graber <stgraber@stgraber.org>
+* Daniel Bartlett <dan@f-box.org>
+For their software pastebinit released under the GNU GPL v2 Free licence. Their code has been helpful for a non-negligeable part of this software. Thanks to them.
+
