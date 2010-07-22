@@ -31,8 +31,8 @@ gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
 def usage():
-	print (_("""
-usage:		""")+sys.argv[0]+ _(""" [options]
+	print _("""
+usage:		%s [options]
 
 options:
 		-h or --help: print this help
@@ -42,8 +42,7 @@ options:
 		-p or --pastebin: send the report on pastebin
 		-w or --website [arg]: specify pastebin website
 		--verbose: increase verbosity
-		""")
-		)
+		""") %sys.argv[0] 
 		
 		
 def list(categories):
@@ -52,9 +51,7 @@ List of categories:""")
 
 	for i in categories:
 		print ("\t* "+i+" -> "+categories[i])
-	print(""" _(Reminder:) 
-	"""+sys.argv[0]+""" -c internet
-	""")
+	print _("\nReminder: %s -c internet") %sys.argv[0] 
 
 
 
@@ -73,7 +70,7 @@ def main(argv):
 	#set default
 	dumpfile='/tmp/inforevealer'
 	verbosity=False
-	category=None
+	category=""
 
 	defaultPB = "http://pastebin.com" #Default pastebin
 	website = defaultPB
@@ -203,7 +200,7 @@ def main(argv):
 '''
 	print(header)
 	dumpfile_handler.write(header)	
-	dumpfile_handler.write("Category: "+ category+"\n")	
+	dumpfile_handler.write('Category: '+ category)	
 	
 
 	if category in list_category:
