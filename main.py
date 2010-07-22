@@ -24,10 +24,7 @@ import getinfo
 import io
 import pastebin
 
-import os
-import time
-import sys
-import urllib
+import os, sys, time, urllib, re
 from subprocess import PIPE,Popen
 
 
@@ -204,6 +201,8 @@ def main(argv):
 '''
 	print(header)
 	dumpfile_handler.write(header)	
+	dumpfile_handler.write("Category: "+ category+"\n")	
+	
 
 	if category in list_category:
 		linux_distrib=getinfo.General_info(dumpfile_handler)
@@ -227,7 +226,7 @@ def main(argv):
 	if pastebin_choice:
 		user = os.environ.get('USER')
 		jabberid = ""
-		title = ""
+		title = category
 		permatag = ""
 		format = "text"
 		username = ""
@@ -236,9 +235,7 @@ def main(argv):
 		content = ""
 		parentpid = ""
 	
-	##This is what we should do
-	##content should content the content :)
-		
+		#read dumpfile content	
 		dumpfile_handler= open(dumpfile,'r')
 		content = dumpfile_handler.read()
 		dumpfile_handler.close()
