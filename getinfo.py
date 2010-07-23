@@ -27,7 +27,7 @@ import time
 
 class Command:
 	"get a command output"
-	def __init__(self, com=["uname"], root=False,verb=False,linux=None):
+	def __init__(self, com, root=False,verb=False,linux=None):
 		self.command=com
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
@@ -45,12 +45,8 @@ class Command:
 					#print("To get this, run the script as root")
 					output.write("To get this, run the script as root\n")
 				else:
-					pass #FIXME
-					#proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-					#foo = proc.stdout.read()
-					#proc.wait()
-					#print(foo)
-					#output.write(foo)
+					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
+					output.write( proc.stdout.read() )
 		else:
 			output.write('Use verbose option (-v) to print this command.')
 class File:
