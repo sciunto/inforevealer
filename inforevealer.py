@@ -65,7 +65,7 @@ def main(argv):
 	import getopt
 	import sys
 
-	version="devel"
+	version=0.1
 
 	#set default
 	dumpfile='/tmp/inforevealer'
@@ -97,7 +97,8 @@ def main(argv):
 	disk = (getinfo.Command(["df","-h"]),
 		getinfo.Command(["fdisk", "-l"],root=True),
 		getinfo.File("/etc/fstab"),
-		getinfo.Command(["blkid"],root=True)
+		getinfo.Command(["blkid"],root=True),
+		getinfo.Command(["udisks","--dump"],verb=True)
 		)
 
 	cpu = (getinfo.Command(["lscpu"],root=True),
