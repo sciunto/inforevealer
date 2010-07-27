@@ -1,0 +1,14 @@
+VERSION 0.2
+RELEASE
+
+new features:
+	* add configuration files
+
+################
+VERSION 0.1 
+RELEASE 2010-07-25
+
+First version
+features:
+	* generate log on harddrive
+	* send this log on pastebin
