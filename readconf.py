@@ -1,52 +1,53 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Inforevealer
+# Copyright (C) 2010  Francois Boulogne <fboulogne at april dot org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+import getinfo
 
 
-from configobj import ConfigObj
-
-filename="conf.conf"
-spec_filename="validator.conf"
-#config = ConfigObj(filename)
-
-from validate import Validator
-configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,
-		                       _inspec=True)
-config = ConfigObj(filename, configspec=configspec)
-
-val = Validator()
-test = config.validate(val)
-if test == True:
-	print 'Succeeded.'
-else:
-	print 'failed'
 
 
 #Load category list
-def LoadCategoryList():
+def LoadCategoryList(config):
 	list_category=dict()
 	for section in config.sections:
 		list_category[section]=config[section]['descr'] 
 	return list_category
 
 #Load info on a category
-def LoadCategoryInfo(category):
+def LoadCategoryInfo(config,category):
 	ret_list = list()
 	for subsection in config[category].sections:
 		print subsection
 		descr=config[category][subsection]['descr']
-		type=config[category][subsection]['type']
+		e_type=config[category][subsection]['type']
 		execu=config[category][subsection]['exec']
 		root=config[category][subsection]['root']
 		verb=config[category][subsection]['verb']
 		#linux=config[category][subsection]['linux']
-		print verb
-		if type == 'command':	
-			ret_list.append("")
-		elif type == 'file':
-			ret_list.append("")
-		else:
-			print('Error') #TODO
+
+		if e_type == 'command':	
+			ret_list.append(getinfo.Command(execu.split(" "),root,verb))
+		elif e_type == 'file':
+			ret_list.append(getinfo.File(execu.split(" "),root,verb))
+		#could not be something else thanks to the config check
 	return ret_list
 
-LoadCategoryInfo('disk')
 
 
