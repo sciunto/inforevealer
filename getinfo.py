@@ -33,7 +33,7 @@ class Command:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific os?
 
-	def write(self,user_os,verbosity,output,run_as="user"):
+	def write(self,user_os,verbosity,output,run_as="user",script=None):
 		io.write_header(self.command,output)
 			# the following condition is equivalent to
 			# if user asks verbosity, then print all
@@ -41,19 +41,17 @@ class Command:
 		if not (not verbosity and self.verb):
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
-				#if(not os.getuid() == 0 and self.root):
-				if run_as == "user":
+				if self.root and run_as == "user":
 					output.write("To get this, run the script as root\n")
-				elif run_as == "substitute":
+				elif self.root and run_as == "substitute":
 					print ("dump in file")
+					output.write("via su/sudo\n")
 					#TODO
-				elif run_as == "root":
+				else: #we are root or no root proviledge needed
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 					output.write( proc.stdout.read() )
-				else:
-					print ("bad argument in write function") #FIXME
 		else:
-			output.write('Use verbose option (-v) to print this command.')
+			output.write('Use verbose option (-v) to print this command.\n')
 class File:
 	"get a file"
 	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
@@ -62,7 +60,7 @@ class File:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 
-	def write(self,user_os,verbosity,output,run_as="user"):
+	def write(self,user_os,verbosity,output,run_as="user",script=None):
 		import os
 		#import pdb; pdb.set_trace()
 
@@ -74,22 +72,20 @@ class File:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				io.write_header(self.file,output)
 				#if(not os.getuid() == 0 and self.root):
-				if run_as == "user":
+				if self.root and run_as == "user":
 					output.write("To get this, run the script as root\n")
-				elif run_as == "substitute":
+				elif self.root and run_as == "substitute":
 					print ("dump in file")
 					#TODO
-				elif run_as == "root":
+				else: #we are root or no root proviledge needed
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
 						fhandler.close()
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!")
-				else:
-					print ("bad argument in write function") #FIXME
 		else:
-			output.write('Use verbose option (-v) to print this file.')
+			output.write('Use verbose option (-v) to print this file.\n')
 			
 			
 			
