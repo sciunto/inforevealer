@@ -218,31 +218,32 @@ Do you want to substitute user?"""))
 				run_as="user"
 		else:
 			run_as='user'
-	
+
+	#detect which distribution the user uses
+	linux_distrib=getinfo.General_info(dumpfile_handler)
+
 	# In the case of run_as='substitute'
 	# a configuration file is generated
 	# su/sudo is used to run a new instance of inforevealer in append mode
 	# to complete the report
-	
-	#detect which distribution the user uses
-	linux_distrib=getinfo.General_info(dumpfile_handler)
 
 	for i in category_info:
 		i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
 		
 	#Use su or sudo to complete the report
-	#find the substitute user command and run the script	
-	if which.which('sudo') != None: #TODO checkme
-		print(_("Please, enter your user password."))
-		root_instance = ";" #TODO
-		os.system(root_instance)
-	elif which.which('su') != None:
-		print(_("Please, enter the root password."))
-		root_instance = ";" #TODO 
-		os.system(root_instance)
-	else:
-		print("Error: No substitute user command available.") #FIXME
-	
+	if run_as == "substitute":
+		#find the substitute user command and run the script	
+		if which.which('sudo') != None: #TODO checkme
+			print(_("Please, enter your user password."))
+			root_instance = ";" #TODO
+			os.system(root_instance)
+		elif which.which('su') != None:
+			print(_("Please, enter the root password."))
+			root_instance = ";" #TODO 
+			os.system(root_instance)
+		else:
+			print("Error: No substitute user command available.") #FIXME
+		
 
 	dumpfile_handler.close()
 	print( _("The output has been dumped in ")+dumpfile)
