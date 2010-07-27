@@ -37,7 +37,6 @@ class Command:
 		self.linux_dependant=linux # need a specific os?
 
 	def write(self,user_os,verbosity,output,output_path,run_as="user",config_out=None):
-		io.write_header(self.command,output)
 			# the following condition is equivalent to
 			# if user asks verbosity, then print all
 			# else print not verb only
@@ -46,9 +45,9 @@ class Command:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
+						io.write_header(self.command,output)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
-						output.write("via su/sudo\n")
 						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
 						config_out.write("type=command\n")
@@ -58,12 +57,15 @@ class Command:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == 'root':
+						io.write_header(self.command,output)
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 						output.write( proc.stdout.read() )
 				else:
+					io.write_header(self.command,output)
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 					output.write( proc.stdout.read() )
 		else:
+			io.write_header(self.command,output)
 			output.write('Use verbose option (-v) to print this command.\n')
 			
 		
@@ -88,12 +90,11 @@ class File:
 		if not (not verbosity and self.verb):
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
-				io.write_header(self.file,output)
 				if self.root:
 					if run_as == "user":
+						io.write_header(self.file,output)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
-						output.write("via su/sudo\n")
 						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
 						config_out.write("type=file\n")
@@ -103,6 +104,7 @@ class File:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == "root":
+						io.write_header(self.file,output)
 						if os.path.isfile(self.file):
 							fhandler= open(self.file,'r')
 							output.write( fhandler.read() )
@@ -110,6 +112,7 @@ class File:
 						else:
 							output.write("The file "+str(self.file)+ " does not exist!")
 				else:
+					io.write_header(self.file,output)
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
@@ -117,6 +120,7 @@ class File:
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!")
 		else:
+			io.write_header(self.file,output)
 			output.write('Use verbose option (-v) to print this file.\n')		
 
 
