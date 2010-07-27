@@ -228,6 +228,20 @@ Do you want to substitute user?"""))
 
 	for i in category_info:
 		i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
+		
+	#Use su or sudo to complete the report
+	#find the substitute user command and run the script	
+	if which.which('sudo') != None: #TODO checkme
+		print(_("Please, enter your user password."))
+		root_instance = ";" #TODO
+		os.system(root_instance)
+	elif which.which('su') != None:
+		print(_("Please, enter the root password."))
+		root_instance = ";" #TODO 
+		os.system(root_instance)
+	else:
+		print("Error: No substitute user command available.") #FIXME
+	
 
 	##check if categiry is correct
 	#if category in list_category:
