@@ -24,6 +24,8 @@ import getinfo
 import io
 import pastebin
 import which
+import readconf
+
 
 import os, sys, time, urllib, re, gettext, string, stat
 from subprocess import PIPE,Popen
@@ -93,82 +95,48 @@ def main(argv):
 	website = defaultPB
 	pastebin_choice=False
 
+
+
+# CONFIG FILE
+
+
+
+	from configobj import ConfigObj
+	from validate import Validator
+
+	filename="inforevealer.d/conf.conf"
+	spec_filename="inforevealer.d/validator.conf"
+
+	configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,
+	_inspec=True)
+	configfile = ConfigObj(filename, configspec=configspec)
+
+	val = Validator()
+	test = configfile.validate(val)
+	if test == True:
+		print 'Succeeded.'
+	else:
+		print 'failed' #TODO
+
+
+
+
+
+
+
 	###########
 	# FILES & COMMANDS
 	###########
 	#wiki.mandriva.com/en/Docs/Hardware
 
-	list_category={ 'disk': _("Volumes, sizes, UUID..."),
-			'cpu': _("All CPU info"),
-			'hardware': _("General hardware information which are not included in other items"),
-			'display': _("Xorg, monitor info..."),
-			'sound': _(""),
-			'bootloader': _('Everything on grub and partitions (include "disk")'),
-			'internet': _('Wifi, ethernet...'),
-			'package': _("List of reprositories...")
-			}
-
-# dmesg
-# /var/log/messages
-
-	disk = (getinfo.Command(["df","-h"]),
-		getinfo.Command(["fdisk", "-l"],root=True),
-		getinfo.File("/etc/fstab"),
-		getinfo.Command(["blkid"],root=True),
-		getinfo.Command(["udisks","--dump"],verb=True)
-		)
-
-	cpu = (getinfo.Command(["lscpu"],root=True),
-		getinfo.File("/proc/cpuinfo",root=True),
-		getinfo.Command(["cpufred-info"],root=True)
-		)
-
-	#temperature=(getinfo.Command(["sensors"]))
-
-	hardware = (
-		    getinfo.Command(["lsmod"],root=True), #hummm
-		    getinfo.Command(["lsusb"],root=True),
-		    getinfo.Command(["lspci","-v"],root=True),
-		    getinfo.Command(["lshal"],root=True,verb=True),
-		    getinfo.Command(["lshw"],root=True,verb=True)
-		    )
-
-	#lspci -vvv  Display  VGA
-	display = (getinfo.File("/etc/X11/xorg.conf"),
-			getinfo.File('/var/log/Xorg.0.log',root=True),
-			getinfo.Command("monitor-edid",root=True)
-			)
-
-
-	#lspci -vvv Audio
-	sound = (
-		 getinfo.Command(['aumix', '-q']), # Volume ?
-		 getinfo.Command(['/sbin/fuser', '-v', '/dev/dsp'],root=True) # what is in use ?
-		 )
-	
-	bootloader= (getinfo.File('/boot/grub/menu.lst',root=True),
-			getinfo.File("/etc/default/grub",root=True),
-			getinfo.File("/etc/lilo.conf",root=True),
-			)+ disk
-
-	#lspci
-	internet = (getinfo.Command(["ping","-c","1","www.kernel.org"]),
-		    getinfo.Command(["ifconfig"],root=True),
-		    getinfo.Command(["iwconfig"],root=True),
-		    getinfo.File("/etc/resolv.conf"),	
-		    getinfo.File("/etc/hosts")	
-	            )
-
-	package = (getinfo.File('/etc/urpmi/urpmi.cfg',linux='mandriva'),
-			getinfo.File('/etc/urpmi.skip.list',linux='mandriva'),
-			getinfo.File('/etc/yum.conf',linux='fedora'),
-			getinfo.File('/etc/yum.conf',linux='suse'),
-			getinfo.File('/etc/apt/preferences',linux='debian'),
-			getinfo.File('/etc/apt/source.list',linux='debian'))
+	list_category=readconf.LoadCategoryList(configfile)
 
 	#####################
 	# GETOPT
 	#####################
+	
+	print sys.argv
+	
 	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:pw:', ['help',
 								   'list',
 								   'category=',
@@ -199,7 +167,12 @@ def main(argv):
 			if not website.endswith("/"):
 				website += "/"
 
-	
+	#check if category is ok
+	if category in list_category:
+		pass
+	else:
+		usage()
+		sys.exit()
 
 	#####################
 	# Write in dumpfile
@@ -219,71 +192,107 @@ def main(argv):
 	print(header)
 	dumpfile_handler.write(header)	
 	dumpfile_handler.write('Category: '+ category)	
+
+	category_info = readconf.LoadCategoryInfo(configfile,category)
 	
-	#check if categiry is correct
-	if category in list_category:
-		linux_distrib=getinfo.General_info(dumpfile_handler)
-		user_uid = os.getuid()
-		run_as = "user"
-		if user_uid == 0:
-			print('Im root')
-			run_as="root"
-		else:
-			root_needed = False
-			#check if root is needed
-			for i in locals()[category]:
-				if i.root:
-					root_needed=True
-					break
-			if root_needed:
-				#do u want to substitute 
-				substitute=askYesNo(_("""To generate a complete report, root access is needed.
-Do you want to substitute user?"""))				
-				if substitute:
-					run_as="substitute"
-				else:
-					run_as="user"
+	#need/want to run commands as...
+	run_as='user'
+	if os.getuid() == 0:
+		#we are root
+		run_as='root'
+	else:
+		#check if root is needed
+		root_needed=False
+		for i in category_info:
+			if i.root:
+				root_needed=True
+				break
+		if root_needed:
+			#ask if the user want to substitute
+			substitute=askYesNo(_("""To generate a complete report, root access is needed.
+Do you want to substitute user?"""))
+			if substitute:
+				run_as="substitute"
 			else:
 				run_as="user"
-		if run_as != "substitute":	
-			for i in locals()[category]:
-				i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
 		else:
-			scriptfile='/tmp/script_inforevealer.py'
-			script_handler= open(scriptfile,'w')
-			#write the script file header #TODO
-			script_handler.write('''#!/usr/bin/python
-''')
-			for i in locals()[category]:
-				i.write(linux_distrib,verbosity,dumpfile_handler,run_as,script_handler)
-			#write the script file footer #TODO
+			run_as='user'
+	
+	# In the case of run_as='substitute'
+	# a configuration file is generated
+	# su/sudo is used to run a new instance of inforevealer in append mode
+	# to complete the report
+	
+	#detect which distribution the user uses
+	linux_distrib=getinfo.General_info(dumpfile_handler)
+
+	for i in category_info:
+		i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
+
+	##check if categiry is correct
+	#if category in list_category:
+		#linux_distrib=getinfo.General_info(dumpfile_handler)
+		#user_uid = os.getuid()
+		#run_as = "user"
+		#if user_uid == 0:
+			#print('Im root')
+			#run_as="root"
+		#else:
+			#root_needed = False
+			##check if root is needed
+			#for i in locals()[category]:
+				#if i.root:
+					#root_needed=True
+					#break
+			#if root_needed:
+				##do u want to substitute 
+				#substitute=askYesNo(_("""To generate a complete report, root access is needed.
+#Do you want to substitute user?"""))				
+				#if substitute:
+					#run_as="substitute"
+				#else:
+					#run_as="user"
+			#else:
+				#run_as="user"
+		#if run_as != "substitute":	
+			#for i in locals()[category]:
+				#i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
+		#else:
+			#scriptfile='/tmp/script_inforevealer.py'
+			#script_handler= open(scriptfile,'w')
+			##write the script file header #TODO
+			#script_handler.write('''#!/usr/bin/python
+#''')
+			#for i in locals()[category]:
+				#i.write(linux_distrib,verbosity,dumpfile_handler,run_as,script_handler)
+			##write the script file footer #TODO
 
 
-			script_handler.close()
+			#script_handler.close()
 			
-			#find the substitute user command and run the script
-			if which.which('sudo') != None: #TODO checkme
-				print(_("Please, enter the root password."))
-				command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('sudo')) +' "python ' + str(scriptfile)+ '"' 
-				os.system(command)
-			elif which.which('su') != None:
-				print(_("Please, enter the root password."))
-				command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('su')) +' - -c "python ' + str(scriptfile)+ '"' 
-				os.system(command)
-			else:
-				print("Error: No substitute user command available.")
+			##find the substitute user command and run the script
+			#if which.which('sudo') != None: #TODO checkme
+				#print(_("Please, enter the root password."))
+				#command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('sudo')) +' "python ' + str(scriptfile)+ '"' 
+				#os.system(command)
+			#elif which.which('su') != None:
+				#print(_("Please, enter the root password."))
+				#command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('su')) +' - -c "python ' + str(scriptfile)+ '"' 
+				#os.system(command)
+			#else:
+				#print("Error: No substitute user command available.")
 
-			#Mr proper
-			os.remove(scriptfile)
+			##Mr proper
+			#os.remove(scriptfile)
 
-		#dumpfile footer + close it
-		io.write_header(_("You didn\'t find what you expected?"),dumpfile_handler)
-		dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
-	else:
-		print(_('Error: Wrong category'))
-		usage()
-		list(list_category)
-		sys.exit()
+		##dumpfile footer + close it
+		#io.write_header(_("You didn\'t find what you expected?"),dumpfile_handler)
+		#dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
+	#else:
+		#print(_('Error: Wrong category'))
+		#usage()
+		#list(list_category)
+		#sys.exit()
 
 	dumpfile_handler.close()
 	print( _("The output has been dumped in ")+dumpfile)
