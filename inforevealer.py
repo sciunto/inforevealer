@@ -95,17 +95,19 @@ def main(argv):
 	website = defaultPB
 	pastebin_choice=False
 
+	filename="inforevealer.d/categories.conf"
+	spec_filename="inforevealer.d/validator.conf"
 
 
-# CONFIG FILE
+	###########
+	# FILES & COMMANDS
+	###########
 
 
 
 	from configobj import ConfigObj
 	from validate import Validator
 
-	filename="inforevealer.d/categories.conf"
-	spec_filename="inforevealer.d/validator.conf"
 
 	configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,
 	_inspec=True)
@@ -114,9 +116,10 @@ def main(argv):
 	val = Validator()
 	test = configfile.validate(val)
 	if test == True:
-		print 'Succeeded.'
+		pass
 	else:
-		print 'failed' #TODO
+		print(_("Error: the configuration file %s is not valid. See %s for a template.") % (filename,spec_filename))  
+		sys.exit()
 
 
 
@@ -124,9 +127,6 @@ def main(argv):
 
 
 
-	###########
-	# FILES & COMMANDS
-	###########
 	#wiki.mandriva.com/en/Docs/Hardware
 
 	list_category=readconf.LoadCategoryList(configfile)
