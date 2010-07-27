@@ -240,7 +240,7 @@ def main(argv):
 '''
 	print(header)
 	dumpfile_handler.write(header)	
-	dumpfile_handler.write('Category: '+ category)	
+	dumpfile_handler.write('Category: '+ category+'\n')	
 
 	category_info = readconf.LoadCategoryInfo(configfile,category)
 	
