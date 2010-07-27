@@ -36,7 +36,7 @@ class Command:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific os?
 
-	def write(self,user_os,verbosity,output,run_as="user",config_out=None):
+	def write(self,user_os,verbosity,output,output_path,run_as="user",config_out=None):
 		io.write_header(self.command,output)
 			# the following condition is equivalent to
 			# if user asks verbosity, then print all
@@ -56,6 +56,7 @@ class Command:
 						config_out.write("exec="+' '.join(self.command) +"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
+						config_out.write("dumpfile="+str(output_path)+"\n")
 						#TODO
 				else:
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
@@ -75,7 +76,7 @@ class File:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 
-	def write(self,user_os,verbosity,output,run_as="user",config_out=None):
+	def write(self,user_os,verbosity,output,output_path,run_as="user",config_out=None):
 		import os
 		#import pdb; pdb.set_trace()
 
@@ -99,6 +100,7 @@ class File:
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
+						config_out.write("dumpfile="+str(output_path)+"\n")
 				else:
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')

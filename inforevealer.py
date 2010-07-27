@@ -214,6 +214,22 @@ def main(argv):
 	#First to do: runfile (internal use)
 	if runfile != None:
 		#TODO
+		configfile = ConfigObj(tmp_configfile)
+		for section in configfile.sections:
+			descr=config[section]['description']
+			e_type=config[section]['type']
+			execu=config[section]['exec']
+			root=config[section]['root']
+			verb=config[section]['verbose']
+			linux=config[section]['linux_distribution']
+			dumpfile=config[section]['dumpfile']
+                	if e_type == 'command':
+		               com=getinfo.Command(subsection,execu.split(" "),root,verb,linux)
+			elif e_type == 'file':
+	                       com=getinfo.File(subsection,execu,root,verb,linux)
+			dumpfile_handler= open(dumpfile,'a')
+			com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
+			dumpfile_handler.close()
 		sys.exit()
 	#check if category is ok
 	elif category in list_category:
@@ -257,7 +273,7 @@ def main(argv):
 
 	tmp_configfile_handler= open(tmp_configfile,'w')
 	for i in category_info:
-		i.write(linux_distrib,verbosity,dumpfile_handler,run_as,tmp_configfile_handler)
+		i.write(linux_distrib,verbosity,dumpfile_handler,dumpfile,run_as,tmp_configfile_handler)
 	tmp_configfile_handler.close()
 		
 	#Use su or sudo to complete the report
