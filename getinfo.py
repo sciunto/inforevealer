@@ -48,7 +48,6 @@ class Command:
 					if run_as == "user":
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
-						print ("dump in file")
 						output.write("via su/sudo\n")
 						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
@@ -56,8 +55,11 @@ class Command:
 						config_out.write("exec="+' '.join(self.command) +"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
+						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
-						#TODO
+					elif run_as == 'root':
+						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
+						output.write( proc.stdout.read() )
 				else:
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 					output.write( proc.stdout.read() )
@@ -91,7 +93,6 @@ class File:
 					if run_as == "user":
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
-						print ("dump in file")
 						output.write("via su/sudo\n")
 						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
@@ -101,6 +102,13 @@ class File:
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
+					elif run_as == "root":
+						if os.path.isfile(self.file):
+							fhandler= open(self.file,'r')
+							output.write( fhandler.read() )
+							fhandler.close()
+						else:
+							output.write("The file "+str(self.file)+ " does not exist!")
 				else:
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')

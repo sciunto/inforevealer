@@ -101,7 +101,7 @@ Do you want to substitute user?"""))
 	return run_as
 
 
-def CompleteReportRoot(run_as):
+def CompleteReportRoot(run_as,tmp_configfile):
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
 		if which.which('sudo') != None: #TODO checkme
@@ -110,7 +110,7 @@ def CompleteReportRoot(run_as):
 			os.system(root_instance)
 		elif which.which('su') != None:
 			print(_("Please, enter the root password."))
-			root_instance = ";" #TODO 
+			root_instance = str(which.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
 			os.system(root_instance)
 		else:
 			print("Error: No substitute user command available.") #FIXME
@@ -176,8 +176,6 @@ def main(argv):
 	# GETOPT
 	#####################
 	
-	print sys.argv
-	
 	options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:pw:', ['help',
 								   'list',
 								   'category=',
@@ -213,20 +211,19 @@ def main(argv):
 
 	#First to do: runfile (internal use)
 	if runfile != None:
-		#TODO
-		configfile = ConfigObj(tmp_configfile)
-		for section in configfile.sections:
-			descr=config[section]['description']
+		config = ConfigObj(tmp_configfile)
+		for section in config.sections:
+			descr=config[section]['descr']
 			e_type=config[section]['type']
 			execu=config[section]['exec']
 			root=config[section]['root']
-			verb=config[section]['verbose']
+			verb=config[section]['verb']
 			linux=config[section]['linux_distribution']
 			dumpfile=config[section]['dumpfile']
                 	if e_type == 'command':
-		               com=getinfo.Command(subsection,execu.split(" "),root,verb,linux)
+		               com=getinfo.Command(section,execu.split(" "),root,verb,linux)
 			elif e_type == 'file':
-	                       com=getinfo.File(subsection,execu,root,verb,linux)
+	                       com=getinfo.File(section,execu,root,verb,linux)
 			dumpfile_handler= open(dumpfile,'a')
 			com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
 			dumpfile_handler.close()
@@ -238,7 +235,6 @@ def main(argv):
 		print(_('Error: Wrong category'))
 		usage()
 		sys.exit()
-
 	#####################
 	# Write in dumpfile
 	#####################
@@ -278,10 +274,10 @@ def main(argv):
 		
 	#Use su or sudo to complete the report
 
-	CompleteReportRoot(run_as)
-
-
 	dumpfile_handler.close()
+	CompleteReportRoot(run_as,tmp_configfile)
+
+	#TODO add message close report
 	print( _("The output has been dumped in ")+dumpfile)
 
 	
