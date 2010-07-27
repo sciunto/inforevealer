@@ -23,6 +23,8 @@ import os
 import subprocess
 import time
 
+import gettext
+_ = gettext.gettext
 
 
 class Command:
@@ -41,17 +43,22 @@ class Command:
 		if not (not verbosity and self.verb):
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
-				if self.root and run_as == "user":
-					output.write("To get this, run the script as root\n")
-				elif self.root and run_as == "substitute":
-					print ("dump in file")
-					output.write("via su/sudo\n")
-					#TODO
-				else: #we are root or no root proviledge needed
+				if self.root:
+					if run_as == "user":
+						output.write("To get this, run the script as root\n")
+					elif run_as == "substitute":
+						print ("dump in file")
+						output.write("via su/sudo\n")
+						#TODO
+				else:
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 					output.write( proc.stdout.read() )
 		else:
 			output.write('Use verbose option (-v) to print this command.\n')
+			
+		
+			
+	
 class File:
 	"get a file"
 	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
@@ -71,13 +78,14 @@ class File:
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				io.write_header(self.file,output)
-				#if(not os.getuid() == 0 and self.root):
-				if self.root and run_as == "user":
-					output.write("To get this, run the script as root\n")
-				elif self.root and run_as == "substitute":
-					print ("dump in file")
-					#TODO
-				else: #we are root or no root proviledge needed
+				if self.root:
+					if run_as == "user":
+						output.write("To get this, run the script as root\n")
+					elif run_as == "substitute":
+						print ("dump in file")
+						output.write("via su/sudo\n")
+						#TODO
+				else:
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
@@ -85,14 +93,7 @@ class File:
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!")
 		else:
-			output.write('Use verbose option (-v) to print this file.\n')
-			
-			
-			
-			
-			
-			
-			
+			output.write('Use verbose option (-v) to print this file.\n')		
 
 
 def General_info(output):
@@ -104,8 +105,6 @@ def General_info(output):
 
 	uname = subprocess.Popen(args=["uname","-a"],stdout=subprocess.PIPE).communicate()[0]
 	output.write("uname: "+str(uname)+"\n")
-
-
 
 	# detect linux distribution
 	if(os.path.isfile("/etc/fedora-release")):
@@ -140,7 +139,7 @@ def General_info(output):
 		output.write(foo)
 	else:
 		myos='unknown'
-		output.write('Your distribution is unknown. Please, open a bug report with the command ls /etc.')
+		output.write(_('Your distribution is unknown. Please, open a bug report with the command output ls /etc'))
 	return myos
 
 
