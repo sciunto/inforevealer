@@ -49,6 +49,12 @@ class Command:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
+						output.write("[title]\n")
+						output.write("descr=\n")
+						output.write("type=command\n")
+						output.write("exec="+' '.join(self.command) +"\n")
+						output.write("root="+str(self.root)+"\n")
+						output.write("verb="+str(self.verb)+"\n")
 						#TODO
 				else:
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
@@ -84,7 +90,13 @@ class File:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
-						#TODO
+						output.write("[title]\n")
+						output.write("descr=\n")
+						output.write("type=file\n")
+						output.write("exec="+str(self.file)+"\n")
+						output.write("root="+str(self.root)+"\n")
+						output.write("verb="+str(self.verb)+"\n")
+						output.write("linux_distribution="+str(self.linux_dependant)+"\n")
 				else:
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
