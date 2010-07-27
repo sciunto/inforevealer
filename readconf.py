@@ -27,25 +27,24 @@ import getinfo
 def LoadCategoryList(config):
 	list_category=dict()
 	for section in config.sections:
-		list_category[section]=config[section]['descr'] 
+		list_category[section]=config[section]['description'] 
 	return list_category
 
 #Load info on a category
 def LoadCategoryInfo(config,category):
 	ret_list = list()
 	for subsection in config[category].sections:
-		print subsection
-		descr=config[category][subsection]['descr']
+		descr=config[category][subsection]['description']
 		e_type=config[category][subsection]['type']
 		execu=config[category][subsection]['exec']
 		root=config[category][subsection]['root']
-		verb=config[category][subsection]['verb']
-		#linux=config[category][subsection]['linux']
+		verb=config[category][subsection]['verbose']
+		linux=config[category][subsection]['distribution']
 
 		if e_type == 'command':	
-			ret_list.append(getinfo.Command(execu.split(" "),root,verb))
+			ret_list.append(getinfo.Command(execu.split(" "),root,verb,linux))
 		elif e_type == 'file':
-			ret_list.append(getinfo.File(execu,root,verb))
+			ret_list.append(getinfo.File(execu,root,verb,linux))
 		#could not be something else thanks to the config check
 	return ret_list
 
