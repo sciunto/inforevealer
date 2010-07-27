@@ -45,7 +45,7 @@ def LoadCategoryInfo(config,category):
 		if e_type == 'command':	
 			ret_list.append(getinfo.Command(execu.split(" "),root,verb))
 		elif e_type == 'file':
-			ret_list.append(getinfo.File(execu.split(" "),root,verb))
+			ret_list.append(getinfo.File(execu,root,verb))
 		#could not be something else thanks to the config check
 	return ret_list
 
