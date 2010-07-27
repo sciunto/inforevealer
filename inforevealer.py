@@ -171,6 +171,7 @@ def main(argv):
 	if category in list_category:
 		pass
 	else:
+		print(_('Error: Wrong category'))
 		usage()
 		sys.exit()
 
@@ -242,71 +243,6 @@ Do you want to substitute user?"""))
 	else:
 		print("Error: No substitute user command available.") #FIXME
 	
-
-	##check if categiry is correct
-	#if category in list_category:
-		#linux_distrib=getinfo.General_info(dumpfile_handler)
-		#user_uid = os.getuid()
-		#run_as = "user"
-		#if user_uid == 0:
-			#print('Im root')
-			#run_as="root"
-		#else:
-			#root_needed = False
-			##check if root is needed
-			#for i in locals()[category]:
-				#if i.root:
-					#root_needed=True
-					#break
-			#if root_needed:
-				##do u want to substitute 
-				#substitute=askYesNo(_("""To generate a complete report, root access is needed.
-#Do you want to substitute user?"""))				
-				#if substitute:
-					#run_as="substitute"
-				#else:
-					#run_as="user"
-			#else:
-				#run_as="user"
-		#if run_as != "substitute":	
-			#for i in locals()[category]:
-				#i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
-		#else:
-			#scriptfile='/tmp/script_inforevealer.py'
-			#script_handler= open(scriptfile,'w')
-			##write the script file header #TODO
-			#script_handler.write('''#!/usr/bin/python
-#''')
-			#for i in locals()[category]:
-				#i.write(linux_distrib,verbosity,dumpfile_handler,run_as,script_handler)
-			##write the script file footer #TODO
-
-
-			#script_handler.close()
-			
-			##find the substitute user command and run the script
-			#if which.which('sudo') != None: #TODO checkme
-				#print(_("Please, enter the root password."))
-				#command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('sudo')) +' "python ' + str(scriptfile)+ '"' 
-				#os.system(command)
-			#elif which.which('su') != None:
-				#print(_("Please, enter the root password."))
-				#command = 'chmod 760 '+ str(scriptfile)+ ";"+ str(which.which('su')) +' - -c "python ' + str(scriptfile)+ '"' 
-				#os.system(command)
-			#else:
-				#print("Error: No substitute user command available.")
-
-			##Mr proper
-			#os.remove(scriptfile)
-
-		##dumpfile footer + close it
-		#io.write_header(_("You didn\'t find what you expected?"),dumpfile_handler)
-		#dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
-	#else:
-		#print(_('Error: Wrong category'))
-		#usage()
-		#list(list_category)
-		#sys.exit()
 
 	dumpfile_handler.close()
 	print( _("The output has been dumped in ")+dumpfile)
