@@ -90,6 +90,7 @@ def main(argv):
 	dumpfile='/tmp/inforevealer'
 	verbosity=False
 	category=""
+	runfile=None #only for internal use
 
 	defaultPB = "http://pastebin.com" #Default pastebin
 	website = defaultPB
@@ -143,7 +144,8 @@ def main(argv):
 								   'verbose',
 								   'file=',
 								   'pastebin',
-								   'website'
+								   'website',
+								   'runfile='
 								 ])
 								 
 
@@ -166,9 +168,14 @@ def main(argv):
 			website=arg
 			if not website.endswith("/"):
 				website += "/"
+		elif opt in ('--runfile'):
+			runfile=arg
 
+	#First to do: runfile (internal use)
+	if runfile != None:
+		pass #TODO
 	#check if category is ok
-	if category in list_category:
+	elif category in list_category:
 		pass
 	else:
 		print(_('Error: Wrong category'))
