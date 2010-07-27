@@ -29,7 +29,8 @@ _ = gettext.gettext
 
 class Command:
 	"get a command output"
-	def __init__(self, com, root=False,verb=False,linux=None):
+	def __init__(self, category, com, root=False,verb=False,linux=None):
+		self.category=category
 		self.command=com
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
@@ -49,7 +50,7 @@ class Command:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
-						config_out.write("[title]\n")
+						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
 						config_out.write("type=command\n")
 						config_out.write("exec="+' '.join(self.command) +"\n")
@@ -67,7 +68,8 @@ class Command:
 	
 class File:
 	"get a file"
-	def __init__(self, file="/dev/null", root=False,verb=False,linux=None):
+	def __init__(self, category, file, root=False,verb=False,linux=None):
+		self.category=category
 		self.file=file
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
@@ -90,7 +92,7 @@ class File:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
-						config_out.write("[title]\n")
+						config_out.write("["+self.category+"]\n")
 						config_out.write("descr=\n")
 						config_out.write("type=file\n")
 						config_out.write("exec="+str(self.file)+"\n")
