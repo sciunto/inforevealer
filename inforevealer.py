@@ -104,7 +104,7 @@ def main(argv):
 	from configobj import ConfigObj
 	from validate import Validator
 
-	filename="inforevealer.d/conf.conf"
+	filename="inforevealer.d/categories.conf"
 	spec_filename="inforevealer.d/validator.conf"
 
 	configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,
