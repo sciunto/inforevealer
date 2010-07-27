@@ -138,7 +138,7 @@ def main(argv):
 
 	filename="inforevealer.d/categories.conf"
 	spec_filename="inforevealer.d/validator.conf"
-
+	tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 
 	###########
 	# FILES & COMMANDS
@@ -255,8 +255,10 @@ def main(argv):
 	# su/sudo is used to run a new instance of inforevealer in append mode
 	# to complete the report
 
+	tmp_configfile_handler= open(tmp_configfile,'w')
 	for i in category_info:
-		i.write(linux_distrib,verbosity,dumpfile_handler,run_as)
+		i.write(linux_distrib,verbosity,dumpfile_handler,run_as,tmp_configfile_handler)
+	tmp_configfile_handler.close()
 		
 	#Use su or sudo to complete the report
 

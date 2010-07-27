@@ -35,7 +35,7 @@ class Command:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific os?
 
-	def write(self,user_os,verbosity,output,run_as="user",script=None):
+	def write(self,user_os,verbosity,output,run_as="user",config_out=None):
 		io.write_header(self.command,output)
 			# the following condition is equivalent to
 			# if user asks verbosity, then print all
@@ -49,12 +49,12 @@ class Command:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
-						output.write("[title]\n")
-						output.write("descr=\n")
-						output.write("type=command\n")
-						output.write("exec="+' '.join(self.command) +"\n")
-						output.write("root="+str(self.root)+"\n")
-						output.write("verb="+str(self.verb)+"\n")
+						config_out.write("[title]\n")
+						config_out.write("descr=\n")
+						config_out.write("type=command\n")
+						config_out.write("exec="+' '.join(self.command) +"\n")
+						config_out.write("root="+str(self.root)+"\n")
+						config_out.write("verb="+str(self.verb)+"\n")
 						#TODO
 				else:
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
@@ -73,7 +73,7 @@ class File:
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 
-	def write(self,user_os,verbosity,output,run_as="user",script=None):
+	def write(self,user_os,verbosity,output,run_as="user",config_out=None):
 		import os
 		#import pdb; pdb.set_trace()
 
@@ -90,13 +90,13 @@ class File:
 					elif run_as == "substitute":
 						print ("dump in file")
 						output.write("via su/sudo\n")
-						output.write("[title]\n")
-						output.write("descr=\n")
-						output.write("type=file\n")
-						output.write("exec="+str(self.file)+"\n")
-						output.write("root="+str(self.root)+"\n")
-						output.write("verb="+str(self.verb)+"\n")
-						output.write("linux_distribution="+str(self.linux_dependant)+"\n")
+						config_out.write("[title]\n")
+						config_out.write("descr=\n")
+						config_out.write("type=file\n")
+						config_out.write("exec="+str(self.file)+"\n")
+						config_out.write("root="+str(self.root)+"\n")
+						config_out.write("verb="+str(self.verb)+"\n")
+						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 				else:
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
