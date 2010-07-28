@@ -42,9 +42,9 @@ def preloadPastebins():
     #  - for source checkout, config in the checkout
     #  - user's overrides in ~/.pastebin.d
     # Files found later override files found earlier.
-    for confdir in ['/etc/pastebin.d',
-		    os.path.join(os.path.dirname(__file__), 'pastebin.d'),
-		    os.path.expanduser('~/.pastebin.d')]:
+    for confdir in ['/etc/inforevealer.d/pastebin',
+		    os.path.join(os.path.dirname(__file__), 'inforevealer.d/pastebin'),
+		    os.path.expanduser('~/.inforevealer.d/pastebin')]:
 	try:
 	    confdirlist = os.listdir(confdir)
 	except OSError:
