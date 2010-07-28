@@ -273,11 +273,16 @@ def main(argv):
 	tmp_configfile_handler.close()
 		
 	#Use su or sudo to complete the report
-
-	dumpfile_handler.close()
+	dumpfile_handler.close() #the next function will modify the report, close the dumpfile
 	CompleteReportRoot(run_as,tmp_configfile)
 
-	#TODO add message close report
+
+	# Message to close the report
+	dumpfile_handler= open(dumpfile,'a')
+	io.write_header(_("You didn\'t find what you expected?"),dumpfile_handler)
+        dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
+	dumpfile_handler.close()
+
 	print( _("The output has been dumped in ")+dumpfile)
 
 	
