@@ -141,6 +141,12 @@ def General_info(output):
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
+	elif(os.path.isfile("/etc/arch-release")):
+		myos='archlinux'
+		fhandler=open("/etc/arch-release")
+		foo=fhandler.read()
+		fhandler.close()
+		output.write(foo)
 	elif(os.path.isfile("/etc/SuSe-release")):
 		myos='suse'
 		fhandler=open("/etc/SuSe-release")
