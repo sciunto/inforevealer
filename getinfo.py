@@ -22,6 +22,8 @@ import io
 import os
 import subprocess
 import time
+import which
+
 
 import gettext
 _ = gettext.gettext
@@ -43,27 +45,32 @@ class Command:
 		if not (not verbosity and self.verb):
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
-				if self.root:
-					if run_as == "user":
+				path_command=which.findPath(self.command[0])
+				if path_command != None:	
+					if self.root:
+						if run_as == "user":
+							io.write_title(self.command,output)
+							output.write("To get this, run the script as root\n")
+						elif run_as == "substitute":
+							config_out.write("["+self.category+"]\n")
+							config_out.write("descr=\n")
+							config_out.write("type=command\n")
+							config_out.write("exec="+' '.join(path_command) +"\n")
+							config_out.write("root="+str(self.root)+"\n")
+							config_out.write("verb="+str(self.verb)+"\n")
+							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
+							config_out.write("dumpfile="+str(output_path)+"\n")
+						elif run_as == 'root':
+							io.write_title(self.command,output)
+							proc = subprocess.Popen(path_command,stdout=subprocess.PIPE)
+							output.write( proc.stdout.read() )
+					else:
 						io.write_title(self.command,output)
-						output.write("To get this, run the script as root\n")
-					elif run_as == "substitute":
-						config_out.write("["+self.category+"]\n")
-						config_out.write("descr=\n")
-						config_out.write("type=command\n")
-						config_out.write("exec="+' '.join(self.command) +"\n")
-						config_out.write("root="+str(self.root)+"\n")
-						config_out.write("verb="+str(self.verb)+"\n")
-						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
-						config_out.write("dumpfile="+str(output_path)+"\n")
-					elif run_as == 'root':
-						io.write_title(self.command,output)
-						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
+						proc = subprocess.Popen(path_command,stdout=subprocess.PIPE)
 						output.write( proc.stdout.read() )
 				else:
 					io.write_title(self.command,output)
-					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-					output.write( proc.stdout.read() )
+					output.write(_("%s not found! \n") %self.command[0])
 		else:
 			io.write_title(self.command,output)
 			output.write('Use verbose option (-v) to print this command.\n')
