@@ -27,7 +27,7 @@ import which
 import readconf
 
 
-import os, sys, time, urllib, re, gettext, string, stat
+import os, sys, time, urllib, re, gettext, string, stat,configobj
 from subprocess import PIPE,Popen
 
 import string
@@ -164,7 +164,6 @@ def main(argv):
 
 
 
-		from configobj import ConfigObj
 		from validate import Validator
 
 
