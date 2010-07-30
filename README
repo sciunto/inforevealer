@@ -16,7 +16,12 @@ Description
 The goal of this software is to provide easily a check-up of useful commands, logfiles or configuration files through categories. This check-up might be used by people who experiences some troubles on Linux on forums, IRC, jabber... Thus, contributors could identify quickly problems thanks to relevant information. 
 
 
+##################################################
+Install
+##################################################
 
+The inforevealer.d/ directory should be in the current path or in /etc/
+Run ./inforevealer.py
 
 ##################################################
 Acknowledgments
