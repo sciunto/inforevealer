@@ -3,6 +3,7 @@ RELEASE
 
 new features:
 	* add configuration files
+	* switch to root if needed and desired
 
 ################
 VERSION 0.1 
