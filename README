@@ -17,6 +17,12 @@ The goal of this software is to provide easily a check-up of useful commands, lo
 
 
 ##################################################
+Dependances
+##################################################
+
+* python-configobj
+
+##################################################
 Install
 ##################################################
 
