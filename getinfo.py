@@ -110,7 +110,7 @@ class File:
 							output.write( fhandler.read() )
 							fhandler.close()
 						else:
-							output.write("The file "+str(self.file)+ " does not exist!")
+							output.write("The file "+str(self.file)+ " does not exist!\n")
 				else:
 					io.write_title(self.file,output)
 					if os.path.isfile(self.file):
@@ -118,7 +118,7 @@ class File:
 						output.write( fhandler.read() )
 						fhandler.close()
 					else:
-						output.write("The file "+str(self.file)+ " does not exist!")
+						output.write("The file "+str(self.file)+ " does not exist!\n")
 		else:
 			io.write_title(self.file,output)
 			output.write('Use verbose option (-v) to print this file.\n')		

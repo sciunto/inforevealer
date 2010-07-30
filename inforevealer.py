@@ -292,7 +292,7 @@ def main(argv):
 			# Message to close the report
 			dumpfile_handler= open(dumpfile,'a')
 			io.write_title(_("You didn\'t find what you expected?"),dumpfile_handler)
-			dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
+			dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer\n'))
 			dumpfile_handler.close()
 
 			print( _("The output has been dumped in ")+dumpfile)
