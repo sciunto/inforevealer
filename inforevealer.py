@@ -177,8 +177,8 @@ def main(argv):
 		#####################
 		# GETOPT
 		#####################
-		
-		options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:pw:', ['help',
+		try:	
+			options, remainder = getopt.gnu_getopt(sys.argv[1:], 'hlc:vf:pw:', ['help',
 									   'list',
 									   'category=',
 									   'verbose',
@@ -188,8 +188,11 @@ def main(argv):
 									   'runfile='
 									 ])
 									 
+		except getopt.GetoptError:
+			sys.stderr.write(_("Invalid arguments."))
+			usage()
+			sys.exit(1)
 
-		#FIXME throw an exeception when options have no value
 		for opt, arg in options:
 			if opt in ('-h', '--help'):
 				usage()
