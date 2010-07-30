@@ -20,7 +20,7 @@ The goal of this software is to provide easily a check-up of useful commands, lo
 Dependances
 ##################################################
 
-* python-configobj
+* python-configobj 4.6.0 or greater
 
 ##################################################
 Install
