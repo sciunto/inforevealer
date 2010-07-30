@@ -45,7 +45,7 @@ class Command:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_header(self.command,output)
+						io.write_title(self.command,output)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -57,15 +57,15 @@ class Command:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == 'root':
-						io.write_header(self.command,output)
+						io.write_title(self.command,output)
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 						output.write( proc.stdout.read() )
 				else:
-					io.write_header(self.command,output)
+					io.write_title(self.command,output)
 					proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 					output.write( proc.stdout.read() )
 		else:
-			io.write_header(self.command,output)
+			io.write_title(self.command,output)
 			output.write('Use verbose option (-v) to print this command.\n')
 			
 		
@@ -92,7 +92,7 @@ class File:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_header(self.file,output)
+						io.write_title(self.file,output)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -104,7 +104,7 @@ class File:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == "root":
-						io.write_header(self.file,output)
+						io.write_title(self.file,output)
 						if os.path.isfile(self.file):
 							fhandler= open(self.file,'r')
 							output.write( fhandler.read() )
@@ -112,7 +112,7 @@ class File:
 						else:
 							output.write("The file "+str(self.file)+ " does not exist!")
 				else:
-					io.write_header(self.file,output)
+					io.write_title(self.file,output)
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
@@ -120,13 +120,13 @@ class File:
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!")
 		else:
-			io.write_header(self.file,output)
+			io.write_title(self.file,output)
 			output.write('Use verbose option (-v) to print this file.\n')		
 
 
 def General_info(output):
 
-	io.write_header('General information',output)
+	io.write_title('General information',output)
 
 	mytime = time.gmtime()
 	output.write("date: "+ str(mytime[0])+"-"+str(mytime[1])+"-"+str(mytime[2])+" "+str(mytime[3])+ ":"+str(mytime[4])+"\n")
