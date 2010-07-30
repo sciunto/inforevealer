@@ -107,7 +107,7 @@ def CompleteReportRoot(run_as,tmp_configfile):
 		#find the substitute user command and run the script	
 		if which.which('sudo') != None: #TODO checkme
 			print(_("Please, enter your user password."))
-			root_instance = str(which.which('sudo')) + os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile
+			root_instance = str(which.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
 			os.system(root_instance)
 		elif which.which('su') != None:
 			print(_("Please, enter the root password."))
