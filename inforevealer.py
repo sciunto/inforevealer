@@ -102,6 +102,7 @@ Do you want to substitute user?"""))
 
 
 def CompleteReportRoot(run_as,tmp_configfile):
+	"""Run a new instance of inforevealer with root priviledge to complete tmp_configfile"""
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
 		if which.which('sudo') != None: #TODO checkme
@@ -113,7 +114,7 @@ def CompleteReportRoot(run_as,tmp_configfile):
 			root_instance = str(which.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
 			os.system(root_instance)
 		else:
-			sys.stderr.write("Error: No substitute user command available.")
+			sys.stderr.write(_("Error: No substitute user command available.\n"))
 		
 
 
@@ -131,7 +132,7 @@ def main(argv):
 		dumpfile='/tmp/inforevealer'
 		verbosity=False
 		category=""
-		runfile=None #only for internal use
+		runfile=None #option only for internal use, see above
 
 		defaultPB = "http://pastebin.com" #Default pastebin
 		website = defaultPB
@@ -167,27 +168,27 @@ def main(argv):
 		from validate import Validator
 
 
-		configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,
-		_inspec=True)
-		configfile = ConfigObj(filename, configspec=configspec)
+		try:
+			configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,_inspec=True)
+		except configobj.ConfigObjError, e:
+			sys.stderr.write('%s: %s' % (filename, e))
+			sys.exit(1)
 
-		val = Validator()
-		test = configfile.validate(val)
-		if test == True:
-			pass
+		try:
+			configfile = ConfigObj(filename, configspec=configspec)
+		except configobj.ConfigObjError, e:
+			sys.stderr.write('%s: %s' % (filename, e))
+			sys.exit(1)
+		#check if configfile respects specs
+		if configfile.validate(Validator()):
+			list_category=readconf.LoadCategoryList(configfile)
 		else:
 			sys.stderr.write(_("Error: the configuration file %s is not valid.\nSee %s for a template.\n") % (filename,spec_filename))  
-			sys.exit()
+			sys.exit(1)
 
 
 
 
-
-
-
-		#wiki.mandriva.com/en/Docs/Hardware
-
-		list_category=readconf.LoadCategoryList(configfile)
 
 		#####################
 		# GETOPT
