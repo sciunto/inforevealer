@@ -113,7 +113,7 @@ def CompleteReportRoot(run_as,tmp_configfile):
 			root_instance = str(which.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
 			os.system(root_instance)
 		else:
-			print("Error: No substitute user command available.") #FIXME
+			sys.stderr.write("Error: No substitute user command available.")
 		
 
 
@@ -137,6 +137,7 @@ def main(argv):
 		website = defaultPB
 		pastebin_choice=False
 
+		#TODO look for them in differents directories
 		filename="inforevealer.d/categories.conf"
 		spec_filename="inforevealer.d/validator.conf"
 		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
@@ -160,7 +161,7 @@ def main(argv):
 		if test == True:
 			pass
 		else:
-			print(_("Error: the configuration file %s is not valid. See %s for a template.") % (filename,spec_filename))  
+			sys.stderr.write(_("Error: the configuration file %s is not valid.\nSee %s for a template.\n") % (filename,spec_filename))  
 			sys.exit()
 
 
@@ -188,6 +189,7 @@ def main(argv):
 									 ])
 									 
 
+		#FIXME throw an exeception when options have no value
 		for opt, arg in options:
 			if opt in ('-h', '--help'):
 				usage()
@@ -233,7 +235,7 @@ def main(argv):
 		elif category in list_category:
 			pass
 		else:
-			print(_('Error: Wrong category'))
+			sys.stderr.write(_('Error: Wrong category'))
 			usage()
 			sys.exit()
 		#####################
@@ -333,7 +335,7 @@ def main(argv):
 					else:
 						pastelink = website + re.split(reLink, page.read())[1] #Print the result of the Regexp
 				else:
-					pastelink = page.url #Get the final page and show the ur
+					pastelink = page.url #Get the final page and show the url
 				print(_("Pastebin link: ")+pastelink+"\n")
 			except KeyboardInterrupt:
 				sys.exit(_("KeyboardInterrupt caught."))
