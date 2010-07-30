@@ -38,9 +38,9 @@ class pasteURLopener(urllib.FancyURLopener):
 
 def preloadPastebins():
     # Check several places for config files:
-    #  - global config in /etc/pastebin.d
+    #  - global config in /etc/inforevealer.d/pastebin
     #  - for source checkout, config in the checkout
-    #  - user's overrides in ~/.pastebin.d
+    #  - user's overrides in ~/.inforevealer.d/pastebin
     # Files found later override files found earlier.
     for confdir in ['/etc/inforevealer.d/pastebin',
 		    os.path.join(os.path.dirname(__file__), 'inforevealer.d/pastebin'),

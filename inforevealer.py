@@ -159,7 +159,7 @@ def main(argv):
 		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 
 		###########
-		# FILES & COMMANDS
+		# Open config files
 		###########
 
 
@@ -233,7 +233,12 @@ def main(argv):
 
 		#First to do: runfile (internal use)
 		if runfile != None:
-			config = ConfigObj(tmp_configfile)
+			#TODO > in readconf.py
+			try:
+				config = ConfigObj(tmp_configfile)
+			except configobj.ConfigObjError, e:
+				sys.stderr.write('%s: %s' % (filename, e))
+				sys.exit(1)
 			for section in config.sections:
 				descr=config[section]['descr']
 				e_type=config[section]['type']
@@ -252,57 +257,56 @@ def main(argv):
 			sys.exit()
 		#check if category is ok
 		elif category in list_category:
-			pass
+			#####################
+			# Write in dumpfile
+			#####################
+			dumpfile_handler= open(dumpfile,'w')
+
+			io.print_write_header(dumpfile_handler)
+
+			dumpfile_handler.write('Category: '+ category+'\n')	
+
+			category_info = readconf.LoadCategoryInfo(configfile,category)
+			
+			#need/want to run commands as...
+			run_as = RunAs(category_info)
+
+			#detect which distribution the user uses
+			linux_distrib=getinfo.General_info(dumpfile_handler)
+
+			# In the case of run_as='substitute'
+			# a configuration file is generated
+			# su/sudo is used to run a new instance of inforevealer in append mode
+			# to complete the report
+
+			tmp_configfile_handler= open(tmp_configfile,'w')
+			for i in category_info:
+				i.write(linux_distrib,verbosity,dumpfile_handler,dumpfile,run_as,tmp_configfile_handler)
+			tmp_configfile_handler.close()
+				
+			#Use su or sudo to complete the report
+			dumpfile_handler.close() #the next function will modify the report, close the dumpfile
+			CompleteReportRoot(run_as,tmp_configfile)
+
+
+			# Message to close the report
+			dumpfile_handler= open(dumpfile,'a')
+			io.write_title(_("You didn\'t find what you expected?"),dumpfile_handler)
+			dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
+			dumpfile_handler.close()
+
+			print( _("The output has been dumped in ")+dumpfile)
+
+			
+			#if desired, send the report on pastebin
+			if pastebin_choice:
+				pastebin.sendFileContent(dumpfile,title=category,website=website,version=version)
+		
 		else:
 			sys.stderr.write(_('Error: Wrong category'))
 			usage()
-			sys.exit()
-		#####################
-		# Write in dumpfile
-		#####################
-		dumpfile_handler= open(dumpfile,'w')
-
-		io.print_write_header(dumpfile_handler)
-
-		dumpfile_handler.write('Category: '+ category+'\n')	
-
-		category_info = readconf.LoadCategoryInfo(configfile,category)
-		
-		#need/want to run commands as...
-		run_as = RunAs(category_info)
-
-		#detect which distribution the user uses
-		linux_distrib=getinfo.General_info(dumpfile_handler)
-
-		# In the case of run_as='substitute'
-		# a configuration file is generated
-		# su/sudo is used to run a new instance of inforevealer in append mode
-		# to complete the report
-
-		tmp_configfile_handler= open(tmp_configfile,'w')
-		for i in category_info:
-			i.write(linux_distrib,verbosity,dumpfile_handler,dumpfile,run_as,tmp_configfile_handler)
-		tmp_configfile_handler.close()
-			
-		#Use su or sudo to complete the report
-		dumpfile_handler.close() #the next function will modify the report, close the dumpfile
-		CompleteReportRoot(run_as,tmp_configfile)
-
-
-		# Message to close the report
-		dumpfile_handler= open(dumpfile,'a')
-		io.write_title(_("You didn\'t find what you expected?"),dumpfile_handler)
-		dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer'))
-		dumpfile_handler.close()
-
-		print( _("The output has been dumped in ")+dumpfile)
-
-		
-		#####################
-		# PASTEBIN: a part of this § comes from pastebinit
-		#####################
-		if pastebin_choice:
-			pastebin.sendFileContent(dumpfile,title=category,website=website,version=version)
+			sys.exit(1)
+	
 	except KeyboardInterrupt:
 		sys.exit(_("KeyboardInterrupt caught."))
 
