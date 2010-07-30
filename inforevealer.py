@@ -137,9 +137,24 @@ def main(argv):
 		website = defaultPB
 		pastebin_choice=False
 
-		#TODO look for them in differents directories
-		filename="inforevealer.d/categories.conf"
-		spec_filename="inforevealer.d/validator.conf"
+		#look for categories.conf in differents directories
+		if os.access('/etc/inforevealer.d/categories.conf',os.R_OK):
+			filename="/etc/inforevealer.d/categories.conf"
+		elif os.access(os.path.join(os.path.dirname(__file__), 'inforevealer.d/categories.conf'),os.R_OK):
+			filename="inforevealer.d/categories.conf"
+		else:
+			sys.stderr.write(_("Error: No categories.conf available.\n"))
+			sys.exit(1)
+
+		#look for validator.conf in differents directories
+		if os.access('/etc/inforevealer.d/validator.conf',os.R_OK):
+			spec_filename="/etc/inforevealer.d/validator.conf"
+		elif os.access(os.path.join(os.path.dirname(__file__), 'inforevealer.d/validator.conf'),os.R_OK):
+			spec_filename="inforevealer.d/validator.conf"
+		else:
+			sys.stderr.write(_("Error: No validator.conf available.\n"))
+			sys.exit(1)
+
 		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 
 		###########
