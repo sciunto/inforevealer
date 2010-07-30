@@ -30,6 +30,9 @@ import readconf
 import os, sys, time, urllib, re, gettext, string, stat,configobj
 from subprocess import PIPE,Popen
 
+from validate import Validator
+from configobj import ConfigObj
+
 import string
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
@@ -164,7 +167,6 @@ def main(argv):
 
 
 
-		from validate import Validator
 
 
 		try:
