@@ -45,8 +45,6 @@ def findPath(executable):
 		my_path=['/bin','/usr/bin','/sbin','/usr/sbin'] #this should be a common path for our usage
 		for p in my_path:
 			exec_test=p+'/'+executable
-			print "test"
-			print exec_test
 			if os.access(exec_test,os.F_OK):
 				return exec_test
 		return None			
