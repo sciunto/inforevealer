@@ -1,5 +1,5 @@
 VERSION 0.3 
-RELEASE 
+RELEASE 2010-07-31
 
 Bugfixes:
 	* error in sudo command
