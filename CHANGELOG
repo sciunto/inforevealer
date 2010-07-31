@@ -1,5 +1,15 @@
+VERSION 0.3 
+RELEASE 
+
+Bugfixes:
+	* error in sudo command
+	* path troubles for some distributions when runned as root
+	* Be more specific for the configobj dependance
+	* Corrections for debian(-like) package config. files
+
+################
 VERSION 0.2
-RELEASE
+RELEASE 2010-07-30
 
 new features:
 	* add configuration files
