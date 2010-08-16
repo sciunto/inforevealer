@@ -102,6 +102,7 @@ class Application(gtk.Window):
         
         self.show_all()
         
+        yesNoDialog()
         
     def __create_radio_buttons(self,box):
         """ Create the category list """
@@ -189,7 +190,7 @@ class Application(gtk.Window):
 	pastebin_choice=False
 	tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 	print self.category
-	#action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,pastebin_choice,website)
+	action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,pastebin_choice,website,gui=True)
 	TextViewer(dumpfile)
 
     def quit_prog(self,widget,evnmt,data=None):
@@ -258,6 +259,66 @@ class TextViewer:
         bouton.grab_default()
         bouton.show()
         fenetre.show()
+
+
+
+
+
+
+
+
+def yesNoDialog(title=" ",question="?"):
+	'''
+	returns True if yes 
+	        False if no
+	#inspired from http://www.daa.com.au/pipermail/pygtk/2002-June/002962.html
+		   '''
+	
+	window=gtk.Window()
+	window.set_title(title)
+	vbox = gtk.VBox(True, 0)
+	window.add(vbox)
+	label = gtk.Label();
+        label.set_markup(question)
+        vbox.pack_start(label, False, False, 0)
+	
+	
+	hbox = gtk.HButtonBox()
+	def delete_event(widget, event, window):
+		window.callback_return=-1
+		return False
+	window.connect("delete_event", delete_event, window)
+	vbox.pack_start(hbox, False, False, 0)
+	
+	
+	def callback(widget, data):
+		window=data[0]
+		data=data[1]
+		window.hide()
+		window.callback_return=data
+
+	yes = gtk.Button(stock=gtk.STOCK_YES)
+	yes.connect("clicked", callback, (window, 1))
+	hbox.pack_start(yes)
+
+	no = gtk.Button(stock=gtk.STOCK_NO)
+	no.connect("clicked", callback, (window, 0))
+	hbox.pack_start(no)
+
+	window.set_modal(True)
+	window.show_all()
+	window.callback_return=None
+	while window.callback_return==None:
+		gtk.main_iteration(True) # block until event occurs
+	return window.callback_return
+
+
+
+
+
+
+
+
 
 
 

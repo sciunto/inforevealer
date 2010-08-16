@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-import io, readconf, getinfo, pastebin
+import io, readconf, getinfo, pastebin,gtktest
 import os, sys, gettext,string, pexpect,getpass
 
 gettext.textdomain('inforevealer')
@@ -55,11 +55,13 @@ def RunAs(category_info,gui=False):
 				break
 		if root_needed:
 			#ask if the user want to substitute
+			question=_("""To generate a complete report, root access is needed.
+Do you want to substitute user?""")
 			if gui:
-				pass #TODO
+				
+				substitute=gtktest.yesNoDialog(question=question)
 			else:
-				substitute=askYesNo(_("""To generate a complete report, root access is needed.
-Do you want to substitute user?"""))
+				substitute=askYesNo(question)
 			if substitute:
 				run_as="substitute"
 			else:
@@ -83,18 +85,20 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 		else:
 			sys.stderr.write(_("Error: No substitute user command available.\n"))
 			return 1
+		
+		#Get password
 		if gui:
-			pass
+			pass #TODO
 		else:
 			password=getpass.getpass()
-		
+		#Run the command
 		child = pexpect.spawn(root_instance)
 		child.expect([".*:",pexpect.EOF]) #Could we do more ?
 		child.sendline(password)
+		#TODO test wrong password
 
 
-
-def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website):
+def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website,gui=False):
 	#####################
 	# Write in dumpfile
 	#####################
@@ -107,7 +111,7 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choic
 	category_info = readconf.LoadCategoryInfo(configfile,category)
 	
 	#need/want to run commands as...
-	run_as = RunAs(category_info)
+	run_as = RunAs(category_info,gui)
 
 	#detect which distribution the user uses
 	linux_distrib=getinfo.General_info(dumpfile_handler)
