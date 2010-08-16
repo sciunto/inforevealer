@@ -18,8 +18,10 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-import io, readconf, getinfo, pastebin,gtktest
+import io, readconf, getinfo, pastebin
 import os, sys, gettext,string, pexpect,getpass
+
+from gtktest import askPassword, yesNoDialog
 
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
@@ -59,7 +61,7 @@ def RunAs(category_info,gui=False):
 Do you want to substitute user?""")
 			if gui:
 				
-				substitute=gtktest.yesNoDialog(question=question)
+				substitute=yesNoDialog(question=question)
 			else:
 				substitute=askYesNo(question)
 			if substitute:
@@ -75,11 +77,11 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
 		if pexpect.which('sudo') != None: #TODO checkme
-			print(_("Please, enter your user password."))
+			message=_("Please, enter your user password.")
 			root_instance = str(pexpect.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
 
 		elif pexpect.which('su') != None:
-			print(_("Please, enter the root password."))
+			message=_("Please, enter the root password.")
 			root_instance = str(pexpect.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
 			
 		else:
@@ -87,18 +89,16 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 			return 1
 		
 		#Get password
-		print "gui"
-		print gui
 		if gui:
-			password=gtktest.askPassword()
-			print password
-			#pass #TODO
+			password=askPassword(question=message)
 		else:
+			print(message)
 			password=getpass.getpass()
 		#Run the command
 		child = pexpect.spawn(root_instance)
-		child.expect([".*:",pexpect.EOF]) #Could we do more ?
+		ret=child.expect([".*:",pexpect.EOF]) #Could we do more ?
 		child.sendline(password)
+		print child.readlines()
 		#TODO test wrong password
 
 

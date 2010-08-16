@@ -153,6 +153,7 @@ def main(argv):
 		#First to do: runfile (internal use)
 		if runfile != None:
 			#TODO > in readconf.py
+			print ">>>>>>>>>runfile"
 			try:
 				config = ConfigObj(tmp_configfile)
 			except configobj.ConfigObjError, e:

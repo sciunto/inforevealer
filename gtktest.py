@@ -6,6 +6,11 @@ import gtk
 
 import action
 
+import gettext
+gettext.textdomain('inforevealer')
+_ = gettext.gettext
+
+
 ui_info ='''<ui>
   <menubar name='MenuBar'>
     <menu action='FileMenu'>
@@ -53,9 +58,9 @@ class Application(gtk.Window):
 
 	# Create Menu
         try:
-            mergeid = merge.add_ui_from_string(ui_info)
+	      mergeid = merge.add_ui_from_string(ui_info)
         except gobject.GError, msg:
-            print "building menus failed: %s" % msg
+            print("building menus failed: %s" % msg)
             
         bar = merge.get_widget("/MenuBar")
         
@@ -71,7 +76,7 @@ class Application(gtk.Window):
 
         #Add info
         label = gtk.Label();
-        label.set_markup("Select on of the following category:")
+        label.set_markup(_("Select on of the following category:"))
         box1.pack_start(label, False, False, 0)
 
         self.__create_radio_buttons(box1)
@@ -84,22 +89,19 @@ class Application(gtk.Window):
 
         #quit
         bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
-        bouton.connect_object("clicked", self.quit_prog,self, None)
+        bouton.connect("clicked", self.quit_prog,self, None)
         box2.pack_start(bouton, True, True, 0)
         bouton.set_flags(gtk.CAN_DEFAULT)
         bouton.grab_default()
         bouton.show()
         #apply
         bouton = gtk.Button(stock=gtk.STOCK_APPLY)
-        bouton.connect_object("clicked", self.generate,self, None) #FIXME
+        bouton.connect("clicked", self.generate,self, None) #FIXME
         box2.pack_start(bouton, True, True, 0)
         bouton.show()
 
         box2.show()
-
-        box1.show()
-
-        
+        box1.show()    
         self.show_all()
         
         
@@ -118,11 +120,12 @@ class Application(gtk.Window):
             box.pack_start(button, True, True, 0)
             button.show()
             first=False
+            
     def callback_radio_buttons(self,widget,data=None):
-        print( str(data) + "  " + str(widget.get_active()))
+	""" Get the selected radio button """
         if widget.get_active():
 	     self.category=data
-        #TODO
+   
 
     def __create_action_group(self):
         """ Create the top menu entry  """
@@ -183,7 +186,7 @@ class Application(gtk.Window):
 
     def generate(self,widget,evnmt,data=None):
 	""" Do the work """
-	dumpfile='/tmp/inforevealer'
+	dumpfile='/tmp/inforevealer' #FIXME
 	verbosity=False
 	
 	website = "http://pastebin.com"
@@ -241,7 +244,7 @@ class TextViewer:
         # Chargement du fichier textview-basic.py dans la fenetre
         fichier = open(output_file, "r")#FIXME
 
-        if fichier:
+        if fichier: #FIXME
             text = fichier.read()
             fichier.close()
             buffertexte.set_text(text)
@@ -259,11 +262,6 @@ class TextViewer:
         bouton.grab_default()
         bouton.show()
         fenetre.show()
-
-
-
-
-
 
 
 
@@ -315,7 +313,8 @@ def yesNoDialog(title=" ",question="?"):
 
 
 def askPassword(title=" ",question="?"):
-
+	""" Dialog box for a password.
+	Return the password """
 	#create window+ Vbox + question
 	window=gtk.Window()
 	window.set_title(title)
@@ -346,7 +345,7 @@ def askPassword(title=" ",question="?"):
 	vbox.pack_start(hbox, False, False, 0)
 
 	# OK button
-	but = gtk.Button("OK")
+	but = gtk.Button(stock=gtk.STOCK_OK)
 	hbox.add(but)
 	but.connect("clicked", callback, (window,True))
 
