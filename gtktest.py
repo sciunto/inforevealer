@@ -254,9 +254,9 @@ class TextViewer:
         #load file
         try:
 	    fichier = open(self.output, "r")#FIXME
-	    text = fichier.read()
+	    self.text = fichier.read()
             fichier.close()
-            buffertexte.set_text(text)
+            buffertexte.set_text(self.text)
 	except IOError:
 	    sys.stderr.write("Error: Cannot open %s" %self.output)
 
@@ -289,14 +289,29 @@ class TextViewer:
         boiteH.pack_start(bouton, True, False, 0)
 	
 	#END pastebin
+    
+	#Buttons
+	boiteH = gtk.HBox(True,0)
+	boite2.pack_start(boiteH, False, False, 0)
+        boiteH.show()	
+	
+        bouton = gtk.Button(_("Copy to clipboard"))
+        bouton.connect("clicked", self.copy_clipboard)
+        boiteH.pack_start(bouton, False, False, 0)
+        bouton.show()
 
         bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
         bouton.connect("clicked", self.quit_prog)
-        boite2.pack_start(bouton, False, False, 0)
+        boiteH.pack_start(bouton, False, False, 0)
         bouton.set_flags(gtk.CAN_DEFAULT)
-        bouton.grab_default()
+        #bouton.grab_default()
         bouton.show()
         fenetre.show()
+        
+    def copy_clipboard(self,widget):
+	""" Copy self.text in clipboard """
+	clipb = gtk.Clipboard()
+	clipb.set_text(self.text, len=-1)
 
     def send_pastebin(self, widget): #IMPROVEME
 	link = "http://" + self.website[self.combobox.get_active()]+"/"
