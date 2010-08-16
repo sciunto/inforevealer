@@ -17,8 +17,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-
+import gettext
+gettext.textdomain('inforevealer')
+_ = gettext.gettext
 
 def print_write_header(fhandler):
         header=''' 
@@ -48,3 +49,29 @@ def write_title(string,output):
 	header= header + '\n' + '#   ' + title + '\n'
 	header=header+'#############################################\n'
 	output.write(header)
+
+def usage():
+	print _("""
+usage:		%s [options]
+
+options:
+		-h or --help: print this help
+		-l or --list: print a trouble category list
+		-c or --category [arg]: choose a category
+		-f or --file [arg]: dump file
+		-p or --pastebin: send the report on pastebin
+		-w or --website [arg]: specify pastebin website
+		--verbose: increase verbosity
+		--gui: run a graphic interface (other options are ignored)
+		""") %sys.argv[0] 
+			
+		
+def list(categories):
+	print _("""
+List of categories:""")
+
+	for i in categories:
+		print ("\t* "+i+" -> "+categories[i])
+	print _("\nReminder: %s -c internet") %sys.argv[0] 
+
+
