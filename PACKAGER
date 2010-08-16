@@ -1,9 +1,15 @@
 This file is a help for packagers.
 
 name=inforevealer
-version=devel
+version=0.3
 licence=GPLv2
 source=http://github.com/sciunto/inforevealer
-dep=
+dep= see README file
 build_dep=
 summary=inforevealer provides relevant information easily to solve a problem on Linux
+
+
+
+If you write your own desktop file, make sure to call inforevealer with option --gui
+
+
