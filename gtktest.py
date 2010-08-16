@@ -4,7 +4,7 @@
 import gobject
 import gtk
 
-import action
+import action,pastebin
 
 import gettext
 gettext.textdomain('inforevealer')
@@ -130,7 +130,7 @@ class Application(gtk.Window):
     def __create_action_group(self):
         """ Create the top menu entry  """
         # GtkActionEntry
-        entries = (
+        entries = ( #FIXME
           ( "FileMenu", None, "_File" ),               # name, stock id, label
           ( "HelpMenu", None, "_Help" ),               # name, stock id, label
           ( "New", gtk.STOCK_NEW,                      # name, stock id
@@ -213,7 +213,7 @@ class TextViewer:
         gtk.main_quit()
 
     def __init__(self,output_file):
-
+	self.output=output_file
       
         fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
         fenetre.set_resizable(True)
@@ -225,9 +225,7 @@ class TextViewer:
         boite1 = gtk.VBox(False, 0)
         fenetre.add(boite1)
         boite1.show()
-        
-
-        
+       
         
         boite2 = gtk.VBox(False, 10)
         boite2.set_border_width(10)
@@ -236,7 +234,7 @@ class TextViewer:
         
         #Add info
         label = gtk.Label();
-        output_string=_("The following report is availlable in ")+str(output_file)
+        output_string=_("The following report is availlable in ")+str(self.output)
         label.set_markup(output_string)
         label.show()
         boite2.pack_start(label,False,False,0)
@@ -255,33 +253,33 @@ class TextViewer:
         boite2.pack_start(fd)
         #load file
         try:
-	    fichier = open(output_file, "r")#FIXME
+	    fichier = open(self.output, "r")#FIXME
 	    text = fichier.read()
             fichier.close()
             buffertexte.set_text(text)
 	except IOError:
-	    sys.stderr.write("Error: Cannot open %s" %output_file)
+	    sys.stderr.write("Error: Cannot open %s" %self.output)
 
-
-        boiteH = gtk.HBox(False,0)
-        boite2.pack_start(boiteH, True, False, 0)
+	#Add Pastebin
+        boiteH = gtk.HBox(True,0)
+        boite2.pack_start(boiteH, False, False, 0)
         boiteH.show()
 
-        #Add Pastebin
+       
         label = gtk.Label();
         label.set_markup(_("Send the report on pastebin "))
         label.show()
         boiteH.pack_start(label,True,False,0)
 	
 	#TODO
-	import pastebin
+	
 	self.pastebin_list = pastebin.preloadPastebins()
 	self.combobox = gtk.combo_box_new_text()
-	self.website=list() #FIXME workaround, weird behaviour of gtk.TreeModel.get_iter_from_string
+	self.website=list()
 	boiteH.pack_start(self.combobox, True, False, 0)
 	for k in self.pastebin_list:
 	    self.combobox.append_text(k)
-	    #self.website.append(v)
+	    self.website.append(k)
 	self.combobox.set_active(0)
 	self.combobox.show()
 	
@@ -294,18 +292,23 @@ class TextViewer:
 
         bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
         bouton.connect("clicked", self.quit_prog)
-        boite2.pack_start(bouton, True, False, 0)
+        boite2.pack_start(bouton, False, False, 0)
         bouton.set_flags(gtk.CAN_DEFAULT)
         bouton.grab_default()
         bouton.show()
         fenetre.show()
 
-    def send_pastebin(self, widget): #TODO
-	#print self.combobox.get_active()
-	#iter = self.combobox.get_active_iter()
-	#gtk.TreeModel.get_string_from_iter(iter)
-	#print self.pastebin_list[iter.get_string_from_iter()]
-	print self.website[self.combobox.get_active()]
+    def send_pastebin(self, widget): #IMPROVEME
+	link = "http://" + self.website[self.combobox.get_active()]+"/"
+	link=pastebin.sendFileContent(self.output,title=None,website=link,version=None)
+	message = "File sent on\n"+link
+	md = gtk.MessageDialog(None, 
+            gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
+            gtk.BUTTONS_CLOSE, message)
+        md.set_title(_("Pastebin link"))
+        md.run()
+        md.destroy()
+
 
 def yesNoDialog(title=" ",question="?"):
 	'''

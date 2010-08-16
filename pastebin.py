@@ -143,7 +143,9 @@ def getFirstNodeText(nodes, title):
     
     
 def sendFileContent(filepath,title,website,version):
-	"""Send filepath on pastebin"""
+	"""Send filepath on pastebin,
+	    print link on stdout
+	    return the link"""
 	user = os.environ.get('USER')
 	jabberid = ""
 	permatag = ""
@@ -187,6 +189,7 @@ def sendFileContent(filepath,title,website,version):
 		else:
 			pastelink = page.url #Get the final page and show the url
 		print(_("Pastebin link: ")+pastelink+"\n")
+		return pastelink
 	except KeyboardInterrupt:
 		sys.exit(_("KeyboardInterrupt caught."))
 	except:
