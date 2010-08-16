@@ -20,6 +20,7 @@ The goal of this software is to provide easily a check-up of useful commands, lo
 Dependances
 ##################################################
 
+* pygtk 2.6 or greater
 * python-configobj 4.6.0 or greater
 * python-pexpect
 
