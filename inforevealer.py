@@ -49,6 +49,7 @@ def main(argv):
 
 		#set default
 		dumpfile='/tmp/inforevealer'
+		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 		verbosity=False
 		category=""
 		runfile=None #option only for internal use, see above
@@ -76,7 +77,7 @@ def main(argv):
 			sys.stderr.write(_("Error: No validator.conf available.\n"))
 			sys.exit(1)
 
-		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
+		
 
 		###########
 		# Open config files
@@ -175,7 +176,7 @@ def main(argv):
 		elif gui==True:
 			print 'run gui'
 			import gtktest
-			gtktest.main(list_category)
+			gtktest.main(configfile,list_category)
 		#check if category is ok
 		elif category in list_category:
 			action.action(category,dumpfile,configfile,tmp_configfile,verbosity,pastebin_choice,website)

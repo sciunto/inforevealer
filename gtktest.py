@@ -4,6 +4,8 @@
 import gobject
 import gtk
 
+import action
+
 ui_info ='''<ui>
   <menubar name='MenuBar'>
     <menu action='FileMenu'>
@@ -22,8 +24,11 @@ ui_info ='''<ui>
 
 
 class Application(gtk.Window):
-    def __init__(self, list_category, parent=None):
+    def __init__(self, configfile, list_category, parent=None):
+        self.configfile=configfile
         self.check_list=list_category
+        self.category=None
+        
         # Create the toplevel window
         gtk.Window.__init__(self)
        
@@ -86,7 +91,7 @@ class Application(gtk.Window):
         bouton.show()
         #apply
         bouton = gtk.Button(stock=gtk.STOCK_APPLY)
-        bouton.connect_object("clicked", self.quit_prog,self, None) #FIXME
+        bouton.connect_object("clicked", self.generate,self, None) #FIXME
         box2.pack_start(bouton, True, True, 0)
         bouton.show()
 
@@ -105,6 +110,7 @@ class Application(gtk.Window):
 	    button_label = str(item)+": "+ str(self.check_list[item])
             if first:
                 button = gtk.RadioButton(group=None, label=button_label)
+                self.category=item
             else:
                 button = gtk.RadioButton(group=button, label=button_label)
             button.connect("toggled", self.callback_radio_buttons, item)
@@ -113,6 +119,8 @@ class Application(gtk.Window):
             first=False
     def callback_radio_buttons(self,widget,data=None):
         print( str(data) + "  " + str(widget.get_active()))
+        if widget.get_active():
+	     self.category=data
         #TODO
 
     def __create_action_group(self):
@@ -157,9 +165,9 @@ class Application(gtk.Window):
     def activate_about(self, action):
         """ About dialog """
         dialog = gtk.AboutDialog()
-        dialog.set_name("PyGTK Demo")
-        dialog.set_copyright("\302\251 Copyright 200x the PyGTK Team")
-        dialog.set_website("http://www.pygtk.org./")
+        dialog.set_name("Inforevealer") #FIXME
+        dialog.set_copyright("\302\251 Copyright 2010 Francois Boulogne")
+        dialog.set_website("http://github.com/sciunto/inforevealer")
         ## Close dialog on user response
         dialog.connect ("response", lambda d, r: d.destroy())
         dialog.show()
@@ -172,13 +180,25 @@ class Application(gtk.Window):
         dialog.connect ("response", lambda d, r: d.destroy())
         dialog.show()
 
+    def generate(self,widget,evnmt,data=None):
+	""" Do the work """
+	dumpfile='/tmp/inforevealer'
+	verbosity=False
+	
+	website = "http://pastebin.com"
+	pastebin_choice=False
+	tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
+	print self.category
+	#action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,pastebin_choice,website)
+	
+
     def quit_prog(self,widget,evnmt,data=None):
         """ Quit the software """
         gtk.main_quit()
 
 
-def main(list):
-    Application(list)
+def main(configfile,list):
+    Application(configfile,list)
     gtk.main()
 
 if __name__ == '__main__':
