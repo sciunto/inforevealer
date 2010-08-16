@@ -22,7 +22,7 @@ import io
 import os
 import subprocess
 import time
-import which
+from pexpect import which
 
 
 import gettext
@@ -45,7 +45,7 @@ class Command:
 		if not (not verbosity and self.verb):
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
-				path_command=which.findPath(self.command[0])
+				path_command=which(self.command[0])
 				if path_command != None:	
 					#correct the command, keep options
 					self.command[0]=path_command
