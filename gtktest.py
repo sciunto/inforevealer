@@ -190,11 +190,75 @@ class Application(gtk.Window):
 	tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
 	print self.category
 	#action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,pastebin_choice,website)
-	
+	TextViewer(dumpfile)
 
     def quit_prog(self,widget,evnmt,data=None):
         """ Quit the software """
         gtk.main_quit()
+
+
+class TextViewer:
+    def change_editable(self, case, textview):
+        textview.set_editable(case.get_active())
+
+    def change_curseur_visible(self, case, textview):
+        textview.set_cursor_visible(case.get_active())
+
+   
+    def quit_prog(self, widget):
+        gtk.main_quit()
+
+    def __init__(self,output_file):
+        fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        fenetre.set_resizable(True)
+        fenetre.set_default_size(600, 400)
+        fenetre.connect("destroy", self.quit_prog)
+        fenetre.set_title("Inforevealer") #FIXME
+        fenetre.set_border_width(0)
+
+        boite1 = gtk.VBox(False, 0)
+        fenetre.add(boite1)
+        boite1.show()
+
+        boite2 = gtk.VBox(False, 10)
+        boite2.set_border_width(10)
+        boite1.pack_start(boite2, True, True, 0)
+        boite2.show()
+
+        fd = gtk.ScrolledWindow()
+        fd.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        textview = gtk.TextView()
+        textview.set_editable(False)
+        
+        buffertexte = textview.get_buffer()
+        fd.add(textview)
+        fd.show()
+        textview.show()
+        textview.set_cursor_visible(False)
+
+        boite2.pack_start(fd)
+        # Chargement du fichier textview-basic.py dans la fenetre
+        fichier = open(output_file, "r")#FIXME
+
+        if fichier:
+            text = fichier.read()
+            fichier.close()
+            buffertexte.set_text(text)
+
+
+        boite2 = gtk.VBox(False, 10)
+        boite2.set_border_width(10)
+        boite1.pack_start(boite2, False, True, 0)
+        boite2.show()
+
+        bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
+        bouton.connect("clicked", self.quit_prog)
+        boite2.pack_start(bouton, True, True, 0)
+        bouton.set_flags(gtk.CAN_DEFAULT)
+        bouton.grab_default()
+        bouton.show()
+        fenetre.show()
+
 
 
 def main(configfile,list):
