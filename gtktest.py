@@ -71,12 +71,12 @@ class Application(gtk.Window):
         self.add(box1)
         
         #Add Menu into TABLE        
-        box1.pack_start(bar, False)
+        box1.pack_start(bar, False, False, 0)
         bar.show()
 
         #Add info
         label = gtk.Label();
-        label.set_markup(_("Select on of the following category:"))
+        label.set_markup(_("Select one of the following category:"))
         box1.pack_start(label, False, False, 0)
 
         self.__create_radio_buttons(box1)
@@ -213,6 +213,8 @@ class TextViewer:
         gtk.main_quit()
 
     def __init__(self,output_file):
+
+      
         fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
         fenetre.set_resizable(True)
         fenetre.set_default_size(600, 400)
@@ -223,11 +225,21 @@ class TextViewer:
         boite1 = gtk.VBox(False, 0)
         fenetre.add(boite1)
         boite1.show()
+        
 
+        
+        
         boite2 = gtk.VBox(False, 10)
         boite2.set_border_width(10)
         boite1.pack_start(boite2, True, True, 0)
         boite2.show()
+        
+        #Add info
+        label = gtk.Label();
+        output_string=_("The following report is availlable in ")+str(output_file)
+        label.set_markup(output_string)
+        label.show()
+        boite2.pack_start(label,False,False,0)
 
         fd = gtk.ScrolledWindow()
         fd.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -241,29 +253,59 @@ class TextViewer:
         textview.set_cursor_visible(False)
 
         boite2.pack_start(fd)
-        # Chargement du fichier textview-basic.py dans la fenetre
-        fichier = open(output_file, "r")#FIXME
-
-        if fichier: #FIXME
-            text = fichier.read()
+        #load file
+        try:
+	    fichier = open(output_file, "r")#FIXME
+	    text = fichier.read()
             fichier.close()
             buffertexte.set_text(text)
+	except IOError:
+	    sys.stderr.write("Error: Cannot open %s" %output_file)
 
 
-        boite2 = gtk.VBox(False, 10)
-        boite2.set_border_width(10)
-        boite1.pack_start(boite2, False, True, 0)
-        boite2.show()
+        boiteH = gtk.HBox(False,0)
+        boite2.pack_start(boiteH, True, False, 0)
+        boiteH.show()
+
+        #Add Pastebin
+        label = gtk.Label();
+        label.set_markup(_("Send the report on pastebin "))
+        label.show()
+        boiteH.pack_start(label,True,False,0)
+	
+	#TODO
+	import pastebin
+	self.pastebin_list = pastebin.preloadPastebins()
+	self.combobox = gtk.combo_box_new_text()
+	self.website=list() #FIXME workaround, weird behaviour of gtk.TreeModel.get_iter_from_string
+	boiteH.pack_start(self.combobox, True, False, 0)
+	for k in self.pastebin_list:
+	    self.combobox.append_text(k)
+	    #self.website.append(v)
+	self.combobox.set_active(0)
+	self.combobox.show()
+	
+	bouton = gtk.Button(_("Send"))
+        bouton.connect("clicked", self.send_pastebin)
+        bouton.show()
+        boiteH.pack_start(bouton, True, False, 0)
+	
+	#END pastebin
 
         bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
         bouton.connect("clicked", self.quit_prog)
-        boite2.pack_start(bouton, True, True, 0)
+        boite2.pack_start(bouton, True, False, 0)
         bouton.set_flags(gtk.CAN_DEFAULT)
         bouton.grab_default()
         bouton.show()
         fenetre.show()
 
-
+    def send_pastebin(self, widget): #TODO
+	#print self.combobox.get_active()
+	#iter = self.combobox.get_active_iter()
+	#gtk.TreeModel.get_string_from_iter(iter)
+	#print self.pastebin_list[iter.get_string_from_iter()]
+	print self.website[self.combobox.get_active()]
 
 def yesNoDialog(title=" ",question="?"):
 	'''
@@ -296,6 +338,7 @@ def yesNoDialog(title=" ",question="?"):
 		window.callback_return=data
 
 	yes = gtk.Button(stock=gtk.STOCK_YES)
+	yes.set_flags(gtk.CAN_DEFAULT)
 	yes.connect("clicked", callback, (window, True))
 	hbox.pack_start(yes)
 
@@ -346,6 +389,7 @@ def askPassword(title=" ",question="?"):
 
 	# OK button
 	but = gtk.Button(stock=gtk.STOCK_OK)
+	but.set_flags(gtk.CAN_DEFAULT)
 	hbox.add(but)
 	but.connect("clicked", callback, (window,True))
 
