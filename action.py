@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-import io, readconf, getinfo, which, pastebin
+import io, readconf, getinfo, pastebin
 import os, sys, gettext,string, pexpect,getpass
 
 gettext.textdomain('inforevealer')
@@ -68,23 +68,26 @@ Do you want to substitute user?"""))
 			run_as='user'
 	return run_as
 
-def CompleteReportRoot(run_as,tmp_configfile):
+def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 	"""Run a new instance of inforevealer with root priviledge to complete tmp_configfile"""
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
-		if which.which('sudo') != None: #TODO checkme
+		if pexpect.which('sudo') != None: #TODO checkme
 			print(_("Please, enter your user password."))
-			root_instance = str(which.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
+			root_instance = str(pexpect.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
 
-		elif which.which('su') != None:
+		elif pexpect.which('su') != None:
 			print(_("Please, enter the root password."))
-			root_instance = str(which.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
+			root_instance = str(pexpect.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
 			
 		else:
 			sys.stderr.write(_("Error: No substitute user command available.\n"))
 			return 1
+		if gui:
+			pass
+		else:
+			password=getpass.getpass()
 		
-		password=getpass.getpass()
 		child = pexpect.spawn(root_instance)
 		child.expect([".*:",pexpect.EOF]) #Could we do more ?
 		child.sendline(password)
