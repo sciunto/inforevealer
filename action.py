@@ -21,7 +21,6 @@
 import io, readconf, getinfo, pastebin
 import os, sys, gettext,string, pexpect,getpass
 
-from gtktest import askPassword, yesNoDialog
 
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
@@ -74,6 +73,9 @@ Do you want to substitute user?""")
 
 def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 	"""Run a new instance of inforevealer with root priviledge to complete tmp_configfile"""
+    
+	if gui: from gtktest import askPassword
+
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
 		if pexpect.which('sudo') != None: #TODO checkme
@@ -98,11 +100,12 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 		child = pexpect.spawn(root_instance)
 		ret=child.expect([".*:",pexpect.EOF]) #Could we do more ?
 		child.sendline(password)
-		print child.readlines()
-		#TODO test wrong password
+
+		#TODO case wrong password: try again...
 
 
 def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website,gui=False):
+	if gui: from gtktest import  yesNoDialog
 	#####################
 	# Write in dumpfile
 	#####################
