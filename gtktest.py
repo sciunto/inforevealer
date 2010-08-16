@@ -11,6 +11,8 @@ gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
 
+icon_path='icon.svg'
+
 ui_info ='''<ui>
   <menubar name='MenuBar'>
     <menu action='FileMenu'>
@@ -36,7 +38,10 @@ class Application(gtk.Window):
         
         # Create the toplevel window
         gtk.Window.__init__(self)
-       
+             
+	pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+	self.set_icon(pixbuf)
+	   
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
@@ -215,7 +220,11 @@ class TextViewer:
     def __init__(self,output_file):
 	self.output=output_file
       
+
+      
         fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+	fenetre.set_icon(pixbuf)
         fenetre.set_resizable(True)
         fenetre.set_default_size(600, 400)
         fenetre.connect("destroy", self.quit_prog)
@@ -333,6 +342,8 @@ def yesNoDialog(title=" ",question="?"):
 		   '''
 	#create window+ Vbox + question
 	window=gtk.Window()
+	pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+	window.set_icon(pixbuf)
 	window.set_title(title)
 	vbox = gtk.VBox(True, 0)
 	window.add(vbox)
@@ -380,6 +391,8 @@ def askPassword(title=" ",question="?"):
 	return false if the dialog is closed"""
 	#create window+ Vbox + question
 	window=gtk.Window()
+	pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+	window.set_icon(pixbuf)
 	window.set_title(title)
 	vbox = gtk.VBox(True, 0)
 	window.add(vbox)
