@@ -43,6 +43,7 @@ def askYesNo(question,default='y'):
 
 def RunAs(category_info,gui=False):
 	""" Check if root is needed, if user want to be root... """
+	if gui: from gtktest import  yesNoDialog
 	run_as='user'
 	if os.getuid() == 0:
 		#we are root
@@ -59,7 +60,6 @@ def RunAs(category_info,gui=False):
 			question=_("""To generate a complete report, root access is needed.
 Do you want to substitute user?""")
 			if gui:
-				
 				substitute=yesNoDialog(question=question)
 			else:
 				substitute=askYesNo(question)
@@ -89,19 +89,33 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 		else:
 			sys.stderr.write(_("Error: No substitute user command available.\n"))
 			return 1
-		
-		#Get password
+		ret=""
+		count=0
+		while ret!=[' \r\n'] and count <3:
+			#Get password
+			count+=1
+			if gui:
+				password=askPassword(question=message)
+			else:
+				print(message)
+				password=getpass.getpass()
+			if password != False: #askPassword could return False
+				#Run the command
+				child = pexpect.spawn(root_instance)
+				ret=child.expect([".*:",pexpect.EOF]) #Could we do more ?
+				child.sendline(password)
+				ret = child.readlines()
+				if ret ==[' \r\n']: break
+		message=_("Wrong password.\nThe log will be generated without root priviledge.")
 		if gui:
-			password=askPassword(question=message)
+			import gtk
+			md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, message)
+			md.set_title(_("Error"))
+			md.run()
+			md.destroy()
 		else:
 			print(message)
-			password=getpass.getpass()
-		#Run the command
-		child = pexpect.spawn(root_instance)
-		ret=child.expect([".*:",pexpect.EOF]) #Could we do more ?
-		child.sendline(password)
-
-		#TODO case wrong password: try again...
+			
 
 
 def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website,gui=False):

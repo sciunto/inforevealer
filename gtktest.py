@@ -342,6 +342,7 @@ def yesNoDialog(title=" ",question="?"):
 
 	yes = gtk.Button(stock=gtk.STOCK_YES)
 	yes.set_flags(gtk.CAN_DEFAULT)
+	window.set_default(yes)
 	yes.connect("clicked", callback, (window, True))
 	hbox.pack_start(yes)
 
@@ -360,7 +361,8 @@ def yesNoDialog(title=" ",question="?"):
 
 def askPassword(title=" ",question="?"):
 	""" Dialog box for a password.
-	Return the password """
+	Return the password 
+	return false if the dialog is closed"""
 	#create window+ Vbox + question
 	window=gtk.Window()
 	window.set_title(title)
@@ -372,7 +374,7 @@ def askPassword(title=" ",question="?"):
 
 
 	def delete_event(widget, event, window):
-		window.callback_return=-1
+		window.callback_return=False
 		return False
 	window.connect("delete_event", delete_event, window)	
 	
@@ -393,6 +395,7 @@ def askPassword(title=" ",question="?"):
 	# OK button
 	but = gtk.Button(stock=gtk.STOCK_OK)
 	but.set_flags(gtk.CAN_DEFAULT)
+	window.set_default(but)
 	hbox.add(but)
 	but.connect("clicked", callback, (window,True))
 
