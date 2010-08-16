@@ -181,7 +181,7 @@ def main(argv):
 			sys.stderr.write('%s: %s' % (filename, e))
 			sys.exit(1)
 		#check if configfile respects specs
-		if configfile.validate(Validator()):
+		if configfile.validate(Validator()) == True:
 			list_category=readconf.LoadCategoryList(configfile)
 		else:
 			sys.stderr.write(_("Error: the configuration file %s is not valid.\nSee %s for a template.\n") % (filename,spec_filename))  
