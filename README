@@ -21,6 +21,7 @@ Dependances
 ##################################################
 
 * python-configobj 4.6.0 or greater
+* python-pexpect
 
 ##################################################
 Install
