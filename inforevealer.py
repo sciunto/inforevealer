@@ -174,6 +174,8 @@ def main(argv):
 			sys.exit()
 		elif gui==True:
 			print 'run gui'
+			import gtktest
+			gtktest.main(list_category)
 		#check if category is ok
 		elif category in list_category:
 			action.action(category,dumpfile,configfile,tmp_configfile,verbosity,pastebin_choice,website)

@@ -22,9 +22,11 @@ ui_info ='''<ui>
 
 
 class Application(gtk.Window):
-    def __init__(self, parent=None):
+    def __init__(self, list_category, parent=None):
+        self.check_list=list_category
         # Create the toplevel window
         gtk.Window.__init__(self)
+       
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
@@ -67,9 +69,7 @@ class Application(gtk.Window):
         label.set_markup("Select on of the following category:")
         box1.pack_start(label, False, False, 0)
 
-        check_list = ("item1","item2","item3") #FIXME
-
-        self.__create_radio_buttons(box1,check_list)
+        self.__create_radio_buttons(box1)
 
 
         #buttons (bottom)
@@ -98,14 +98,15 @@ class Application(gtk.Window):
         self.show_all()
         
         
-    def __create_radio_buttons(self,box,mylist):
+    def __create_radio_buttons(self,box):
         """ Create the category list """
         first=True
-        for item in mylist:
+        for item in self.check_list:
+	    button_label = str(item)+": "+ str(self.check_list[item])
             if first:
-                button = gtk.RadioButton(group=None, label=item)
+                button = gtk.RadioButton(group=None, label=button_label)
             else:
-                button = gtk.RadioButton(group=button, label=item)
+                button = gtk.RadioButton(group=button, label=button_label)
             button.connect("toggled", self.callback_radio_buttons, item)
             box.pack_start(button, True, True, 0)
             button.show()
@@ -176,8 +177,8 @@ class Application(gtk.Window):
         gtk.main_quit()
 
 
-def main():
-    Application()
+def main(list):
+    Application(list)
     gtk.main()
 
 if __name__ == '__main__':
