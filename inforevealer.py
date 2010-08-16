@@ -153,7 +153,6 @@ def main(argv):
 		#First to do: runfile (internal use)
 		if runfile != None:
 			#TODO > in readconf.py
-			print ">>>>>>>>>runfile"
 			try:
 				config = ConfigObj(tmp_configfile)
 			except configobj.ConfigObjError, e:
@@ -176,7 +175,6 @@ def main(argv):
 				dumpfile_handler.close()
 			sys.exit()
 		elif gui==True:
-			print 'run gui'
 			import gtktest
 			gtktest.main(configfile,list_category)
 		#check if category is ok
