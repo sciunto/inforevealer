@@ -19,7 +19,7 @@
 
 
 import io, readconf, getinfo, which, pastebin
-import os, sys, gettext,string
+import os, sys, gettext,string, pexpect,getpass
 
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
@@ -40,7 +40,7 @@ def askYesNo(question,default='y'):
 
 
 
-def RunAs(category_info):
+def RunAs(category_info,gui=False):
 	""" Check if root is needed, if user want to be root... """
 	run_as='user'
 	if os.getuid() == 0:
@@ -55,7 +55,10 @@ def RunAs(category_info):
 				break
 		if root_needed:
 			#ask if the user want to substitute
-			substitute=askYesNo(_("""To generate a complete report, root access is needed.
+			if gui:
+				pass #TODO
+			else:
+				substitute=askYesNo(_("""To generate a complete report, root access is needed.
 Do you want to substitute user?"""))
 			if substitute:
 				run_as="substitute"
@@ -72,14 +75,19 @@ def CompleteReportRoot(run_as,tmp_configfile):
 		if which.which('sudo') != None: #TODO checkme
 			print(_("Please, enter your user password."))
 			root_instance = str(which.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
-			os.system(root_instance)
+
 		elif which.which('su') != None:
 			print(_("Please, enter the root password."))
 			root_instance = str(which.which('su')) + " - -c \'"+ os.path.abspath(sys.argv[0])+" --runfile "+ tmp_configfile+"\'" 
-			os.system(root_instance)
+			
 		else:
 			sys.stderr.write(_("Error: No substitute user command available.\n"))
+			return 1
 		
+		password=getpass.getpass()
+		child = pexpect.spawn(root_instance)
+		child.expect([".*:",pexpect.EOF]) #Could we do more ?
+		child.sendline(password)
 
 
 
