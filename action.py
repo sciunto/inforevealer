@@ -87,8 +87,12 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 			return 1
 		
 		#Get password
+		print "gui"
+		print gui
 		if gui:
-			pass #TODO
+			password=gtktest.askPassword()
+			print password
+			#pass #TODO
 		else:
 			password=getpass.getpass()
 		#Run the command
@@ -128,7 +132,7 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choic
 		
 	#Use su or sudo to complete the report
 	dumpfile_handler.close() #the next function will modify the report, close the dumpfile
-	CompleteReportRoot(run_as,tmp_configfile)
+	CompleteReportRoot(run_as,tmp_configfile,gui)
 
 
 	# Message to close the report

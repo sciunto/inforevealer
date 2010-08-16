@@ -102,7 +102,7 @@ class Application(gtk.Window):
         
         self.show_all()
         
-        yesNoDialog()
+        
         
     def __create_radio_buttons(self,box):
         """ Create the category list """
@@ -273,7 +273,7 @@ def yesNoDialog(title=" ",question="?"):
 	        False if no
 	#inspired from http://www.daa.com.au/pipermail/pygtk/2002-June/002962.html
 		   '''
-	
+	#create window+ Vbox + question
 	window=gtk.Window()
 	window.set_title(title)
 	vbox = gtk.VBox(True, 0)
@@ -298,11 +298,11 @@ def yesNoDialog(title=" ",question="?"):
 		window.callback_return=data
 
 	yes = gtk.Button(stock=gtk.STOCK_YES)
-	yes.connect("clicked", callback, (window, 1))
+	yes.connect("clicked", callback, (window, True))
 	hbox.pack_start(yes)
 
 	no = gtk.Button(stock=gtk.STOCK_NO)
-	no.connect("clicked", callback, (window, 0))
+	no.connect("clicked", callback, (window, False))
 	hbox.pack_start(no)
 
 	window.set_modal(True)
@@ -314,11 +314,49 @@ def yesNoDialog(title=" ",question="?"):
 
 
 
+def askPassword(title=" ",question="?"):
+
+	#create window+ Vbox + question
+	window=gtk.Window()
+	window.set_title(title)
+	vbox = gtk.VBox(True, 0)
+	window.add(vbox)
+	label = gtk.Label();
+        label.set_markup(question)
+        vbox.pack_start(label, False, False, 0)
 
 
+	def delete_event(widget, event, window):
+		window.callback_return=-1
+		return False
+	window.connect("delete_event", delete_event, window)	
+	
+	def callback(widget,data):
+		window=data[0]
+		window.hide()
+		window.callback_return=pword.get_text()
+
+	# Message for the window 
+	pword = gtk.Entry()
+	pword.set_visibility(False)
+	vbox.pack_start(pword, False, False, 0)
+	
+	
+	hbox = gtk.HButtonBox()
+	vbox.pack_start(hbox, False, False, 0)
+
+	# OK button
+	but = gtk.Button("OK")
+	hbox.add(but)
+	but.connect("clicked", callback, (window,True))
 
 
-
+	window.set_modal(True)
+	window.show_all()
+	window.callback_return=None
+	while window.callback_return==None:
+		gtk.main_iteration(True) # block until event occurs
+	return window.callback_return
 
 
 
