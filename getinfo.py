@@ -19,7 +19,7 @@
 
 
 import io
-import os
+import os, re
 import subprocess
 import time
 from pexpect import which
@@ -84,7 +84,13 @@ class File:
 	"get a file"
 	def __init__(self, category, file, root=False,verb=False,linux=None):
 		self.category=category
-		self.file=file
+		#check if file starts by ~
+		if re.match('^~.*',file)==None:
+			self.file=file
+		else:
+			#replace ~ by $HOME
+			self.file=str(os.getenv('HOME'))+re.sub('^~','',file)
+			
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?

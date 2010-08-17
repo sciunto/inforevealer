@@ -3,6 +3,7 @@ RELEASE 2010-
 
 new features:
     * GUI
+    * Allow file=~/foobar in configfile. (~==$HOME)
 
 Bugfixes:
     * configfile validator
