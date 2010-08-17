@@ -25,11 +25,13 @@ import io #outputs...
 import readconf #read categories
 import action # main part...
 
+
 import os, sys, time, urllib, re, gettext, string, stat,configobj,string
 #from subprocess import PIPE,Popen
 
 from validate import Validator
 from configobj import ConfigObj
+from pastebin import sendFileContent
 
 
 gettext.textdomain('inforevealer')
@@ -177,7 +179,8 @@ def main(argv):
 			gui.main(configfile,list_category)
 		#check if category is ok
 		elif category in list_category:
-			action.action(category,dumpfile,configfile,tmp_configfile,verbosity,pastebin_choice,website)
+			action.action(category,dumpfile,configfile,tmp_configfile,verbosity)
+			sendFileContent(dumpfile,title=category,website=website,version=None)
 		else:
 			sys.stderr.write(_('Error: Wrong category'))
 			io.usage()

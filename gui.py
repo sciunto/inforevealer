@@ -479,13 +479,10 @@ END OF TERMS AND CONDITIONS
 		""" Do the work """
 		dumpfile='/tmp/inforevealer' #FIXME
 		verbosity=False
-		
-		website = "http://pastebin.com"
-		pastebin_choice=False
 		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
-		print self.category
-		action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,pastebin_choice,website,gui=True)
-		TextViewer(dumpfile)
+		action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,gui=True)
+		TextViewer(dumpfile)#open a new window with the result.
+		
 
 	def quit_prog(self,widget,evnmt,data=None):
 		""" Quit the software """
@@ -504,10 +501,7 @@ class TextViewer:
 		gtk.main_quit()
 
 	def __init__(self,output_file):
-		self.output=output_file
-	
-
-      
+		self.output=output_file  
 		fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
 		fenetre.set_icon(pixbuf)
@@ -534,6 +528,7 @@ class TextViewer:
 		label.show()
 		boite2.pack_start(label,False,False,0)
 
+		# TEXT BOX
 		fd = gtk.ScrolledWindow()
 		fd.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		textview = gtk.TextView()
@@ -544,18 +539,20 @@ class TextViewer:
 		fd.show()
 		textview.show()
 		textview.set_cursor_visible(False)
-
 		boite2.pack_start(fd)
+		
 		#load file
 		try:
-			fichier = open(self.output, "r")#FIXME
+			fichier = open(self.output, "r")
 			self.text = fichier.read()
 			fichier.close()
 			buffertexte.set_text(self.text)
 		except IOError:
 			sys.stderr.write("Error: Cannot open %s" %self.output)
+		#END TEXTBOX
 
-		#Add Pastebin
+
+		# PASTEBIN
 		boiteH = gtk.HBox(True,0)
 		boite2.pack_start(boiteH, False, False, 0)
 		boiteH.show()
@@ -566,7 +563,7 @@ class TextViewer:
 		label.show()
 		boiteH.pack_start(label,True,False,0)
 		
-		#TODO
+		
 		
 		self.pastebin_list = pastebin.preloadPastebins()
 		self.combobox = gtk.combo_box_new_text()
@@ -583,9 +580,9 @@ class TextViewer:
 		bouton.show()
 		boiteH.pack_start(bouton, True, False, 0)
 		
-		#END pastebin
+		#END PASTEBIN
 	
-		#Buttons
+		# BUTTONS (close...)
 		boiteH = gtk.HBox(True,0)
 		boite2.pack_start(boiteH, False, False, 0)
 		boiteH.show()	
@@ -608,7 +605,8 @@ class TextViewer:
 		clipb = gtk.Clipboard()
 		clipb.set_text(self.text, len=-1)
 
-	def send_pastebin(self, widget): #IMPROVEME
+	def send_pastebin(self, widget): #IMPROVEME : Design + clipboard ?
+		""" Send the content on pastebin """
 		link = "http://" + self.website[self.combobox.get_active()]+"/"
 		link=pastebin.sendFileContent(self.output,title=None,website=link,version=None)
 		message = "File sent on\n"+link

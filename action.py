@@ -118,7 +118,7 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 			
 
 
-def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website,gui=False):
+def action(category,dumpfile,configfile,tmp_configfile,verbosity,gui=False):
 	if gui: from gui import  yesNoDialog
 	#####################
 	# Write in dumpfile
@@ -161,6 +161,3 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choic
 	print( _("The output has been dumped in ")+dumpfile)
 
 	
-	#if desired, send the report on pastebin
-	if pastebin_choice:
-		pastebin.sendFileContent(dumpfile,title=category,website=website,version=None)
