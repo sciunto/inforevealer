@@ -11,7 +11,7 @@ gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
 pixbuf=None
-for icon_file in ['/usr/share/inforevealer/icons/icon.svg','icons/icons.svg']:
+for icon_file in ['/usr/share/inforevealer/icons/icon.svg','icons/icon.svg']:
 	if os.path.isfile(icon_file):
 		pixbuf = gtk.gdk.pixbuf_new_from_file(icon_file)
 		
