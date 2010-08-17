@@ -503,7 +503,6 @@ class TextViewer:
 	def __init__(self,output_file):
 		self.output=output_file  
 		fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
-		pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
 		fenetre.set_icon(pixbuf)
 		fenetre.set_resizable(True)
 		fenetre.set_default_size(600, 400)
