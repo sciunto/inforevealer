@@ -46,7 +46,7 @@ def main(argv):
 		import getopt
 		import sys
 
-		version=0.1
+		version=0.4
 
 		#set default
 		dumpfile='/tmp/inforevealer'
