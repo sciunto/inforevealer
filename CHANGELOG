@@ -1,11 +1,11 @@
 VERSION 0.4 
-RELEASE 2010-
+RELEASE 2010-08-17
 
 new features:
     * GUI
     * Allow file=~/foobar in configfile. (~==$HOME)
 
-Bugfixes:
+Bugfix:
     * configfile validator
 
 ################
