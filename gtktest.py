@@ -115,16 +115,16 @@ class Application(gtk.Window):
 		""" Create the category list """
 		first=True
 		for item in self.check_list:
-		button_label = str(item)+": "+ str(self.check_list[item])
-		if first:
-			button = gtk.RadioButton(group=None, label=button_label)
-			self.category=item
-		else:
-			button = gtk.RadioButton(group=button, label=button_label)
-		button.connect("toggled", self.callback_radio_buttons, item)
-		box.pack_start(button, True, True, 0)
-		button.show()
-		first=False
+			button_label = str(item)+": "+ str(self.check_list[item])
+			if first:
+				button = gtk.RadioButton(group=None, label=button_label)
+				self.category=item
+			else:
+				button = gtk.RadioButton(group=button, label=button_label)
+			button.connect("toggled", self.callback_radio_buttons, item)
+			box.pack_start(button, True, True, 0)
+			button.show()
+			first=False
 		
 	def callback_radio_buttons(self,widget,data=None):
 		""" Get the selected radio button """
