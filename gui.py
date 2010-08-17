@@ -4,7 +4,7 @@
 import gobject
 import gtk
 
-import action,pastebin
+import action,pastebin 
 
 import gettext,os
 gettext.textdomain('inforevealer')
@@ -35,10 +35,19 @@ ui_info ='''<ui>
 
 class Application(gtk.Window):
 	def __init__(self, configfile, list_category, parent=None):
+		self.verbosity=False
 		self.configfile=configfile
 		self.check_list=list_category
 		self.category=None
-
+		self.dumpfile='/tmp/inforevealer'
+		try:
+			#Create an empty file (to be seen by the GUI)
+			foo = open(self.dumpfile, 'w')
+			foo.close()
+		except IOError:
+			sys.stderr.write("Error: Cannot open %s" %self.output)
+			
+			
 		# Create the toplevel window
 		gtk.Window.__init__(self)
 			
@@ -50,8 +59,8 @@ class Application(gtk.Window):
 			self.connect('destroy', lambda *w: gtk.main_quit())
 
 		self.set_title("Inforevealer") #FIXME
-		self.set_default_size(200, 200)
-		#self.set_resizable(False)
+		#self.set_default_size(200, 200)
+		self.set_resizable(False)
 
 
 
@@ -74,7 +83,7 @@ class Application(gtk.Window):
 
 
 		# Create TABLE
-		box1 = gtk.VBox(True, 0)
+		box1 = gtk.VBox(False, 0)
 		self.add(box1)
 
 		#Add Menu into TABLE        
@@ -87,7 +96,7 @@ class Application(gtk.Window):
 		box1.pack_start(label, False, False, 0)
 
 		self.__create_radio_buttons(box1)
-
+		self.__create_option_menu(box1)
 
 		#buttons (bottom)
 		# Create TABLE
@@ -111,7 +120,55 @@ class Application(gtk.Window):
 		box1.show()    
 		self.show_all()
 
-        
+        def __create_option_menu(self,box):
+		frame = gtk.Expander("Options")
+		box.pack_start(frame, True, True,0)
+		box2 = gtk.VBox(False, 0)
+		frame.add(box2)
+		box2.show()
+		
+		self.verbose_button = gtk.CheckButton("Verbose mode")
+		#not connected, read it before using self.verbosity
+		box2.pack_start(self.verbose_button,True, True, 0)
+		self.verbose_button.show()
+		
+		#FILECHOOSER
+		
+		hbox = gtk.HBox(False, 0)
+		box2.pack_start(hbox,True, True, 0)
+		hbox.show()
+		
+		#Add info
+		label = gtk.Label();
+		label.set_markup(_("Dumpfile: "))
+		hbox.pack_start(label, False, False, 40)
+		
+		self.label = gtk.Label();
+		self.label.set_markup(self.dumpfile)
+		hbox.pack_start(self.label, False, False, 40)
+		
+		button = gtk.Button(_('Modify'))
+		button.connect("clicked", self.openfile)
+		hbox.pack_start(button, False, False, 0)
+	
+		button.show()
+		
+		#dialog = gtk.FileChooser(title='Title', parent=None, action=gtk.FILE_CHOOSER_ACTION_CREATE_FOLDER, buttons=None, backend=None)
+		#self.filechooser =  gtkfiledialog.FileDialog()
+		#self.filechooser.show()
+		#self.filechooser.get_filename(action='save')
+		#hbox.pack_start( self.filechooser, False, False, 40)
+		#ENDFILECHOOSER
+		
+		frame.show()
+	
+	def openfile(self,w):
+		filechooser =  FileDialog()
+		self.dumpfile=filechooser.get_filename(action='save')
+		if self.dumpfile==None:
+			self.dumpfile = "/tmp/inforevealer"
+		self.label.set_text(self.dumpfile)
+		
         
 	def __create_radio_buttons(self,box):
 		""" Create the category list """
@@ -477,11 +534,10 @@ END OF TERMS AND CONDITIONS
 
 	def generate(self,widget,evnmt,data=None):
 		""" Do the work """
-		dumpfile='/tmp/inforevealer' #FIXME
-		verbosity=False
 		tmp_configfile="/tmp/inforevealer_tmp.conf" #tmp configuration file (substitute)
-		action.action(self.category,dumpfile,self.configfile,tmp_configfile,verbosity,gui=True)
-		TextViewer(dumpfile)#open a new window with the result.
+		self.verbosity = self.verbose_button.get_active()
+		action.action(self.category,self.dumpfile,self.configfile,tmp_configfile,self.verbosity,gui=True)
+		TextViewer(self.dumpfile)#open a new window with the result.
 		
 
 	def quit_prog(self,widget,evnmt,data=None):
@@ -720,9 +776,71 @@ def askPassword(title=" ",question="?"):
 
 
 
+
+
+
+class FileDialog(object):
+    """Handle a pair of file dialogs (open and save).
+
+    Useful to keep the selected filename sync'ed between both
+    dialogs. Eliminates redundant code too.
+
+    """
+    def __init__(self):
+        self.filename = None
+
+    def get_filename(self, action='open'):
+        """Run a dialog and return a filename or None.
+
+        Valid actions are 'open' and 'save'.
+
+        """
+        # I used to create the dialogs only once (on object
+        # initialization), and hide and show them, but I can not
+        # manage to pre-select a filename after a dialog have been
+        # used once. I guess file chooser dialogs are just throwaway
+        # objects. Thus, recreate them every time.
+        if action == 'open':
+            chooser = gtk.FileChooserDialog(
+                                action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                         gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+            chooser.set_title('Open file:')
+
+        elif action == 'save':
+            chooser = gtk.FileChooserDialog(
+                                action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                         gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+            chooser.set_title('Save as:')
+        else:
+            raise Exception("action must be 'open' or 'save' (got '%s')"
+                            % action)
+
+        if self.filename:
+            chooser.select_filename(self.filename)
+        response = chooser.run()
+        filename = chooser.get_filename()
+        chooser.destroy()
+
+        # By default, the GTK loop would wait until the process is
+        # idle to process events. Now, it is very probable that file
+        # I/O will be performed right after this method call and that
+        # would delay hiding the dialog until I/O are done. So,
+        # process pending events to hide the dialog right now.
+        while gtk.events_pending():
+            gtk.main_iteration(False)
+
+        if response == gtk.RESPONSE_OK:
+            self.filename = filename
+            return filename
+        else:
+            return None
+
+
 def main(configfile,list):
 	Application(configfile,list)
 	gtk.main()
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#main()
