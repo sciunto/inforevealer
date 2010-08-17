@@ -96,9 +96,6 @@ class File:
 		self.linux_dependant=linux # need a specific distribution?
 
 	def write(self,user_os,verbosity,output,output_path,run_as="user",config_out=None):
-		import os
-		#import pdb; pdb.set_trace()
-
 			# the following condition is equivalent to
 			# if user asks verbosity, then print all
 			# else print not verb only
