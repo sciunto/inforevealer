@@ -29,6 +29,7 @@ Install
 ##################################################
 
 The inforevealer.d/ directory should be in the current path or in /etc/
+The icons/ directory should be in the current path or in /usr/share/inforevealer/
 Run ./inforevealer.py
 
 ##################################################

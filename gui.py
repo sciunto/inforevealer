@@ -6,13 +6,15 @@ import gtk
 
 import action,pastebin
 
-import gettext
+import gettext,os
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
-
-icon_path='icon.svg'
-pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+pixbuf=None
+for icon_file in ['/usr/share/inforevealer/icons/icon.svg','icons/icons.svg']:
+	if os.path.isfile(icon_file):
+		pixbuf = gtk.gdk.pixbuf_new_from_file(icon_file)
+		
 
 ui_info ='''<ui>
   <menubar name='MenuBar'>
