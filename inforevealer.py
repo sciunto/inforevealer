@@ -22,17 +22,16 @@
 #import gtktest #GUI
 import getinfo #Get info from commands and files
 import io #outputs...
-import pastebin #send date onto pastebin
+#import pastebin #send date onto pastebin
 import readconf #read categories
 import action # main part...
 
-import os, sys, time, urllib, re, gettext, string, stat,configobj
-from subprocess import PIPE,Popen
+import os, sys, time, urllib, re, gettext, string, stat,configobj,string
+#from subprocess import PIPE,Popen
 
 from validate import Validator
 from configobj import ConfigObj
 
-import string
 
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
