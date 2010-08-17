@@ -19,11 +19,6 @@ for icon_file in ['/usr/share/inforevealer/icons/icon.svg','icons/icon.svg']:
 ui_info ='''<ui>
   <menubar name='MenuBar'>
     <menu action='FileMenu'>
-      <menuitem action='New'/>
-      <menuitem action='Open'/>
-      <menuitem action='Save'/>
-      <menuitem action='SaveAs'/>
-      <separator/>
       <menuitem action='Quit'/>
     </menu>
     <menu action='HelpMenu'>
@@ -141,28 +136,24 @@ class Application(gtk.Window):
 		#Add info
 		label = gtk.Label();
 		label.set_markup(_("Dumpfile: "))
-		hbox.pack_start(label, False, False, 40)
+		hbox.pack_start(label, False, False, 10)
 		
 		self.label = gtk.Label();
 		self.label.set_markup(self.dumpfile)
-		hbox.pack_start(self.label, False, False, 40)
+		hbox.pack_start(self.label, False, False, 20)
 		
 		button = gtk.Button(_('Modify'))
-		button.connect("clicked", self.openfile)
-		hbox.pack_start(button, False, False, 0)
+		button.connect("clicked", self.opendumpfile)
+		hbox.pack_end(button, False, False, 20)
 	
 		button.show()
 		
-		#dialog = gtk.FileChooser(title='Title', parent=None, action=gtk.FILE_CHOOSER_ACTION_CREATE_FOLDER, buttons=None, backend=None)
-		#self.filechooser =  gtkfiledialog.FileDialog()
-		#self.filechooser.show()
-		#self.filechooser.get_filename(action='save')
-		#hbox.pack_start( self.filechooser, False, False, 40)
 		#ENDFILECHOOSER
 		
 		frame.show()
 	
-	def openfile(self,w):
+	def opendumpfile(self,w):
+		""" Open the dumpfile"""
 		filechooser =  FileDialog()
 		self.dumpfile=filechooser.get_filename(action='save')
 		if self.dumpfile==None:
@@ -197,28 +188,12 @@ class Application(gtk.Window):
 		entries = ( #FIXME
 		( "FileMenu", None, "_File" ),               # name, stock id, label
 		( "HelpMenu", None, "_Help" ),               # name, stock id, label
-		( "New", gtk.STOCK_NEW,                      # name, stock id
-		"_New", "<control>N",                      # label, accelerator
-		"Create a new file",                       # tooltip
-		self.activate_action ),
-		( "Open", gtk.STOCK_OPEN,                    # name, stock id
-		"_Open","<control>O",                      # label, accelerator
-		"Open a file",                             # tooltip
-		self.activate_action ),
-		( "Save", gtk.STOCK_SAVE,                    # name, stock id
-		"_Save","<control>S",                      # label, accelerator
-		"Save current file",                       # tooltip
-		self.activate_action ),
-		( "SaveAs", gtk.STOCK_SAVE,                  # name, stock id
-		"Save _As...", None,                       # label, accelerator
-		"Save to a file",                          # tooltip
-		self.activate_action ),
 		( "Quit", gtk.STOCK_QUIT,                    # name, stock id
-		"_Quit", "<control>Q",                     # label, accelerator
+		"_Quit", "",                     # label, accelerator
 		"Quit",                                    # tooltip
 		self.activate_action ),
-		( "About", None,                             # name, stock id
-		"_About", "<control>A",                    # label, accelerator
+		( "About", gtk.STOCK_ABOUT,                             # name, stock id
+		"_About", "",                    # label, accelerator
 		"About",                                   # tooltip
 		self.activate_about ),
 		);
