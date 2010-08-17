@@ -43,7 +43,7 @@ def askYesNo(question,default='y'):
 
 def RunAs(category_info,gui=False):
 	""" Check if root is needed, if user want to be root... """
-	if gui: from gtktest import  yesNoDialog
+	if gui: from gui import  yesNoDialog
 	run_as='user'
 	if os.getuid() == 0:
 		#we are root
@@ -74,7 +74,7 @@ Do you want to substitute user?""")
 def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 	"""Run a new instance of inforevealer with root priviledge to complete tmp_configfile"""
     
-	if gui: from gtktest import askPassword
+	if gui: from gui import askPassword
 
 	if run_as == "substitute":
 		#find the substitute user command and run the script	
@@ -119,7 +119,7 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 
 
 def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choice,website,gui=False):
-	if gui: from gtktest import  yesNoDialog
+	if gui: from gui import  yesNoDialog
 	#####################
 	# Write in dumpfile
 	#####################
@@ -155,7 +155,7 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity, pastebin_choic
 	# Message to close the report
 	dumpfile_handler= open(dumpfile,'a')
 	io.write_title(_("You didn\'t find what you expected?"),dumpfile_handler)
-	dumpfile_handler.write( _('Please, fill in a bug report on\nhttp://github.com/sciunto/inforevealer\n'))
+	dumpfile_handler.write( _('Please, open a bug report on\nhttp://github.com/sciunto/inforevealer\n'))
 	dumpfile_handler.close()
 
 	print( _("The output has been dumped in ")+dumpfile)

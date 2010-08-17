@@ -19,10 +19,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-#import gtktest #GUI
+
 import getinfo #Get info from commands and files
 import io #outputs...
-#import pastebin #send date onto pastebin
 import readconf #read categories
 import action # main part...
 
@@ -174,8 +173,8 @@ def main(argv):
 				dumpfile_handler.close()
 			sys.exit()
 		elif gui==True:
-			import gtktest
-			gtktest.main(configfile,list_category)
+			import gui
+			gui.main(configfile,list_category)
 		#check if category is ok
 		elif category in list_category:
 			action.action(category,dumpfile,configfile,tmp_configfile,verbosity,pastebin_choice,website)
@@ -194,5 +193,5 @@ def main(argv):
 #####################
 if __name__ == "__main__":
 	    main(sys.argv[1:])
-       # gtktest.main() 
+        
 
