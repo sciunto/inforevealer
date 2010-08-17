@@ -57,14 +57,11 @@ class Application(gtk.Window):
 		#self.set_default_size(200, 200)
 		self.set_resizable(False)
 
-
-
 		merge = gtk.UIManager()
 		#self.set_data("ui-manager", merge)
 		merge.insert_action_group(self.__create_action_group(), 0)
 		#should be added to the top level window so that the Action accelerators can be used by your users
 		self.add_accel_group(merge.get_accel_group())
-
 
 
 		# Create Menu
@@ -74,8 +71,6 @@ class Application(gtk.Window):
 			print("building menus failed: %s" % msg)
 			
 		bar = merge.get_widget("/MenuBar")
-
-
 
 		# Create TABLE
 		box1 = gtk.VBox(False, 0)
@@ -107,7 +102,7 @@ class Application(gtk.Window):
 		bouton.show()
 		#apply
 		bouton = gtk.Button(stock=gtk.STOCK_APPLY)
-		bouton.connect("clicked", self.generate,self, None) #FIXME
+		bouton.connect("clicked", self.generate,self, None)
 		box2.pack_start(bouton, True, True, 0)
 		bouton.show()
 
@@ -751,9 +746,6 @@ def askPassword(title=" ",question="?"):
 
 
 
-
-
-
 class FileDialog(object):
     """Handle a pair of file dialogs (open and save).
 
@@ -816,6 +808,3 @@ class FileDialog(object):
 def main(configfile,list):
 	Application(configfile,list)
 	gtk.main()
-
-#if __name__ == '__main__':
-#main()
