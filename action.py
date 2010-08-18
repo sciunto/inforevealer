@@ -80,7 +80,7 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 		#find the substitute user command and run the script	
 		if pexpect.which('sudo') != None: #TODO checkme
 			message=_("Please, enter your user password.")
-			root_instance = str(pexpect.which('sudo')) + os.path.abspath(" "+sys.argv[0])+" --runfile "+ tmp_configfile
+			root_instance = str(pexpect.which('sudo')) + ' ' + os.path.abspath(sys.argv[0])+' --runfile '+ tmp_configfile
 
 		elif pexpect.which('su') != None:
 			message=_("Please, enter the root password.")
