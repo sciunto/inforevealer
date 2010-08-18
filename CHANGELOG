@@ -1,3 +1,11 @@
+VERSION 0.4.1
+RELEASE 2010-08-18
+
+
+Bugfix:
+    * bugfix: sudo
+
+################
 VERSION 0.4 
 RELEASE 2010-08-17
 
