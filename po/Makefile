@@ -1,7 +1,7 @@
 CREATEPO=xgettext
 SRC=$(wildcard ../*.py)
-
+POT='inforevealer.pot'
 
 .PHONY=po
 po:
-	$(CREATEPO) $(SRC)
+	$(CREATEPO) -o $(POT) $(SRC)
