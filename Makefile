@@ -25,7 +25,7 @@ pot: $(POAPOT) $(XGETPOT)
 		$(MSGFMT) $< -o $@
 
 $(XGETPOT): $(SRC)
-		$(XGETTEXT) -o $(POT) $(SRC)
+		$(XGETTEXT) -o $(XGETPOT) $(SRC)
 
 $(POAPOT): $(SRC)
 		$(POA) -k0 $(POACONF)
