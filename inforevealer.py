@@ -26,7 +26,7 @@ import readconf #read categories
 import action # main part...
 
 
-import os, sys, time, urllib, re, gettext, string, stat,configobj,string
+import os, sys, time, urllib, re, gettext, string, stat,configobj, locale, string
 #from subprocess import PIPE,Popen
 
 from validate import Validator
@@ -60,14 +60,25 @@ def main(argv):
 		website = defaultPB
 		pastebin_choice=False
 
-		#look for categories.conf in differents directories
-		if os.access('/etc/inforevealer.d/categories.conf',os.R_OK):
-			filename="/etc/inforevealer.d/categories.conf"
-		elif os.access(os.path.join(os.path.dirname(__file__), 'inforevealer.d/categories.conf'),os.R_OK):
-			filename="inforevealer.d/categories.conf"
-		else:
-			sys.stderr.write(_("Error: No categories.conf available.\n"))
-			sys.exit(1)
+		#what locale is used?
+		lang = locale.getdefaultlocale()[0]
+		lang = re.sub('_.*','',lang)
+		loc_path='inforevealer.d/'+str(lang)+'/categories.conf'
+		filename=None
+		#look for categories.conf in differents directories for the current locale
+		if os.access('/etc/'+loc_path,os.R_OK):
+			filename='/etc/'+loc_path
+		elif os.access(os.path.join(os.path.dirname(__file__), loc_path),os.R_OK):
+			filename=loc_path
+		if filename==None:
+			#use the default file (english)
+			if os.access('/etc/inforevealer.d/categories.conf',os.R_OK):
+				filename="/etc/inforevealer.d/categories.conf"
+			elif os.access(os.path.join(os.path.dirname(__file__), 'inforevealer.d/categories.conf'),os.R_OK):
+				filename="inforevealer.d/categories.conf"
+			else:
+				 sys.stderr.write(_("Error: No categories.conf available.\n"))
+				 sys.exit(1)
 
 		#look for validator.conf in differents directories
 		if os.access('/etc/inforevealer.d/validator.conf',os.R_OK):
