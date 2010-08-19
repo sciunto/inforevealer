@@ -22,6 +22,10 @@ install: $(SRC)
 		chmod +x src/setup.py
 		python src/setup.py install
 
+uninstall:
+		chmod +x src/setup.py
+		python src/setup.py uninstall
+
 %.mo : %.po
 		$(MSGFMT) $< -o $@
 
