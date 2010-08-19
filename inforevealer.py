@@ -99,7 +99,7 @@ def main(argv):
 		if configfile.validate(Validator()) == True:
 			list_category=readconf.LoadCategoryList(configfile)
 		else:
-			sys.stderr.write(_("Error: the configuration file %s is not valid.\nSee %s for a template.\n") % (filename,spec_filename))  
+			sys.stderr.write(_(("Error: the configuration file %s is not valid.\nSee %s for a template.\n") % (filename,spec_filename)))  
 			sys.exit(1)
 
 
