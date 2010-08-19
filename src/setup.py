@@ -61,7 +61,8 @@ files = (
 		('inforevealer.d/pastebin/slexy.org.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/stikked.com.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/yourpaste.net.conf','/etc/inforevealer.d/pastebin'),
-		('man/inforevealer.1','share/man/man1')
+		('inforevealer;desktop','share/man/'),
+		('man/inforevealer.1','share/applications/')
 		)
 
 # symlinks: source, destination
@@ -137,7 +138,7 @@ for opt, value in opts:
 # ---------------------------------------------------------------------------
 if args == ['install']:
 	#    check_dependencies()
-	print 'Installing Comix to', install_dir, '...\n'
+	print 'Installing Inforevealer to', install_dir, '...\n'
 	if not os.access(install_dir, os.W_OK):
 		print 'You do not have write permissions to', install_dir
 		sys.exit(1)
@@ -156,10 +157,10 @@ if args == ['install']:
 # Uninstall
 # ---------------------------------------------------------------------------
 elif args == ['uninstall']:
-    print 'Uninstalling Comix from', install_dir, '...\n'
-    #uninstall('share/comix')
-    #uninstall('share/man/man1/comix.1.gz')
-    #uninstall('share/applications/comix.desktop')
+    print 'Uninstalling Inforevealer from', install_dir, '...\n'
+    uninstall('share/inforevealer')
+    uninstall('share/man/man1/inforevealer.1')
+    uninstall('share/applications/inforevealer.desktop')
     #uninstall('share/icons/hicolor/16x16/apps/comix.png')
     #uninstall('share/icons/hicolor/22x22/apps/comix.png')
     #uninstall('share/icons/hicolor/24x24/apps/comix.png')
