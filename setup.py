@@ -36,7 +36,7 @@ import getopt
 source_dir = os.path.dirname(os.path.realpath(__file__))
 install_dir = '/usr/local/'
 
-translations = ('fr')
+translations = ('fr',)
 
 # files: source, destination
 files = (
@@ -61,7 +61,7 @@ files = (
 		('inforevealer.d/pastebin/slexy.org.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/stikked.com.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/yourpaste.net.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer;desktop','share/man/'),
+		('inforevealer.desktop','share/man/'),
 		('man/inforevealer.1','share/applications/')
 		)
 
@@ -145,7 +145,6 @@ if args == ['install']:
 	for src, dst in files:
 		install(src, dst)
 	for lang in translations:
-		pass
 		install(os.path.join('po', lang, 'LC_MESSAGES/inforevealer.mo'),
 		    os.path.join('share/locale/', lang, 'LC_MESSAGES'))
 	for src, link in links:
