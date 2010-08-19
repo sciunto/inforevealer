@@ -1,0 +1,50 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH INFOREVEALER 1 "JULY 2010" INFOREVEALER "User Manual"
+.SH NAME
+inforevealer \- generate...
+.SH SYNOPSIS
+.B inforevealer [-p] [-c
+.I category
+.B ]
+.\".I file
+.\".B ...
+.SH DESCRIPTION
+.B inforevealer
+TODO
+TODO
+TODO
+.SH OPTIONS
+.IP \-c,\ \-\-category=CATEGORY
+Use the category CATEGORY.
+.IP \-f,\ \-\-file=FILE
+Write the report in FILE.
+.IP \-l,\ \-\-list
+Print the list of categories.
+.IP \-p,\ \-\-pastebin
+Send the report on a pastebin website.
+.IP \-w,\ \-\-website=WEBSITE
+Use the pastebin WEBSITE.
+.IP \-\-verbose
+Use the verbose mode.
+.IP \-h,\ \-\-help
+Print a reminder of options.
+.IP \-\-gui
+Start the graphic interface. Other options are ignored.
+.SH FILES
+.I /etc/inforevealer.d/categories.conf
+.RS
+The configuration file which contains categories and their contents. This file should respect
+.BR /etc/inforevealer.d/validator.conf
+specifications.
+.RE
+.I /etc/inforevealer.d/pastebin/
+.RS
+This directory owns configuration files for pastebin websites.
+.SH COPYRIGHT
+(C) Francois Boulogne <fboulogne at april dot org>
+.PP This software is distributed under the GNU GPLv2 license.
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+.SH AUTHOR
+Francois Boulogne <fboulogne at april dot org>
