@@ -161,25 +161,17 @@ elif args == ['uninstall']:
     uninstall('share/inforevealer')
     uninstall('share/man/man1/inforevealer.1')
     uninstall('share/applications/inforevealer.desktop')
+	#TODO /etc...
     #uninstall('share/icons/hicolor/16x16/apps/comix.png')
     #uninstall('share/icons/hicolor/22x22/apps/comix.png')
     #uninstall('share/icons/hicolor/24x24/apps/comix.png')
     #uninstall('share/icons/hicolor/32x32/apps/comix.png')
     #uninstall('share/icons/hicolor/48x48/apps/comix.png')
     #uninstall('share/icons/hicolor/scalable/apps/comix.svg')
-    #for _, link in LINKS:
-        #uninstall(link)
-    #for lang in TRANSLATIONS:
-        #uninstall(os.path.join('share/locale', lang, 'LC_MESSAGES/comix.mo'))
-    #for src, path in MIME_FILES:
-        #uninstall(os.path.join(path, os.path.basename(src)))
-    #for _, link in MIME_LINKS:
-        #uninstall(link)
-    
-    ## These are from old versions of Comix, we try to remove them anyway.
-    #uninstall('share/pixmaps/comix.png')
-    #uninstall('share/pixmaps/comix')
-    #uninstall('/tmp/comix')
+    for _, link in links:
+        uninstall(link)
+    for lang in translations:
+        uninstall(os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
     
 else:
     info()
