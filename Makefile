@@ -19,7 +19,7 @@ pot: $(POAPOT) $(XGETPOT)
 
 
 install: $(SRC)
-		chmod +x setup.py
+		chmod +x src/setup.py
 		python src/setup.py install
 
 %.mo : %.po
