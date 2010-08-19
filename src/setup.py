@@ -60,8 +60,9 @@ files = (
 		('inforevealer.d/pastebin/pastie.org.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/slexy.org.conf','/etc/inforevealer.d/pastebin'),
 		('inforevealer.d/pastebin/stikked.com.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/yourpaste.net.conf','/etc/inforevealer.d/pastebin')
-)
+		('inforevealer.d/pastebin/yourpaste.net.conf','/etc/inforevealer.d/pastebin'),
+		('man/inforevealer.1','share/man/man1')
+		)
 
 # symlinks: source, destination
 links = (('../share/inforevealer/src/inforevealer.py','bin/inforevealer'),)
