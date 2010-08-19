@@ -20,11 +20,11 @@ pot: $(POAPOT) $(XGETPOT)
 
 install: $(SRC)
 		chmod +x setup.py
-		python setup.py install
+		python setup.py install --dir=/usr
 
 uninstall:
 		chmod +x setup.py
-		python setup.py uninstall
+		python setup.py uninstall --dir=/usr
 
 %.mo : %.po
 		$(MSGFMT) $< -o $@
