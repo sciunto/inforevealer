@@ -3,7 +3,8 @@ RELEASE 2010--
 
 new features:
 	* i18n on both source and config files
-
+	* inforevealer.desktop added
+	* Makefile/script to (un)install 
 
 ################
 VERSION 0.4.1
