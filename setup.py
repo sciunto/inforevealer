@@ -109,6 +109,7 @@ def install(src, dst, prefix):
 		print('Installed %s' %dst)
 	except Exception:
 		print('Could not install %s' %dst)
+		print('from %s' %src)
 		
 		
 def uninstall(prefix, path):
@@ -153,7 +154,7 @@ if args == ['install']:
 	for src, dst, prefix in files:
 		install(src, dst, prefix)
 	for lang in translations:
-		install(os.path.join('po', lang, 'LC_MESSAGES/inforevealer.mo'),
+		install(os.path.join('po/', lang, 'inforevealer.mo'),
 		    os.path.join('share/locale/', lang, 'LC_MESSAGES'),install_dir)
 	for src, link in links:
 		make_link(src, link)
