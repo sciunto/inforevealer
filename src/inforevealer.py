@@ -26,11 +26,10 @@ import readconf #read categories
 import action # main part...
 
 
-import os, sys, time, urllib, re, gettext, string, stat,configobj, string
+import os, sys, time, urllib, re, gettext, string, stat, string
 #from subprocess import PIPE,Popen
 
-from validate import Validator
-from configobj import ConfigObj
+
 from pastebin import sendFileContent
 
 
@@ -115,27 +114,7 @@ def main(argv):
 
 		#First to do: runfile (internal use)
 		if runfile != None:
-			#TODO > in readconf.py
-			try:
-				config = ConfigObj(tmp_configfile)
-			except configobj.ConfigObjError, e:
-				sys.stderr.write('%s: %s' % (filename, e))
-				sys.exit(1)
-			for section in config.sections:
-				descr=config[section]['descr']
-				e_type=config[section]['type']
-				execu=config[section]['exec']
-				root=config[section]['root']
-				verb=config[section]['verb']
-				linux=config[section]['linux_distribution']
-				dumpfile=config[section]['dumpfile']
-				if e_type == 'command':
-				       com=getinfo.Command(section,execu.split(" "),root,verb,linux)
-				elif e_type == 'file':
-				       com=getinfo.File(section,execu,root,verb,linux)
-				dumpfile_handler= open(dumpfile,'a')
-				com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
-				dumpfile_handler.close()
+			readconf.ReadAndMakeInternalDesire(tmp_configfile)
 			sys.exit()
 		else:
 			#find categories.conf
