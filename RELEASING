@@ -4,6 +4,7 @@ Stuffs that should be done before releasing:
 
 * i10n: make pot
 * i10n: make mo
+* i10n: complete langs= in setup.py
 * Update version in PACKAGER
 * Complete CHANGELOG
 * Check TODO stuffs
