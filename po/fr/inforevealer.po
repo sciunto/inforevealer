@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-19 21:53+0200\n"
+"POT-Creation-Date: 2010-08-20 14:35+0200\n"
 "PO-Revision-Date: 2010-08-20 11:10+0200\n"
 "Last-Translator: Francois Boulogne <fboulogne at april dot org>\n"
 "Language: \n"
@@ -70,10 +70,10 @@ msgstr "%s non trouvé ! \n"
 #: src/getinfo.py:188
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
-"output ls /etc"
+"output: ls /etc"
 msgstr ""
-"Votre distribution est inconnue. S'il vous plaît, ouvrez un rapport de bug avec le résultat de la commande "
-"ls /etc"
+"Votre distribution est inconnue. S'il vous plaît, ouvrez un rapport de bug "
+"avec le résultat de la commande : ls /etc"
 
 #: src/gui.py:85
 msgid "Select one of the following category:"
@@ -187,8 +187,8 @@ msgid ""
 "Unknown website, please post a bugreport to request this pastebin to be "
 "added (%s)"
 msgstr ""
-"Site web inconnu, s'il vous plaît, postez un rapport de bug 
-"pour demander que ce pastebin soit ajouté (%s)"
+"Site web inconnu, s'il vous plaît, postez un rapport de bug pour demander "
+"que ce pastebin soit ajouté (%s)"
 
 #: src/pastebin.py:191
 msgid "Pastebin link: "
