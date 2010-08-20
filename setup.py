@@ -173,7 +173,7 @@ elif args == ['uninstall']:
         uninstall(install_dir,os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
     for _, link in links:
         uninstall(install_dir,link)
-    print('Uninstalling Inforevealer from %s ...\n' %confdir)
+    print('Uninstalling Inforevealer from %s ...\n' %conf_dir)
     uninstall(conf_dir,'inforevealer.d')
 else:
     info()
