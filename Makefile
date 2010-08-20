@@ -5,7 +5,7 @@ POACONF=po4a.cfg
 SRC=$(wildcard src/*.py)
 XGETPOT='po/inforevealer.pot'
 POAPOT='po/categories.conf.pot'
-POFILES=$(wildcard po/*/*.po)
+POFILES=$(wildcard po/*/inforevealer.po)
 MOFILES=$(POFILES:.po=.mo)
 
 .PHONY: all pot
