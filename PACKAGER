@@ -1,15 +1,26 @@
 This file is a help for packagers.
 
+##############
+# INFO
+##############
+
 name=inforevealer
-version=0.3
+version=0.5
 licence=GPLv2
 source=http://github.com/sciunto/inforevealer
-dep= see README file
+dep= {	pygtk >= 2.6, 
+		python-configobj >= 4.6.0, 
+		python-pexpect
+	 }
 build_dep=
-summary=inforevealer provides relevant information easily to solve a problem on Linux
+summary=inforevealer provides useful information about the system.
 
 
 
+##############
+# inforevealer.desktop
+##############
+A .desktop file is provided. 
 If you write your own desktop file, make sure to call inforevealer with option --gui
 
 
