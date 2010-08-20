@@ -35,6 +35,27 @@ conf_dir = '/etc/'
 
 translations = ('fr',)
 
+
+def info():
+	print(__doc__)
+	sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# Parse the command line.
+# ---------------------------------------------------------------------------
+try:
+	opts, args = getopt.gnu_getopt(sys.argv[1:], '', ['dir='])
+except getopt.GetoptError:
+	info()
+for opt, value in opts:
+	if opt == '--dir':
+		install_dir = value
+		if not os.path.isdir(install_dir):
+			print('\n!!! Error: %s does not exist.' %install_dir) 
+			info()
+
+
 # files: source, destination
 files = [
 		('src/action.py', 'share/inforevealer/src', install_dir),  
@@ -72,9 +93,6 @@ for lang in translations:
 links = (('../share/inforevealer/src/inforevealer.py','bin/inforevealer'),)
 
 
-def info():
-	print(__doc__)
-	sys.exit(1)
 
 def install(src, dst, prefix):
 	"""Copy <src> to <dst>. The <src> path is relative to the source_dir and
@@ -122,28 +140,15 @@ def make_link(src, link):
 	except:
 		print('Could not create symlink', link)
 
-# ---------------------------------------------------------------------------
-# Parse the command line.
-# ---------------------------------------------------------------------------
-try:
-	opts, args = getopt.gnu_getopt(sys.argv[1:], '', ['dir=', 'no-mime'])
-except getopt.GetoptError:
-	info()
-for opt, value in opts:
-	if opt == '--dir':
-		install_dir = value
-		if not os.path.isdir(install_dir):
-			print('\n!!! Error:', install_dir, 'does not exist.') 
-			info()
 
 # ---------------------------------------------------------------------------
 # Install
 # ---------------------------------------------------------------------------
 if args == ['install']:
 	#    check_dependencies()
-	print('Installing Inforevealer to')
+	print('Installing Inforevealer')
 	if not os.access(install_dir, os.W_OK):
-		print('You do not have write permissions to', install_dir)
+		print('You do not have write permissions to %s' %install_dir)
 		sys.exit(1)
 	for src, dst, prefix in files:
 		install(src, dst, prefix)
@@ -158,7 +163,7 @@ if args == ['install']:
 # Uninstall
 # ---------------------------------------------------------------------------
 elif args == ['uninstall']:
-    print('Uninstalling Inforevealer from', install_dir, '...\n')
+    print('Uninstalling Inforevealer from %s ...\n' %install_dir)
     uninstall(install_dir,'share/inforevealer')
     uninstall(install_dir,'share/man/man1/inforevealer.1')
     uninstall(install_dir,'share/applications/inforevealer.desktop')
@@ -167,7 +172,7 @@ elif args == ['uninstall']:
         uninstall(install_dir,os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
     for _, link in links:
         uninstall(install_dir,link)
-    print('Uninstalling Inforevealer from', conf_dir, '...\n')
+    print('Uninstalling Inforevealer from %s ...\n' %confdir)
     uninstall(conf_dir,'inforevealer.d')
 else:
     info()
