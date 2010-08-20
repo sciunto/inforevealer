@@ -31,8 +31,11 @@ from configobj import ConfigObj
 def find_categories_conf():
 	#what locale is used?
 	lang = locale.getdefaultlocale()[0]
-	lang = re.sub('_.*','',lang)
-	loc_path='inforevealer.d/'+str(lang)+'/categories.conf'
+	if lang!=None:
+		lang = re.sub('_.*','',lang)
+		loc_path=os.path.join('inforevealer.d/',lang,'categories.conf')
+	else:
+		loc_path=os.path.join('inforevealer.d/','categories.conf')
 	filename=None
 	#look for categories.conf in differents directories for the current locale
 	if os.access('/etc/'+loc_path,os.R_OK):
