@@ -185,7 +185,7 @@ def General_info(output):
 		output.write(foo)
 	else:
 		myos='unknown'
-		output.write(_('Your distribution is unknown. Please, open a bug report with the command output ls /etc'))
+		output.write(_('Your distribution is unknown. Please, open a bug report with the command output: ls /etc'))
 	return myos
 
 
