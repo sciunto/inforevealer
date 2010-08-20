@@ -3,7 +3,7 @@ TODO list
 * send the dumpfile on pastebins: done
 * integrate root login: done
 * create a GUI interface: done
-* i18n: 90% done
+* i18n: 95% done (Makefile...)
 
 * add more categories and complete them.
 * add directory inspection
