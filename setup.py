@@ -26,7 +26,6 @@ x-cbt and x-cbr archive files.
 
 #TODO 
 #translations categories.conf
-# uninstall
 
 import os
 import sys
@@ -34,35 +33,36 @@ import shutil
 import getopt
 
 source_dir = os.path.dirname(os.path.realpath(__file__))
-install_dir = '/usr/local/'
+install_dir = '/tmp/usr/local/'
+conf_dir = '/tmp/etc/'
 
 translations = ('fr',)
 
 # files: source, destination
 files = (
-		('src/action.py', 'share/inforevealer/src'),  
-		('src/getinfo.py', 'share/inforevealer/src'),   
-		('src/gui.py',  'share/inforevealer/src'),  
-		('src/inforevealer.py',  'share/inforevealer/src'),  
-		('src/io.py',  'share/inforevealer/src'),  
-		('src/pastebin.py',  'share/inforevealer/src'),  
-		('src/readconf.py', 'share/inforevealer/src'),
-		('icons/icon.svg', 'share/inforevealer/icons'),
-		('inforevealer.d/categories.conf','/etc/inforevealer.d'),
-		('inforevealer.d/validator.conf','/etc/inforevealer.d'),
-		('inforevealer.d/validator.conf','/etc/inforevealer.d'),
-		('inforevealer.d/pastebin/fpaste.org.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/paste2.org.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/pastebin.ca.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/pastebin.com.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/paste.debian.net.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/paste.ubuntu.com.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/pastie.org.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/slexy.org.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/stikked.com.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.d/pastebin/yourpaste.net.conf','/etc/inforevealer.d/pastebin'),
-		('inforevealer.desktop','share/man/'),
-		('man/inforevealer.1','share/applications/')
+		('src/action.py', 'share/inforevealer/src', install_dir),  
+		('src/getinfo.py', 'share/inforevealer/src', install_dir),   
+		('src/gui.py',  'share/inforevealer/src', install_dir),  
+		('src/inforevealer.py',  'share/inforevealer/src', install_dir),  
+		('src/io.py',  'share/inforevealer/src', install_dir),  
+		('src/pastebin.py',  'share/inforevealer/src', install_dir),  
+		('src/readconf.py', 'share/inforevealer/src', install_dir),
+		('icons/icon.svg', 'share/inforevealer/icons', install_dir),
+		('inforevealer.d/categories.conf','inforevealer.d', conf_dir),
+		('inforevealer.d/validator.conf','inforevealer.d', conf_dir),
+		('inforevealer.d/validator.conf','inforevealer.d', conf_dir),
+		('inforevealer.d/pastebin/fpaste.org.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/paste2.org.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/pastebin.ca.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/pastebin.com.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/paste.debian.net.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/paste.ubuntu.com.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/pastie.org.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/slexy.org.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/stikked.com.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.d/pastebin/yourpaste.net.conf','inforevealer.d/pastebin', conf_dir),
+		('inforevealer.desktop','share/applications/', install_dir),
+		('man/inforevealer.1','share/man/man1', install_dir)
 		)
 
 # symlinks: source, destination
@@ -73,12 +73,12 @@ def info():
 	print(__doc__)
 	sys.exit(1)
 
-def install(src, dst):
+def install(src, dst, prefix):
 	"""Copy <src> to <dst>. The <src> path is relative to the source_dir and
-	the <dst> path is a directory relative to the install_dir.
+	the <dst> path is a directory relative to the dir prefix.
 	"""
 	try:
-		dst = os.path.join(install_dir, dst, os.path.basename(src))
+		dst = os.path.join(prefix, dst, os.path.basename(src))
 		src = os.path.join(source_dir, src)
 		assert os.path.isfile(src)
 		assert not os.path.isdir(dst)
@@ -90,12 +90,12 @@ def install(src, dst):
 		print('Could not install', dst)
 		
 		
-def uninstall(path):
+def uninstall(prefix, path):
 	"""Remove the file or directory at <path>, which is relative to the 
-	install_dir.
+	prefix.
 	"""
 	try:
-		path = os.path.join(install_dir, path)
+		path = os.path.join(prefix, path)
 		if os.path.isfile(path) or os.path.islink(path):
 			os.remove(path)
 		elif os.path.isdir(path):
@@ -138,15 +138,15 @@ for opt, value in opts:
 # ---------------------------------------------------------------------------
 if args == ['install']:
 	#    check_dependencies()
-	print 'Installing Inforevealer to', install_dir, '...\n'
+	print('Installing Inforevealer to')
 	if not os.access(install_dir, os.W_OK):
 		print 'You do not have write permissions to', install_dir
 		sys.exit(1)
-	for src, dst in files:
-		install(src, dst)
+	for src, dst, prefix in files:
+		install(src, dst, prefix)
 	for lang in translations:
 		install(os.path.join('po', lang, 'LC_MESSAGES/inforevealer.mo'),
-		    os.path.join('share/locale/', lang, 'LC_MESSAGES'))
+		    os.path.join('share/locale/', lang, 'LC_MESSAGES'),install_dir)
 	for src, link in links:
 		make_link(src, link)
 	#os.utime(os.path.join(install_dir, 'share/icons/hicolor'), None)
@@ -157,20 +157,14 @@ if args == ['install']:
 # ---------------------------------------------------------------------------
 elif args == ['uninstall']:
     print 'Uninstalling Inforevealer from', install_dir, '...\n'
-    uninstall('share/inforevealer')
-    uninstall('share/man/man1/inforevealer.1')
-    uninstall('share/applications/inforevealer.desktop')
-	#TODO /etc...
-    #uninstall('share/icons/hicolor/16x16/apps/comix.png')
-    #uninstall('share/icons/hicolor/22x22/apps/comix.png')
-    #uninstall('share/icons/hicolor/24x24/apps/comix.png')
-    #uninstall('share/icons/hicolor/32x32/apps/comix.png')
-    #uninstall('share/icons/hicolor/48x48/apps/comix.png')
-    #uninstall('share/icons/hicolor/scalable/apps/comix.svg')
-    for _, link in links:
-        uninstall(link)
+    uninstall(install_dir,'share/inforevealer')
+    uninstall(install_dir,'share/man/man1/inforevealer.1')
+    uninstall(install_dir,'share/applications/inforevealer.desktop')
     for lang in translations:
-        uninstall(os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
-    
+        uninstall(install_dir,os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
+    for _, link in links:
+        uninstall(install_dir,link)
+    print 'Uninstalling Inforevealer from', conf_dir, '...\n'
+    uninstall(conf_dir,'inforevealer.d')
 else:
     info()
