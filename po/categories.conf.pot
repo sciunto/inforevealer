@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-19 16:55+0300\n"
+"POT-Creation-Date: 2010-08-20 15:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:1
 #, no-wrap
-msgid "disk"
+msgid "Disk"
 msgstr ""
 
 #: inforevealer.d/categories.conf:2
@@ -27,7 +27,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:34
 #, no-wrap
-msgid "cpu"
+msgid "CPU"
 msgstr ""
 
 #: inforevealer.d/categories.conf:35
@@ -37,7 +37,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:56
 #, no-wrap
-msgid "hardware"
+msgid "Hardware"
 msgstr ""
 
 #: inforevealer.d/categories.conf:57
@@ -47,7 +47,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:91
 #, no-wrap
-msgid "display"
+msgid "Display"
 msgstr ""
 
 #: inforevealer.d/categories.conf:92
@@ -57,7 +57,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:129
 #, no-wrap
-msgid "sound"
+msgid "Sound"
 msgstr ""
 
 #: inforevealer.d/categories.conf:130
@@ -72,7 +72,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:143
 #, no-wrap
-msgid "bootloader"
+msgid "Bootloader"
 msgstr ""
 
 #: inforevealer.d/categories.conf:144
@@ -82,7 +82,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:164
 #, no-wrap
-msgid "internet"
+msgid "Internet"
 msgstr ""
 
 #: inforevealer.d/categories.conf:165
@@ -92,7 +92,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:195
 #, no-wrap
-msgid "package"
+msgid "Package"
 msgstr ""
 
 #: inforevealer.d/categories.conf:196
@@ -102,7 +102,7 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:240
 #, no-wrap
-msgid "system"
+msgid "System"
 msgstr ""
 
 #: inforevealer.d/categories.conf:241

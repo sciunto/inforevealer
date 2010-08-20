@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-19 16:55+0300\n"
-"PO-Revision-Date: 2010-08-19 16:55+0300\n"
+"POT-Creation-Date: 2010-08-20 15:19+0300\n"
+"PO-Revision-Date: 2010-08-20 15:19+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -18,53 +18,53 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:1
 #, no-wrap
-msgid "disk"
-msgstr ""
+msgid "Disk"
+msgstr "Disque"
 
 #: inforevealer.d/categories.conf:2
 #, no-wrap
 msgid "Volumes, sizes, UUID..."
-msgstr ""
+msgstr "Volumes, tailles, UUID"
 
 #: inforevealer.d/categories.conf:34
 #, no-wrap
-msgid "cpu"
-msgstr ""
+msgid "CPU"
+msgstr "CPU"
 
 #: inforevealer.d/categories.conf:35
 #, no-wrap
 msgid "All CPU info"
-msgstr ""
+msgstr "Toutes les informations sur le processeur"
 
 #: inforevealer.d/categories.conf:56
 #, no-wrap
-msgid "hardware"
-msgstr ""
+msgid "Hardware"
+msgstr "Materiel"
 
 #: inforevealer.d/categories.conf:57
 #, no-wrap
 msgid "General hardware information which are not included in other items"
-msgstr ""
+msgstr "Informations generales du materiel qui ne sont pas inclus dans d'autres categories"
 
 #: inforevealer.d/categories.conf:91
 #, no-wrap
-msgid "display"
-msgstr ""
+msgid "Display"
+msgstr "Affichage"
 
 #: inforevealer.d/categories.conf:92
 #, no-wrap
 msgid "Xorg, monitor info..."
-msgstr ""
+msgstr "Xorg, information sur l'ecran"
 
 #: inforevealer.d/categories.conf:129
 #, no-wrap
-msgid "sound"
-msgstr ""
+msgid "Sound"
+msgstr "Son"
 
 #: inforevealer.d/categories.conf:130
 #, no-wrap
 msgid "Volume and sound parameters"
-msgstr ""
+msgstr "Volume et parametres sonores"
 
 #: inforevealer.d/categories.conf:137
 #, no-wrap
@@ -73,40 +73,40 @@ msgstr ""
 
 #: inforevealer.d/categories.conf:143
 #, no-wrap
-msgid "bootloader"
-msgstr ""
+msgid "Bootloader"
+msgstr "Chargeur de demarrage"
 
 #: inforevealer.d/categories.conf:144
 #, no-wrap
 msgid "Everything on grub and partitions"
-msgstr ""
+msgstr "Tout sur grub et les partitions"
 
 #: inforevealer.d/categories.conf:164
 #, no-wrap
-msgid "internet"
-msgstr ""
+msgid "Internet"
+msgstr "Internet"
 
 #: inforevealer.d/categories.conf:165
 #, no-wrap
 msgid "Wifi, ethernet..."
-msgstr ""
+msgstr "Wifi, ethernet..."
 
 #: inforevealer.d/categories.conf:195
 #, no-wrap
-msgid "package"
-msgstr ""
+msgid "Package"
+msgstr "Paquet"
 
 #: inforevealer.d/categories.conf:196
 #, no-wrap
 msgid "List of repositories..."
-msgstr ""
+msgstr "Liste des media sources..."
 
 #: inforevealer.d/categories.conf:240
 #, no-wrap
-msgid "system"
-msgstr ""
+msgid "System"
+msgstr "Systeme"
 
 #: inforevealer.d/categories.conf:241
 #, no-wrap
 msgid "Memory usage, current tasks and specific distribution's configuration files"
-msgstr ""
+msgstr "Utilisation memoire, taches courantes et informations specifique a la distribution"
