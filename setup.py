@@ -162,6 +162,7 @@ elif args == ['uninstall']:
     uninstall(install_dir,'share/inforevealer')
     uninstall(install_dir,'share/man/man1/inforevealer.1')
     uninstall(install_dir,'share/applications/inforevealer.desktop')
+    uninstall(install_dir,'share/icons/hicolor/scalable/apps/inforevealer.svg')
     for lang in translations:
         uninstall(install_dir,os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
     for _, link in links:
