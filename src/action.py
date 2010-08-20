@@ -154,8 +154,8 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity,gui=False):
 
 	# Message to close the report
 	dumpfile_handler= open(dumpfile,'a')
-	io.write_title(_("You didn\'t find what you expected?"),dumpfile_handler)
-	dumpfile_handler.write( _('Please, open a bug report on\nhttp://github.com/sciunto/inforevealer\n'))
+	io.write_title("You didn\'t find what you expected?",dumpfile_handler)
+	dumpfile_handler.write( 'Please, open a bug report on\nhttp://github.com/sciunto/inforevealer\n')
 	dumpfile_handler.close()
 
 	print( _("The output has been dumped in ")+dumpfile)
