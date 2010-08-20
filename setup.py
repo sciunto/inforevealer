@@ -24,9 +24,6 @@ or register new mime types for x-cbz,
 x-cbt and x-cbr archive files.
 """
 
-#TODO 
-#translations categories.conf
-
 import os
 import sys
 import shutil
@@ -39,7 +36,7 @@ conf_dir = '/etc/'
 translations = ('fr',)
 
 # files: source, destination
-files = (
+files = [
 		('src/action.py', 'share/inforevealer/src', install_dir),  
 		('src/getinfo.py', 'share/inforevealer/src', install_dir),   
 		('src/gui.py',  'share/inforevealer/src', install_dir),  
@@ -63,7 +60,13 @@ files = (
 		('inforevealer.d/pastebin/yourpaste.net.conf','inforevealer.d/pastebin', conf_dir),
 		('inforevealer.desktop','share/applications/', install_dir),
 		('man/inforevealer.1','share/man/man1', install_dir)
-		)
+		]
+
+#add translations for conf files
+for lang in translations:
+	source = 'inforevealer.d/'+str(lang)+'/categories.conf'
+	dest = 'inforevealer.d/'+str(lang)
+	files.append( (source,dest,conf_dir) )
 
 # symlinks: source, destination
 links = (('../share/inforevealer/src/inforevealer.py','bin/inforevealer'),)
