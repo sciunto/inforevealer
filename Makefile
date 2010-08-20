@@ -11,6 +11,10 @@ MOFILES=$(POFILES:.po=.mo)
 .PHONY: all pot
 all: mo
 
+#TODO
+#update po
+#msgmerge -U .po .pot
+
 #Create mo files 
 mo: $(MOFILES)
 
