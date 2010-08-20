@@ -33,8 +33,8 @@ import shutil
 import getopt
 
 source_dir = os.path.dirname(os.path.realpath(__file__))
-install_dir = '/tmp/usr/local/'
-conf_dir = '/tmp/etc/'
+install_dir = '/usr/local/'
+conf_dir = '/etc/'
 
 translations = ('fr',)
 
