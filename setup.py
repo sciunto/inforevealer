@@ -102,9 +102,9 @@ def uninstall(prefix, path):
 			shutil.rmtree(path)
 		else:
 			return
-		print 'Removed', path
+		print('Removed', path)
 	except Exception:
-		print 'Could not remove', path
+		print('Could not remove', path)
 				
 
 def make_link(src, link):
@@ -115,9 +115,9 @@ def make_link(src, link):
 		if not os.path.exists(os.path.dirname(link)):
 			os.makedirs(os.path.dirname(link))
 		os.symlink(src, link)
-		print 'Symlinked', link
+		print('Symlinked', link)
 	except:
-		print 'Could not create symlink', link
+		print('Could not create symlink', link)
 
 # ---------------------------------------------------------------------------
 # Parse the command line.
@@ -130,7 +130,7 @@ for opt, value in opts:
 	if opt == '--dir':
 		install_dir = value
 		if not os.path.isdir(install_dir):
-			print '\n!!! Error:', install_dir, 'does not exist.' 
+			print('\n!!! Error:', install_dir, 'does not exist.') 
 			info()
 
 # ---------------------------------------------------------------------------
@@ -140,7 +140,7 @@ if args == ['install']:
 	#    check_dependencies()
 	print('Installing Inforevealer to')
 	if not os.access(install_dir, os.W_OK):
-		print 'You do not have write permissions to', install_dir
+		print('You do not have write permissions to', install_dir)
 		sys.exit(1)
 	for src, dst, prefix in files:
 		install(src, dst, prefix)
@@ -149,14 +149,13 @@ if args == ['install']:
 		    os.path.join('share/locale/', lang, 'LC_MESSAGES'),install_dir)
 	for src, link in links:
 		make_link(src, link)
-	#os.utime(os.path.join(install_dir, 'share/icons/hicolor'), None)
 
 
 # ---------------------------------------------------------------------------
 # Uninstall
 # ---------------------------------------------------------------------------
 elif args == ['uninstall']:
-    print 'Uninstalling Inforevealer from', install_dir, '...\n'
+    print('Uninstalling Inforevealer from', install_dir, '...\n')
     uninstall(install_dir,'share/inforevealer')
     uninstall(install_dir,'share/man/man1/inforevealer.1')
     uninstall(install_dir,'share/applications/inforevealer.desktop')
@@ -164,7 +163,7 @@ elif args == ['uninstall']:
         uninstall(install_dir,os.path.join('share/locale', lang, 'LC_MESSAGES/inforevealer.mo'))
     for _, link in links:
         uninstall(install_dir,link)
-    print 'Uninstalling Inforevealer from', conf_dir, '...\n'
+    print('Uninstalling Inforevealer from', conf_dir, '...\n')
     uninstall(conf_dir,'inforevealer.d')
 else:
     info()
