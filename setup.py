@@ -44,7 +44,7 @@ files = [
 		('src/io.py',  'share/inforevealer/src', install_dir),  
 		('src/pastebin.py',  'share/inforevealer/src', install_dir),  
 		('src/readconf.py', 'share/inforevealer/src', install_dir),
-		('icons/icon.svg', 'share/inforevealer/icons', install_dir),
+		('icons/inforevealer.svg', 'share/icons/hicolor/scalable/apps', install_dir),
 		('inforevealer.d/categories.conf','inforevealer.d', conf_dir),
 		('inforevealer.d/validator.conf','inforevealer.d', conf_dir),
 		('inforevealer.d/validator.conf','inforevealer.d', conf_dir),
