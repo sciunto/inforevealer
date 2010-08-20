@@ -79,7 +79,7 @@ files = [
 		('inforevealer.d/pastebin/slexy.org.conf','inforevealer.d/pastebin', conf_dir),
 		('inforevealer.d/pastebin/stikked.com.conf','inforevealer.d/pastebin', conf_dir),
 		('inforevealer.d/pastebin/yourpaste.net.conf','inforevealer.d/pastebin', conf_dir),
-		('inforevealer.desktop','share/applications/', install_dir),
+		('inforevealer.desktop','share/icons/hicolor/scalable/apps', install_dir),
 		('man/inforevealer.1','share/man/man1', install_dir)
 		]
 
