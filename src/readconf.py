@@ -19,7 +19,69 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import getinfo
+import os
+import re
+import locale
+import sys
 
+import configobj
+from validate import Validator
+from configobj import ConfigObj
+
+def find_categories_conf():
+	#what locale is used?
+	lang = locale.getdefaultlocale()[0]
+	lang = re.sub('_.*','',lang)
+	loc_path='inforevealer.d/'+str(lang)+'/categories.conf'
+	filename=None
+	#look for categories.conf in differents directories for the current locale
+	if os.access('/etc/'+loc_path,os.R_OK):
+		filename='/etc/'+loc_path
+	elif os.access(os.path.join(os.path.dirname(__file__), '../'+loc_path),os.R_OK):
+		filename='../'+loc_path
+	if filename==None: #not yet found
+		#use the default file (english)
+		if os.access('/etc/inforevealer.d/categories.conf',os.R_OK):
+			filename="/etc/inforevealer.d/categories.conf"
+		elif os.access(os.path.join(os.path.dirname(__file__), '../inforevealer.d/categories.conf'),os.R_OK):
+			filename="../inforevealer.d/categories.conf"
+		else:
+			sys.stderr.write(_("Error: No categories.conf available.\n"))
+			sys.exit(1)
+	return filename
+
+def find_validator_conf():
+	#look for validator.conf in differents directories
+	if os.access('/etc/inforevealer.d/validator.conf',os.R_OK):
+		spec_filename="/etc/inforevealer.d/validator.conf"
+	elif os.access(os.path.join(os.path.dirname(__file__), '../inforevealer.d/validator.conf'),os.R_OK):
+		spec_filename="../inforevealer.d/validator.conf"
+	else:
+		sys.stderr.write(_("Error: No validator.conf available.\n"))
+		sys.exit(1)
+	return spec_filename
+
+	###########
+	# Open config files
+	###########
+def open_config_file(filename,spec_filename):
+	try:
+		configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,_inspec=True)
+	except configobj.ConfigObjError, e:
+		sys.stderr.write('%s: %s' % (filename, e))
+		sys.exit(1)
+
+	try:
+		configfile = ConfigObj(filename, configspec=configspec)
+	except configobj.ConfigObjError, e:
+		sys.stderr.write('%s: %s' % (filename, e))
+		sys.exit(1)
+	#check if configfile respects specs
+	if configfile.validate(Validator()) == True:
+		return configfile
+	else:
+		sys.stderr.write(_("Error: the configuration file %(file1)s is not valid.\nSee %(file2)s for a template.\n") % {'file1':filename,'file2':spec_filename})  
+		sys.exit(1)
 
 
 

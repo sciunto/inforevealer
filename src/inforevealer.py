@@ -26,7 +26,7 @@ import readconf #read categories
 import action # main part...
 
 
-import os, sys, time, urllib, re, gettext, string, stat,configobj, locale, string
+import os, sys, time, urllib, re, gettext, string, stat,configobj, string
 #from subprocess import PIPE,Popen
 
 from validate import Validator
@@ -60,62 +60,6 @@ def main(argv):
 		website = defaultPB
 		pastebin_choice=False
 
-		#what locale is used?
-		lang = locale.getdefaultlocale()[0]
-		lang = re.sub('_.*','',lang)
-		loc_path='inforevealer.d/'+str(lang)+'/categories.conf'
-		filename=None
-		#look for categories.conf in differents directories for the current locale
-		if os.access('/etc/'+loc_path,os.R_OK):
-			filename='/etc/'+loc_path
-		elif os.access(os.path.join(os.path.dirname(__file__), '../'+loc_path),os.R_OK):
-			filename='../'+loc_path
-		if filename==None:
-			#use the default file (english)
-			if os.access('/etc/inforevealer.d/categories.conf',os.R_OK):
-				filename="/etc/inforevealer.d/categories.conf"
-			elif os.access(os.path.join(os.path.dirname(__file__), '../inforevealer.d/categories.conf'),os.R_OK):
-				filename="../inforevealer.d/categories.conf"
-			else:
-				 sys.stderr.write(_("Error: No categories.conf available.\n"))
-				 sys.exit(1)
-
-		#look for validator.conf in differents directories
-		if os.access('/etc/inforevealer.d/validator.conf',os.R_OK):
-			spec_filename="/etc/inforevealer.d/validator.conf"
-		elif os.access(os.path.join(os.path.dirname(__file__), '../inforevealer.d/validator.conf'),os.R_OK):
-			spec_filename="../inforevealer.d/validator.conf"
-		else:
-			sys.stderr.write(_("Error: No validator.conf available.\n"))
-			sys.exit(1)
-
-		
-
-		###########
-		# Open config files
-		###########
-
-		try:
-			configspec = ConfigObj(spec_filename, interpolation=False, list_values=False,_inspec=True)
-		except configobj.ConfigObjError, e:
-			sys.stderr.write('%s: %s' % (filename, e))
-			sys.exit(1)
-
-		try:
-			configfile = ConfigObj(filename, configspec=configspec)
-		except configobj.ConfigObjError, e:
-			sys.stderr.write('%s: %s' % (filename, e))
-			sys.exit(1)
-		#check if configfile respects specs
-		if configfile.validate(Validator()) == True:
-			list_category=readconf.LoadCategoryList(configfile)
-		else:
-			sys.stderr.write(_("Error: the configuration file %(file1)s is not valid.\nSee %(file2)s for a template.\n") % {'file1':filename,'file2':spec_filename})  
-			sys.exit(1)
-
-
-
-
 
 		#####################
 		# GETOPT
@@ -142,6 +86,14 @@ def main(argv):
 				io.usage()
 				sys.exit()
 			elif opt in ('-l', '--list'):
+				#find categories.conf
+				filename=readconf.find_categories_conf()
+				#find validator.conf
+				spec_filename=readconf.find_validator_conf()
+				#open categories.conf with validator.conf
+				configfile=readconf.open_config_file(filename,spec_filename)
+				# load the list of categories
+				list_category=readconf.LoadCategoryList(configfile)
 				io.list(list_category)
 				sys.exit()
 			elif opt in ('-c', '--category'):	
@@ -185,17 +137,27 @@ def main(argv):
 				com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
 				dumpfile_handler.close()
 			sys.exit()
-		elif gui==True:
-			import gui
-			gui.main(configfile,list_category)
-		#check if category is ok
-		elif category in list_category:
-			action.action(category,dumpfile,configfile,tmp_configfile,verbosity)
-			sendFileContent(dumpfile,title=category,website=website,version=None)
 		else:
-			sys.stderr.write(_('Error: Wrong category'))
-			io.usage()
-			sys.exit(1)
+			#find categories.conf
+			filename=readconf.find_categories_conf()
+			#find validator.conf
+			spec_filename=readconf.find_validator_conf()
+			#open categories.conf with validator.conf
+			configfile=readconf.open_config_file(filename,spec_filename)
+			# load the list of categories
+			list_category=readconf.LoadCategoryList(configfile)
+			
+			if gui==True:
+				import gui
+				gui.main(configfile,list_category)
+			#check if category is ok
+			elif category in list_category:
+				action.action(category,dumpfile,configfile,tmp_configfile,verbosity)
+				sendFileContent(dumpfile,title=category,website=website,version=None)
+			else:
+				sys.stderr.write(_('Error: Wrong category'))
+				io.usage()
+				sys.exit(1)
 	
 	except KeyboardInterrupt:
 		sys.exit(_("KeyboardInterrupt caught."))
