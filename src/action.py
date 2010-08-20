@@ -71,7 +71,7 @@ Do you want to substitute user?""")
 			run_as='user'
 	return run_as
 
-def CompleteReportRoot(run_as,tmp_configfile,gui=False):
+def CompleteReportAsRoot(run_as,tmp_configfile,gui=False):
 	"""Run a new instance of inforevealer with root priviledge to complete tmp_configfile"""
     
 	if gui: from gui import askPassword
@@ -149,7 +149,7 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity,gui=False):
 		
 	#Use su or sudo to complete the report
 	dumpfile_handler.close() #the next function will modify the report, close the dumpfile
-	CompleteReportRoot(run_as,tmp_configfile,gui)
+	CompleteReportAsRoot(run_as,tmp_configfile,gui)
 
 
 	# Message to close the report
