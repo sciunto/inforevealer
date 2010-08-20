@@ -35,7 +35,7 @@ Dependances
 Install
 ##################################################
 
-run:
+run (as root):
 		make install
 
 By default, the software is installed in /usr.
@@ -45,12 +45,14 @@ install section:
 by
 		"python setup.py install --dir=/foo/bar"
 
+The desktop file is installed (by default) in
+/usr/share/icons/hicolor/scalable/apps/inforevealer.desktop
 
 ##################################################
 Uninstall
 ##################################################
 
-run:
+run (as root):
 		make uninstall
 
 By default, the makefile looks at /usr. Modify the
