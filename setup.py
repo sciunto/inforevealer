@@ -106,9 +106,9 @@ def install(src, dst, prefix):
 		if not os.path.isdir(os.path.dirname(dst)):
 			os.makedirs(os.path.dirname(dst))
 		shutil.copy(src, dst)
-		print('Installed', dst)
+		print('Installed %s' %dst)
 	except Exception:
-		print('Could not install', dst)
+		print('Could not install %s' %dst)
 		
 		
 def uninstall(prefix, path):
@@ -123,9 +123,9 @@ def uninstall(prefix, path):
 			shutil.rmtree(path)
 		else:
 			return
-		print('Removed', path)
+		print('Removed %s' %path)
 	except Exception:
-		print('Could not remove', path)
+		print('Could not remove %s' %path)
 				
 
 def make_link(src, link):
@@ -136,9 +136,9 @@ def make_link(src, link):
 		if not os.path.exists(os.path.dirname(link)):
 			os.makedirs(os.path.dirname(link))
 		os.symlink(src, link)
-		print('Symlinked', link)
+		print('Symlinked %s' %link)
 	except:
-		print('Could not create symlink', link)
+		print('Could not create symlink %s' %link)
 
 
 # ---------------------------------------------------------------------------
