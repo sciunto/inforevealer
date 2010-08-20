@@ -106,7 +106,7 @@ def CompleteReportRoot(run_as,tmp_configfile,gui=False):
 				child.sendline(password)
 				ret = child.readlines()
 				if ret ==[' \r\n']: return 0
-				message=_("Wrong password.\nThe log will be generated without root priviledge.")
+		message=_("Wrong password.\nThe log will be generated without root priviledge.")
 		if gui:
 			import gtk
 			md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, message)
