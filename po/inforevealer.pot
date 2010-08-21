@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-20 15:40+0200\n"
+"POT-Creation-Date: 2010-08-21 13:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "%s not found! \n"
 msgstr ""
 
-#: src/getinfo.py:188
+#: src/getinfo.py:234
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
 "output: ls /etc"
@@ -62,6 +62,14 @@ msgstr ""
 
 #: src/gui.py:85
 msgid "Select one of the following category:"
+msgstr ""
+
+#: src/gui.py:114
+msgid "Options"
+msgstr ""
+
+#: src/gui.py:120
+msgid "Verbose mode"
 msgstr ""
 
 #: src/gui.py:133
@@ -73,7 +81,8 @@ msgid "Modify"
 msgstr ""
 
 #: src/gui.py:551
-msgid "The following report is availlable in "
+#, python-format
+msgid "The following report is availlable in %s"
 msgstr ""
 
 #: src/gui.py:587
@@ -88,34 +97,34 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
+#: src/gui.py:637
+#, python-format
+msgid ""
+"File sent on\n"
+"%s"
+msgstr ""
+
 #: src/gui.py:641
 msgid "Pastebin link"
 msgstr ""
 
-#: src/inforevealer.py:80
-msgid "Error: No categories.conf available.\n"
+#: src/gui.py:775
+msgid "Open file:"
 msgstr ""
 
-#: src/inforevealer.py:89
-msgid "Error: No validator.conf available.\n"
+#: src/gui.py:782
+msgid "Save as:"
 msgstr ""
 
-#: src/inforevealer.py:113
-#, python-format
-msgid ""
-"Error: the configuration file %(file1)s is not valid.\n"
-"See %(file2)s for a template.\n"
-msgstr ""
-
-#: src/inforevealer.py:136
+#: src/inforevealer.py:79
 msgid "Invalid arguments."
 msgstr ""
 
-#: src/inforevealer.py:196
+#: src/inforevealer.py:137
 msgid "Error: Wrong category"
 msgstr ""
 
-#: src/inforevealer.py:201 src/pastebin.py:194
+#: src/inforevealer.py:142 src/pastebin.py:196
 msgid "KeyboardInterrupt caught."
 msgstr ""
 
@@ -150,29 +159,44 @@ msgid ""
 "Reminder: %s -c internet"
 msgstr ""
 
-#: src/pastebin.py:65
+#: src/pastebin.py:66
 #, python-format
 msgid "%s: no section [pastebin]"
 msgstr ""
 
-#: src/pastebin.py:70
+#: src/pastebin.py:71
 #, python-format
 msgid "%s: no 'basename' in [pastebin]"
 msgstr ""
 
-#: src/pastebin.py:125
+#: src/pastebin.py:127
 #, python-format
 msgid ""
 "Unknown website, please post a bugreport to request this pastebin to be "
 "added (%s)"
 msgstr ""
 
-#: src/pastebin.py:191
+#: src/pastebin.py:193
 msgid "Pastebin link: "
 msgstr ""
 
-#: src/pastebin.py:197
+#: src/pastebin.py:199
 msgid ""
 "Unable to read or parse the result page, it could be a server timeout or a "
 "change server side, try with another pastebin."
+msgstr ""
+
+#: src/readconf.py:52
+msgid "Error: No categories.conf available.\n"
+msgstr ""
+
+#: src/readconf.py:63
+msgid "Error: No validator.conf available.\n"
+msgstr ""
+
+#: src/readconf.py:86
+#, python-format
+msgid ""
+"Error: the configuration file %(file1)s is not valid.\n"
+"See %(file2)s for a template.\n"
 msgstr ""
