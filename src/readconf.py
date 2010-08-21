@@ -69,7 +69,8 @@ def find_validator_conf():
 	###########
 def open_config_file(filename,spec_filename):
 	try:
-		configspec = ConfigObj(spec_filename, interpolation=False, list_values=False)
+		#add option _inspec=True for hash support. configobj >=4.6.0
+		configspec = ConfigObj(spec_filename, interpolation=False, list_values=False) 
 	except configobj.ConfigObjError, e:
 		sys.stderr.write('%s: %s' % (filename, e))
 		sys.exit(1)
