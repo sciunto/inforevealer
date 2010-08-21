@@ -19,16 +19,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-import getinfo #Get info from commands and files
 import io #outputs...
 import readconf #read categories
 import action # main part...
 
-
-import os, sys, time, urllib, re, gettext, string, stat, string
-#from subprocess import PIPE,Popen
-
+import sys, time, gettext, string
 
 from pastebin import sendFileContent
 
