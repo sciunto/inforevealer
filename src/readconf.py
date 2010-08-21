@@ -110,7 +110,7 @@ def LoadCategoryInfo(config,category):
 			ret_list.append(getinfo.Command(subsection,execu.split(" "),root,verb,linux))
 		elif e_type == 'file':
 			ret_list.append(getinfo.File(subsection,execu,root,verb,linux))
-		elif e_type == 'directory'
+		elif e_type == 'directory':
 			ret_list.append(getinfo.Directory(subsection,execu,root,verb,linux))
 		#could not be something else thanks to the config check
 	return ret_list
@@ -134,7 +134,7 @@ def ReadAndMakeInternalDesire(tmp_configfile):
 			com=getinfo.Command(section,execu.split(" "),root,verb,linux)
 		elif e_type == 'file':
 			com=getinfo.File(section,execu,root,verb,linux)
-		elif e_type == 'directory'
+		elif e_type == 'directory':
 			com=getinfo.Directory(section,execu,root,verb,linux)
 		dumpfile_handler= open(dumpfile,'a')
 		com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
