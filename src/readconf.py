@@ -123,7 +123,7 @@ def ReadAndMakeInternalDesire(tmp_configfile):
 		sys.stderr.write('%s: %s' % (filename, e))
 		sys.exit(1)
 	for section in config.sections:
-		descr=config[section]['descr']
+		descr=config[section]['description']
 		e_type=config[section]['type']
 		execu=config[section]['exec']
 		root=config[section]['root']
