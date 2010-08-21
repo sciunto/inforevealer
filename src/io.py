@@ -72,6 +72,5 @@ List of categories:""")
 
 	for i in categories:
 		print ("\t* "+i+" -> "+categories[i])
-	print _("\nReminder: %s -c internet") %sys.argv[0] 
-
-
+	print(_("\nReminder: %(command)s -c %(option)s") % {'command':sys.argv[0], 'option':categories.keys()[0]})
+	
