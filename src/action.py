@@ -158,6 +158,6 @@ def action(category,dumpfile,configfile,tmp_configfile,verbosity,gui=False):
 	dumpfile_handler.write( 'Please, open a bug report on\nhttp://github.com/sciunto/inforevealer\n')
 	dumpfile_handler.close()
 
-	print( _("The output has been dumped in ")+dumpfile)
+	print( _("The output has been dumped in %s") %dumpfile)
 
 	
