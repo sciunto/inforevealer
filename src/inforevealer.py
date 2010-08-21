@@ -31,6 +31,7 @@ from pastebin import sendFileContent
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
+__version__="0.5"
 
 #####################
 #Main part
@@ -40,7 +41,7 @@ def main(argv):
 		import getopt
 		import sys
 
-		version=0.4
+		
 
 		#set default
 		dumpfile='/tmp/inforevealer'

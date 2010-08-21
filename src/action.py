@@ -25,6 +25,8 @@ import os, sys, gettext,string, pexpect,getpass
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
+__version__="0.5"
+
 def askYesNo(question,default='y'):
 	""" Yes/no question throught a  console """
 	if string.lower(default) == 'y':

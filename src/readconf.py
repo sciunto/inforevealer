@@ -27,6 +27,7 @@ import sys
 import configobj
 from validate import Validator
 from configobj import ConfigObj
+__version__="0.5"
 
 def find_categories_conf():
 	#what locale is used?

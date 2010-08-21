@@ -7,6 +7,7 @@ Stuffs that should be done before releasing:
 * i10n: make mo
 * i10n: complete langs= in setup.py
 * Update version in PACKAGER
+* Update version in all src/*py
 * Complete CHANGELOG
 * Check TODO stuffs
 * Check README file
