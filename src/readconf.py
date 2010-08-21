@@ -30,6 +30,7 @@ from configobj import ConfigObj
 __version__="0.5"
 
 def find_categories_conf():
+	""" Find categories.conf's path and return it"""
 	#what locale is used?
 	lang = locale.getdefaultlocale()[0]
 	if lang!=None:
@@ -55,7 +56,7 @@ def find_categories_conf():
 	return filename
 
 def find_validator_conf():
-	#look for validator.conf in differents directories
+	""" Find validator.conf's path and return it"""
 	if os.access('/etc/inforevealer.d/validator.conf',os.R_OK):
 		spec_filename="/etc/inforevealer.d/validator.conf"
 	elif os.access(os.path.join(os.path.dirname(__file__), '../inforevealer.d/validator.conf'),os.R_OK):
@@ -65,10 +66,9 @@ def find_validator_conf():
 		sys.exit(1)
 	return spec_filename
 
-	###########
-	# Open config files
-	###########
+
 def open_config_file(filename,spec_filename):
+	""" Open config files and return the handler """
 	try:
 		#add option _inspec=True for hash support. configobj >=4.6.0
 		configspec = ConfigObj(spec_filename, interpolation=False, list_values=False) 
@@ -90,15 +90,15 @@ def open_config_file(filename,spec_filename):
 
 
 
-#Load category list
 def LoadCategoryList(config):
+	""" Load category list """
 	list_category=dict()
 	for section in config.sections:
 		list_category[section]=config[section]['description'] 
 	return list_category
 
-#Load info on a category
 def LoadCategoryInfo(config,category):
+	""" Load info on a category """
 	ret_list = list()
 	for subsection in config[category].sections:
 		descr=config[category][subsection]['description']
@@ -119,6 +119,8 @@ def LoadCategoryInfo(config,category):
 
 
 def ReadAndMakeInternalDesire(tmp_configfile):
+	""" Read an internal conf file (used for root priviledges)
+	Make the things that should be done"""
 	try:
 		config = ConfigObj(tmp_configfile)
 	except configobj.ConfigObjError, e:
