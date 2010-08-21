@@ -100,11 +100,11 @@ def CompleteReportAsRoot(run_as,tmp_configfile,gui=False):
 				print(message)
 				password=getpass.getpass()
 			if password != False: #askPassword could return False
-				#Run the command
+				#Run the command #TODO exceptions ?
 				child = pexpect.spawn(root_instance)
 				ret=child.expect([".*:",pexpect.EOF]) #Could we do more ?
 				child.sendline(password)
-				ret = child.readlines()
+				ret = child.readlines() 
 				if ret ==[' \r\n']: return 0
 		message=_("Wrong password.\nThe log will be generated without root priviledge.")
 		if gui:
