@@ -168,18 +168,18 @@ class Directory:
 				else:
 					__write_in_file()
 		else:
-			io.write_title(self.file,output)
-			output.write('Use verbose option (-v) to print this file.\n')
+			io.write_title(self.directory,output)
+			output.write('Use verbose option (-v) to print this directory content.\n')
 
 	def __write_in_file():
-		#TODO adapt
-		io.write_title(self.file,output)
-		if os.path.isfile(self.file):
-			fhandler= open(self.file,'r')
+		dirList=os.listdir(self.directory)
+		for fname in dirList:
+			print fname		
+			io.write_title(fname,output) #TODO subtitles
+			fhandler= open(fname,'r')
 			output.write( fhandler.read() )
 			fhandler.close()
-		else:
-			output.write("The file "+str(self.file)+ " does not exist!\n")
+
 
 
 def General_info(output):
