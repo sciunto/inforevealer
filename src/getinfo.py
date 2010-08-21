@@ -55,7 +55,7 @@ class Command:
 							output.write("To get this, run the script as root\n")
 						elif run_as == "substitute":
 							config_out.write("["+self.category+"]\n")
-							config_out.write("descr=\n")
+							config_out.write("description=\n")
 							config_out.write("type=command\n")
 							config_out.write("exec="+' '.join(self.command) +"\n")
 							config_out.write("root="+str(self.root)+"\n")
@@ -103,7 +103,7 @@ class File:
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
-						config_out.write("descr=\n")
+						config_out.write("description=\n")
 						config_out.write("type=file\n")
 						config_out.write("exec="+str(self.file)+"\n")
 						config_out.write("root="+str(self.root)+"\n")
@@ -129,6 +129,57 @@ class File:
 		else:
 			io.write_title(self.file,output)
 			output.write('Use verbose option (-v) to print this file.\n')		
+
+
+class Directory:
+	"get the content of a directory"
+	def __init__(self, category, directory, root=False,verb=False,linux=None):
+		self.category=category
+		#replace ~ by $HOME if needed
+		self.directory=os.path.expanduser(directory)			
+		self.root=root # need root?
+		self.verb=verb # is it verbose?
+		self.linux_dependant=linux # need a specific distribution?
+	
+	def write(self,user_os,verbosity,output,output_path,run_as="user",config_out=None):
+		# the following condition is equivalent to
+		# if user asks verbosity, then print all
+		# else print not verb only
+		if not (not verbosity and self.verb):
+			pass
+			#TODO
+			# correct OS or this info does not dependant on distrib ?
+			if self.linux_dependant == user_os or self.linux_dependant == None:
+				if self.root:
+					if run_as == "user":
+						io.write_title(self.file,output)
+						output.write("To get this, run the script as root\n")
+					elif run_as == "substitute":
+						config_out.write("["+self.category+"]\n")
+						config_out.write("description=\n")
+						config_out.write("type=directory\n")
+						config_out.write("exec="+str(self.directory)+"\n")
+						config_out.write("root="+str(self.root)+"\n")
+						config_out.write("verb="+str(self.verb)+"\n")
+						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
+						config_out.write("dumpfile="+str(output_path)+"\n")
+					elif run_as == "root":
+						__write_in_file()
+				else:
+					__write_in_file()
+		else:
+			io.write_title(self.file,output)
+			output.write('Use verbose option (-v) to print this file.\n')
+
+	def __write_in_file():
+		#TODO adapt
+		io.write_title(self.file,output)
+		if os.path.isfile(self.file):
+			fhandler= open(self.file,'r')
+			output.write( fhandler.read() )
+			fhandler.close()
+		else:
+			output.write("The file "+str(self.file)+ " does not exist!\n")
 
 
 def General_info(output):
