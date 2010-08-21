@@ -164,22 +164,25 @@ class Directory:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == "root":
-						__write_in_file()
+						dirList=os.listdir(self.directory)
+						for fname in dirList:
+							fname=os.path.join(self.directory,fname)		
+							io.write_title(fname,output)
+							fhandler= open(fname,'r')
+							output.write( fhandler.read() )
+							fhandler.close()
 				else:
-					__write_in_file()
+					dirList=os.listdir(self.directory)
+					for fname in dirList:
+						fname=os.path.join(self.directory,fname)		
+						io.write_title(fname,output)
+						fhandler= open(fname,'r')
+						output.write( fhandler.read() )
+						fhandler.close()
 		else:
 			io.write_title(self.directory,output)
 			output.write('Use verbose option (-v) to print this directory content.\n')
-
-	def __write_in_file():
-		dirList=os.listdir(self.directory)
-		for fname in dirList:
-			print fname		
-			io.write_title(fname,output) #TODO subtitles
-			fhandler= open(fname,'r')
-			output.write( fhandler.read() )
-			fhandler.close()
-
+		
 
 
 def General_info(output):
