@@ -139,7 +139,7 @@ def main(argv):
 				sys.exit(1)
 	
 	except KeyboardInterrupt:
-		sys.exit(_("KeyboardInterrupt caught."))
+		sys.exit("KeyboardInterrupt caught.")
 
 
 
