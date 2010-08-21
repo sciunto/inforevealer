@@ -111,13 +111,13 @@ class Application(gtk.Window):
 		self.show_all()
 
         def __create_option_menu(self,box):
-		frame = gtk.Expander("Options")
+		frame = gtk.Expander(_("Options"))
 		box.pack_start(frame, True, True,0)
 		box2 = gtk.VBox(False, 0)
 		frame.add(box2)
 		box2.show()
 		
-		self.verbose_button = gtk.CheckButton("Verbose mode")
+		self.verbose_button = gtk.CheckButton(_("Verbose mode"))
 		#not connected, read it before using self.verbosity
 		box2.pack_start(self.verbose_button,True, True, 0)
 		self.verbose_button.show()
@@ -180,7 +180,7 @@ class Application(gtk.Window):
 	def __create_action_group(self):
 		""" Create the top menu entry  """
 		# GtkActionEntry
-		entries = ( #FIXME
+		entries = ( 
 		( "FileMenu", None, "_File" ),               # name, stock id, label
 		( "HelpMenu", None, "_Help" ),               # name, stock id, label
 		( "Quit", gtk.STOCK_QUIT,                    # name, stock id
@@ -548,7 +548,7 @@ class TextViewer:
 
 		#Add info
 		label = gtk.Label();
-		output_string=_("The following report is availlable in ")+str(self.output)
+		output_string=_("The following report is availlable in %s") %str(self.output)
 		label.set_markup(output_string)
 		label.show()
 		boite2.pack_start(label,False,False,0)
@@ -634,7 +634,7 @@ class TextViewer:
 		""" Send the content on pastebin """
 		link = "http://" + self.website[self.combobox.get_active()]+"/"
 		link=pastebin.sendFileContent(self.output,title=None,website=link,version=None)
-		message = "File sent on\n"+link
+		message = _("File sent on\n%s") %link
 		md = gtk.MessageDialog(None, 
 			gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
 			gtk.BUTTONS_CLOSE, message)
@@ -772,14 +772,14 @@ class FileDialog(object):
                                 action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                 buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                                          gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-            chooser.set_title('Open file:')
+            chooser.set_title(_('Open file:'))
 
         elif action == 'save':
             chooser = gtk.FileChooserDialog(
                                 action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                 buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                                          gtk.STOCK_SAVE, gtk.RESPONSE_OK))
-            chooser.set_title('Save as:')
+            chooser.set_title(_('Save as:'))
         else:
             raise Exception("action must be 'open' or 'save' (got '%s')"
                             % action)
