@@ -52,10 +52,10 @@ def write_title(string,output):
 	output.write(header)
 
 def usage():
-	print _("""
-usage:		%s [options]
+	print(_("""
+Usage:		%s [options]
 
-options:
+Options:
 		-h or --help: print this help
 		-l or --list: print a trouble category list
 		-c or --category [arg]: choose a category
@@ -64,7 +64,7 @@ options:
 		-w or --website [arg]: specify pastebin website
 		--verbose: increase verbosity
 		--gui: run a graphic interface (other options are ignored)
-		""") %sys.argv[0] 
+		""") %sys.argv[0] )
 			
 		
 def list(categories):
