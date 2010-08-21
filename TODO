@@ -7,3 +7,6 @@ TODO list
 
 * add more categories and complete them.
 * add directory inspection
+* add the possibility to select the report's language
+	> if user_lang = en : no choice
+	> if user_lang != en : choice between en or user_lang 
