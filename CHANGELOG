@@ -2,6 +2,7 @@ VERSION 0.5.0
 RELEASE 2010--
 
 new features:
+	* inspect directories
 	* i18n on both source and config files
 	* inforevealer.desktop added
 	* man page
