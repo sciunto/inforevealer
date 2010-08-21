@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-21 13:42+0200\n"
+"POT-Creation-Date: 2010-08-21 18:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/action.py:60
+#: src/action.py:62
 msgid ""
 "To generate a complete report, root access is needed.\n"
 "Do you want to substitute user?"
 msgstr ""
 
-#: src/action.py:82
+#: src/action.py:84
 msgid "Please, enter your user password."
 msgstr ""
 
-#: src/action.py:86
+#: src/action.py:88
 msgid "Please, enter the root password."
 msgstr ""
 
-#: src/action.py:90
+#: src/action.py:92
 msgid "Error: No substitute user command available.\n"
 msgstr ""
 
-#: src/action.py:109
+#: src/action.py:111
 msgid ""
 "Wrong password.\n"
 "The log will be generated without root priviledge."
 msgstr ""
 
-#: src/action.py:113
+#: src/action.py:115
 msgid "Error"
 msgstr ""
 
-#: src/action.py:161
-msgid "The output has been dumped in "
+#: src/action.py:163
+#, python-format
+msgid "The output has been dumped in %s"
 msgstr ""
 
 #: src/getinfo.py:75
@@ -54,87 +55,99 @@ msgstr ""
 msgid "%s not found! \n"
 msgstr ""
 
-#: src/getinfo.py:234
+#: src/getinfo.py:237
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
 "output: ls /etc"
 msgstr ""
 
-#: src/gui.py:85
+#: src/gui.py:86
 msgid "Select one of the following category:"
 msgstr ""
 
-#: src/gui.py:114
+#: src/gui.py:115
 msgid "Options"
 msgstr ""
 
-#: src/gui.py:120
+#: src/gui.py:121
 msgid "Verbose mode"
 msgstr ""
 
-#: src/gui.py:133
+#: src/gui.py:134
 msgid "Dumpfile: "
 msgstr ""
 
-#: src/gui.py:140
+#: src/gui.py:141
 msgid "Modify"
 msgstr ""
 
-#: src/gui.py:551
+#: src/gui.py:185
+msgid "File"
+msgstr ""
+
+#: src/gui.py:186
+msgid "Help"
+msgstr ""
+
+#: src/gui.py:188
+msgid "Quit"
+msgstr ""
+
+#: src/gui.py:192
+msgid "About"
+msgstr ""
+
+#: src/gui.py:552
 #, python-format
 msgid "The following report is availlable in %s"
 msgstr ""
 
-#: src/gui.py:587
+#: src/gui.py:588
 msgid "Send the report on pastebin "
 msgstr ""
 
-#: src/gui.py:603
+#: src/gui.py:604
 msgid "Send"
 msgstr ""
 
-#: src/gui.py:615
+#: src/gui.py:616
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/gui.py:637
+#: src/gui.py:638
 #, python-format
 msgid ""
 "File sent on\n"
 "%s"
 msgstr ""
 
-#: src/gui.py:641
+#: src/gui.py:642
 msgid "Pastebin link"
 msgstr ""
 
-#: src/gui.py:775
+#: src/gui.py:776
 msgid "Open file:"
 msgstr ""
 
-#: src/gui.py:782
+#: src/gui.py:783
 msgid "Save as:"
 msgstr ""
 
-#: src/inforevealer.py:79
+#: src/inforevealer.py:75
 msgid "Invalid arguments."
 msgstr ""
 
-#: src/inforevealer.py:137
+#: src/inforevealer.py:133
 msgid "Error: Wrong category"
 msgstr ""
 
-#: src/inforevealer.py:142 src/pastebin.py:196
-msgid "KeyboardInterrupt caught."
-msgstr ""
-
-#: src/io.py:54
+#: src/io.py:55
 #, python-format
 msgid ""
 "\n"
-"usage:\t\t%s [options]\n"
+"Usage:\t\t%s [options]\n"
 "\n"
-"options:\n"
+"Options:\n"
 "\t\t-h or --help: print this help\n"
 "\t\t-l or --list: print a trouble category list\n"
 "\t\t-c or --category [arg]: choose a category\n"
@@ -146,17 +159,17 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: src/io.py:70
+#: src/io.py:71
 msgid ""
 "\n"
 "List of categories:"
 msgstr ""
 
-#: src/io.py:75
+#: src/io.py:76
 #, python-format
 msgid ""
 "\n"
-"Reminder: %s -c internet"
+"Reminder: %(command)s -c %(option)s"
 msgstr ""
 
 #: src/pastebin.py:66
@@ -180,21 +193,25 @@ msgstr ""
 msgid "Pastebin link: "
 msgstr ""
 
+#: src/pastebin.py:196
+msgid "KeyboardInterrupt caught."
+msgstr ""
+
 #: src/pastebin.py:199
 msgid ""
 "Unable to read or parse the result page, it could be a server timeout or a "
 "change server side, try with another pastebin."
 msgstr ""
 
-#: src/readconf.py:52
+#: src/readconf.py:53
 msgid "Error: No categories.conf available.\n"
 msgstr ""
 
-#: src/readconf.py:63
+#: src/readconf.py:64
 msgid "Error: No validator.conf available.\n"
 msgstr ""
 
-#: src/readconf.py:86
+#: src/readconf.py:88
 #, python-format
 msgid ""
 "Error: the configuration file %(file1)s is not valid.\n"

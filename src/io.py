@@ -57,7 +57,7 @@ Usage:		%s [options]
 
 Options:
 		-h or --help: print this help
-		-l or --list: print a trouble category list
+		-l or --list: print the category list
 		-c or --category [arg]: choose a category
 		-f or --file [arg]: dump file
 		-p or --pastebin: send the report on pastebin

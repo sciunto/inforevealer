@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-20 14:35+0200\n"
-"PO-Revision-Date: 2010-08-20 11:10+0200\n"
+"POT-Creation-Date: 2010-08-21 18:14+0200\n"
+"PO-Revision-Date: 2010-08-21 18:20+0200\n"
 "Last-Translator: Francois Boulogne <fboulogne at april dot org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/action.py:60
+#: src/action.py:62
 msgid ""
 "To generate a complete report, root access is needed.\n"
 "Do you want to substitute user?"
@@ -24,19 +24,19 @@ msgstr ""
 "Pour générer un rapport complet, un accès administrateur est nécessaire.\n"
 "Voulez-vous changer d'utilisateur ?"
 
-#: src/action.py:82
+#: src/action.py:84
 msgid "Please, enter your user password."
 msgstr "S'il vous plaît, entrez votre mot de passe utilisateur."
 
-#: src/action.py:86
+#: src/action.py:88
 msgid "Please, enter the root password."
 msgstr "S'il vous plaît, entrez le mot de passe administrateur."
 
-#: src/action.py:90
+#: src/action.py:92
 msgid "Error: No substitute user command available.\n"
 msgstr "Erreur : Aucune commande de substitution d'utilisateur disponible.\n"
 
-#: src/action.py:109
+#: src/action.py:111
 msgid ""
 "Wrong password.\n"
 "The log will be generated without root priviledge."
@@ -44,30 +44,21 @@ msgstr ""
 "Mauvais mot de passe.\n"
 "Le journal sera généré sans les proviledges administrateur."
 
-#: src/action.py:113
+#: src/action.py:115
 msgid "Error"
 msgstr "Erreur"
 
-#: src/action.py:157
-msgid "You didn't find what you expected?"
-msgstr ""
-
-#: src/action.py:158
-msgid ""
-"Please, open a bug report on\n"
-"http://github.com/sciunto/inforevealer\n"
-msgstr ""
-
-#: src/action.py:161
-msgid "The output has been dumped in "
-msgstr ""
+#: src/action.py:163
+#, python-format
+msgid "The output has been dumped in %s"
+msgstr "La sortie a été mise dans %s"
 
 #: src/getinfo.py:75
 #, python-format
 msgid "%s not found! \n"
 msgstr "%s non trouvé ! \n"
 
-#: src/getinfo.py:188
+#: src/getinfo.py:237
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
 "output: ls /etc"
@@ -75,74 +66,93 @@ msgstr ""
 "Votre distribution est inconnue. S'il vous plaît, ouvrez un rapport de bug "
 "avec le résultat de la commande : ls /etc"
 
-#: src/gui.py:85
+#: src/gui.py:86
 msgid "Select one of the following category:"
 msgstr "Sélectionnez une des catégories suivantes :"
 
-#: src/gui.py:133
+#: src/gui.py:115
+msgid "Options"
+msgstr "Options"
+
+#: src/gui.py:121
+msgid "Verbose mode"
+msgstr "Mode verbeux"
+
+#: src/gui.py:134
 msgid "Dumpfile: "
 msgstr "Fichier de sortie : "
 
-#: src/gui.py:140
+#: src/gui.py:141
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/gui.py:551
-msgid "The following report is availlable in "
-msgstr "Le rapport suivant est disponible dans "
+#: src/gui.py:185
+msgid "File"
+msgstr "Fichier"
 
-#: src/gui.py:587
+#: src/gui.py:186
+msgid "Help"
+msgstr "Aide"
+
+#: src/gui.py:188
+msgid "Quit"
+msgstr "Quitter"
+
+#: src/gui.py:192
+msgid "About"
+msgstr "A propos"
+
+#: src/gui.py:552
+#, python-format
+msgid "The following report is availlable in %s"
+msgstr "Le rapport suivant est disponible dans %s"
+
+#: src/gui.py:588
 msgid "Send the report on pastebin "
 msgstr "Envoyer le rapport sur pastebin"
 
-#: src/gui.py:603
+#: src/gui.py:604
 msgid "Send"
 msgstr "Envoyer"
 
-#: src/gui.py:615
+#: src/gui.py:616
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papier"
 
-#: src/gui.py:641
+#: src/gui.py:638
+#, python-format
+msgid ""
+"File sent on\n"
+"%s"
+msgstr ""
+
+#: src/gui.py:642
 msgid "Pastebin link"
 msgstr "Lien pastebin"
 
-#: src/inforevealer.py:80
-msgid "Error: No categories.conf available.\n"
-msgstr "Erreur : aucun categories.conf disponible.\n"
+#: src/gui.py:776
+msgid "Open file:"
+msgstr "Ouvrir un fichier : "
 
-#: src/inforevealer.py:89
-msgid "Error: No validator.conf available.\n"
-msgstr "Erreur : aucun validator.conf disponible.\n"
+#: src/gui.py:783
+msgid "Save as:"
+msgstr "Sauver comme :"
 
-#: src/inforevealer.py:113
-#, python-format
-msgid ""
-"Error: the configuration file %(file1)s is not valid.\n"
-"See %(file2)s for a template.\n"
-msgstr ""
-"Erreur : le fichier de configuration %(file1)s n'est pas valide.\n"
-"Voir %(file2)s pour avoir un modèle.\n"
-
-#: src/inforevealer.py:136
+#: src/inforevealer.py:75
 msgid "Invalid arguments."
 msgstr "Arguments invalides."
 
-#: src/inforevealer.py:196
+#: src/inforevealer.py:133
 msgid "Error: Wrong category"
 msgstr "Erreur : Mauvaise catégorie"
 
-#: src/inforevealer.py:201 src/pastebin.py:194
-msgid "KeyboardInterrupt caught."
-msgstr "Interruption provenant du clavier attrapée"
-
-#: src/io.py:54
+#: src/io.py:55
 #, python-format
 msgid ""
 "\n"
-"usage:\t\t%s [options]\n"
+"Usage:\t\t%s [options]\n"
 "\n"
-"options:\n"
+"Options:\n"
 "\t\t-h or --help: print this help\n"
 "\t\t-l or --list: print a trouble category list\n"
 "\t\t-c or --category [arg]: choose a category\n"
@@ -153,8 +163,21 @@ msgid ""
 "\t\t--gui: run a graphic interface (other options are ignored)\n"
 "\t\t"
 msgstr ""
+"\n"
+"Utilisation :\t\t%s [options]\n"
+"\n"
+"Options :\n"
+"\t\t-h or --help: affiche cette aide\n"
+"\t\t-l or --list: print a trouble category list\n"
+"\t\t-c or --category [arg] : choisi une catégorie\n"
+"\t\t-f or --file [arg] : fichier de sortie\n"
+"\t\t-p or --pastebin : envoyer le rapport sur pastebin\n"
+"\t\t-w or --website [arg] : specifie un site pastebin\n"
+"\t\t--verbose : augmente la verbosité\n"
+"\t\t--gui : lance une interface graphique (les autres options sont ignorées)\n"
+"\t\t"
 
-#: src/io.py:70
+#: src/io.py:71
 msgid ""
 "\n"
 "List of categories:"
@@ -162,26 +185,26 @@ msgstr ""
 "\n"
 "Liste des catégories :"
 
-#: src/io.py:75
+#: src/io.py:76
 #, python-format
 msgid ""
 "\n"
-"Reminder: %s -c internet"
+"Reminder: %(command)s -c %(option)s"
 msgstr ""
 "\n"
-"Rappel : %s -c internet"
+"Rappel : %(command)s -c %(option)s"
 
-#: src/pastebin.py:65
+#: src/pastebin.py:66
 #, python-format
 msgid "%s: no section [pastebin]"
 msgstr "%s : pas de section [pastebin]"
 
-#: src/pastebin.py:70
+#: src/pastebin.py:71
 #, python-format
 msgid "%s: no 'basename' in [pastebin]"
 msgstr "%s : pas de 'basename' dans [pastebin]"
 
-#: src/pastebin.py:125
+#: src/pastebin.py:127
 #, python-format
 msgid ""
 "Unknown website, please post a bugreport to request this pastebin to be "
@@ -190,12 +213,33 @@ msgstr ""
 "Site web inconnu, s'il vous plaît, postez un rapport de bug pour demander "
 "que ce pastebin soit ajouté (%s)"
 
-#: src/pastebin.py:191
+#: src/pastebin.py:193
 msgid "Pastebin link: "
 msgstr "Lien pastebin :"
 
-#: src/pastebin.py:197
+#: src/pastebin.py:196
+msgid "KeyboardInterrupt caught."
+msgstr "Interruption provenant du clavier attrapée"
+
+#: src/pastebin.py:199
 msgid ""
 "Unable to read or parse the result page, it could be a server timeout or a "
 "change server side, try with another pastebin."
 msgstr ""
+
+#: src/readconf.py:53
+msgid "Error: No categories.conf available.\n"
+msgstr "Erreur : aucun categories.conf disponible.\n"
+
+#: src/readconf.py:64
+msgid "Error: No validator.conf available.\n"
+msgstr "Erreur : aucun validator.conf disponible.\n"
+
+#: src/readconf.py:88
+#, python-format
+msgid ""
+"Error: the configuration file %(file1)s is not valid.\n"
+"See %(file2)s for a template.\n"
+msgstr ""
+"Erreur : le fichier de configuration %(file1)s n'est pas valide.\n"
+"Voir %(file2)s pour avoir un modèle.\n"

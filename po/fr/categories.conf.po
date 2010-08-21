@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-20 15:19+0300\n"
+"POT-Creation-Date: 2010-08-21 18:14+0300\n"
 "PO-Revision-Date: 2010-08-20 15:19+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -56,57 +56,58 @@ msgstr "Affichage"
 msgid "Xorg, monitor info..."
 msgstr "Xorg, information sur l'ecran"
 
-#: inforevealer.d/categories.conf:129
+#: inforevealer.d/categories.conf:134
 #, no-wrap
 msgid "Sound"
 msgstr "Son"
 
-#: inforevealer.d/categories.conf:130
+#: inforevealer.d/categories.conf:135
 #, no-wrap
 msgid "Volume and sound parameters"
 msgstr "Volume et parametres sonores"
 
-#: inforevealer.d/categories.conf:137
+#: inforevealer.d/categories.conf:142
 #, no-wrap
 msgid "What is in use?"
 msgstr ""
 
-#: inforevealer.d/categories.conf:143
+#: inforevealer.d/categories.conf:148
 #, no-wrap
 msgid "Bootloader"
 msgstr "Chargeur de demarrage"
 
-#: inforevealer.d/categories.conf:144
-#, no-wrap
-msgid "Everything on grub and partitions"
+#: inforevealer.d/categories.conf:149
+#, fuzzy, no-wrap
+#| msgid "Everything on grub and partitions"
+msgid "Everything on grub, lilo and partitions"
 msgstr "Tout sur grub et les partitions"
 
-#: inforevealer.d/categories.conf:164
+#: inforevealer.d/categories.conf:169
 #, no-wrap
 msgid "Internet"
 msgstr "Internet"
 
-#: inforevealer.d/categories.conf:165
+#: inforevealer.d/categories.conf:170
 #, no-wrap
 msgid "Wifi, ethernet..."
 msgstr "Wifi, ethernet..."
 
-#: inforevealer.d/categories.conf:195
+#: inforevealer.d/categories.conf:200
 #, no-wrap
 msgid "Package"
 msgstr "Paquet"
 
-#: inforevealer.d/categories.conf:196
+#: inforevealer.d/categories.conf:201
 #, no-wrap
 msgid "List of repositories..."
 msgstr "Liste des media sources..."
 
-#: inforevealer.d/categories.conf:240
+#: inforevealer.d/categories.conf:245
 #, no-wrap
 msgid "System"
 msgstr "Systeme"
 
-#: inforevealer.d/categories.conf:241
+#: inforevealer.d/categories.conf:246
 #, no-wrap
 msgid "Memory usage, current tasks and specific distribution's configuration files"
 msgstr "Utilisation memoire, taches courantes et informations specifique a la distribution"
