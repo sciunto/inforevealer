@@ -182,14 +182,14 @@ class Application(gtk.Window):
 		""" Create the top menu entry  """
 		# GtkActionEntry
 		entries = ( 
-		( "FileMenu", None, "_File" ),               # name, stock id, label
-		( "HelpMenu", None, "_Help" ),               # name, stock id, label
+		( "FileMenu", None, _("File") ),               # name, stock id, label
+		( "HelpMenu", None, _("Help") ),               # name, stock id, label
 		( "Quit", gtk.STOCK_QUIT,                    # name, stock id
-		"_Quit", "",                     # label, accelerator
+		_("Quit"), "",                     # label, accelerator
 		"Quit",                                    # tooltip
 		self.activate_action ),
 		( "About", gtk.STOCK_ABOUT,                             # name, stock id
-		"_About", "",                    # label, accelerator
+		_("About"), "",                    # label, accelerator
 		"About",                                   # tooltip
 		self.activate_about ),
 		);
