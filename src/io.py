@@ -33,7 +33,7 @@ def print_write_header(fhandler):
                                     http://github.com/sciunto/inforevealer
                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ''' %__version__
-	print(header) #TODO add version in header
+	print(header)
 	fhandler.write(header)
                 
 
