@@ -79,17 +79,17 @@ def doParentFixup(website, paramname, parentid):
 	post ID given as the parent ID, we must handle this by going to that
 	post page and looking up what the invisible parent ID field will be
 	set to for children."""
-    if parentid == "":
-	return ""
-    url_opener = pasteURLopener()
-    page = url_opener.open(website + '/' + parentid, None)
-    matches = re.split('<input.*?name="' + paramname + '".*?value="(.*?)"', page.read())
-    if len(matches) <= 1 or re.match(parentid, matches[1]) == None:
-	# The obfuscated version didn't begin with the partial version,
-	# or unable to find the obfuscated version for some reason!
-	# Create a paste with no parent (should we throw, instead?)
-	return ""
-    return matches[1]
+	if parentid == "":
+		return ""
+	url_opener = pasteURLopener()
+	page = url_opener.open(website + '/' + parentid, None)
+	matches = re.split('<input.*?name="' + paramname + '".*?value="(.*?)"', page.read())
+	if len(matches) <= 1 or re.match(parentid, matches[1]) == None:
+		# The obfuscated version didn't begin with the partial version,
+		# or unable to find the obfuscated version for some reason!
+		# Create a paste with no parent (should we throw, instead?)
+		return ""
+	return matches[1]
 
 
 def getParameters(website, pastebind, content, user, jabberid, version, format, parentpid, permatag, title, username, password):
