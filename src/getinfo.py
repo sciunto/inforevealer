@@ -84,13 +84,8 @@ class File:
 	"get a file"
 	def __init__(self, category, file, root=False,verb=False,linux=None):
 		self.category=category
-		#check if file starts by ~
-		if re.match('^~.*',file)==None:
-			self.file=file
-		else:
-			#replace ~ by $HOME
-			self.file=str(os.getenv('HOME'))+re.sub('^~','',file)
-			
+		#replace ~ by $HOME if needed
+		self.file=os.path.expanduser(file)			
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
