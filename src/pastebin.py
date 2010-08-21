@@ -21,7 +21,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-#xml.dom.minidom, getopt, 
+
 import urllib, os, sys, re, gettext
 from gettext import gettext as _
 import configobj
@@ -31,17 +31,18 @@ gettext.textdomain("pastebinit")
 defaultPB = "http://pastebin.com" #Default pastebin
 
 
-# Custom urlopener to handle 401's
+
 class pasteURLopener(urllib.FancyURLopener):
+    """Custom urlopener to handle 401's"""
     def http_error_401(self, url, fp, errcode, errmsg, headers, data=None):
 	return None
 
 def preloadPastebins():
-    # Check several places for config files:
-    #  - global config in /etc/inforevealer.d/pastebin
-    #  - for source checkout, config in the checkout
-    #  - user's overrides in ~/.inforevealer.d/pastebin
-    # Files found later override files found earlier.
+    """Check several places for config files:
+     - global config in /etc/inforevealer.d/pastebin
+     - for source checkout, config in the checkout
+     - user's overrides in ~/.inforevealer.d/pastebin
+    Files found later override files found earlier."""
     for confdir in ['/etc/inforevealer.d/pastebin',
 		    os.path.join(os.path.dirname(__file__), '../inforevealer.d/pastebin'),
 		    os.path.expanduser('~/.inforevealer.d/pastebin')]:
@@ -72,11 +73,12 @@ def preloadPastebins():
 	    pastebind[basename] = bininstance
 	return pastebind
 
-# pastey.net obfuscates parent ids for replies.  Rather than taking the
-# post ID given as the parent ID, we must handle this by going to that
-# post page and looking up what the invisible parent ID field will be
-# set to for children.
+
 def doParentFixup(website, paramname, parentid):
+	"""pastey.net obfuscates parent ids for replies.  Rather than taking the
+	post ID given as the parent ID, we must handle this by going to that
+	post page and looking up what the invisible parent ID field will be
+	set to for children."""
     if parentid == "":
 	return ""
     url_opener = pasteURLopener()
@@ -89,7 +91,7 @@ def doParentFixup(website, paramname, parentid):
 	return ""
     return matches[1]
 
-#Return the parameters depending of the pastebin used
+
 def getParameters(website, pastebind, content, user, jabberid, version, format, parentpid, permatag, title, username, password):
     "Return the parameters array for the selected pastebin"
     params = {}
