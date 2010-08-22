@@ -118,11 +118,15 @@ class Application(gtk.Window):
 		box2 = gtk.VBox(False, 0)
 		frame.add(box2)
 		box2.show()
+
+		#VERBOSE MODE
+
 		
-		self.verbose_button = gtk.CheckButton(_("Verbose mode"))
+		self.verbose_button = gtk.CheckButton(_("Verbose mode: add commands or files producing long output"))
 		#not connected, read it before using self.verbosity
 		box2.pack_start(self.verbose_button,True, True, 0)
 		self.verbose_button.show()
+
 		
 		#FILECHOOSER
 		
