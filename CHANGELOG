@@ -11,6 +11,7 @@ bugfix:
 	* Keep the main window open
 	* center windows
 	* Opensuse installs sudo without configuration: try su before sudo
+	* correction open-suse release file
 
 ################
 VERSION 0.4.1
