@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-21 18:14+0200\n"
+"POT-Creation-Date: 2010-08-22 08:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,12 +23,12 @@ msgid ""
 "Do you want to substitute user?"
 msgstr ""
 
-#: src/action.py:84
-msgid "Please, enter your user password."
+#: src/action.py:85
+msgid "Please, enter the root password."
 msgstr ""
 
-#: src/action.py:88
-msgid "Please, enter the root password."
+#: src/action.py:89
+msgid "Please, enter your user password."
 msgstr ""
 
 #: src/action.py:92
@@ -58,78 +58,78 @@ msgstr ""
 #: src/getinfo.py:237
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
-"output: ls /etc"
+"output: ls /etc\n"
 msgstr ""
 
-#: src/gui.py:86
+#: src/gui.py:87
 msgid "Select one of the following category:"
 msgstr ""
 
-#: src/gui.py:115
+#: src/gui.py:116
 msgid "Options"
 msgstr ""
 
-#: src/gui.py:121
-msgid "Verbose mode"
+#: src/gui.py:125
+msgid "Verbose mode: add commands or files producing long output"
 msgstr ""
 
-#: src/gui.py:134
+#: src/gui.py:139
 msgid "Dumpfile: "
 msgstr ""
 
-#: src/gui.py:141
+#: src/gui.py:146
 msgid "Modify"
 msgstr ""
 
-#: src/gui.py:185
+#: src/gui.py:190
 msgid "File"
 msgstr ""
 
-#: src/gui.py:186
+#: src/gui.py:191
 msgid "Help"
 msgstr ""
 
-#: src/gui.py:188
+#: src/gui.py:193
 msgid "Quit"
 msgstr ""
 
-#: src/gui.py:192
+#: src/gui.py:197
 msgid "About"
 msgstr ""
 
-#: src/gui.py:552
+#: src/gui.py:559
 #, python-format
 msgid "The following report is availlable in %s"
 msgstr ""
 
-#: src/gui.py:588
+#: src/gui.py:595
 msgid "Send the report on pastebin "
 msgstr ""
 
-#: src/gui.py:604
+#: src/gui.py:611
 msgid "Send"
 msgstr ""
 
-#: src/gui.py:616
+#: src/gui.py:623
 msgid "Copy to clipboard"
 msgstr ""
 
-#: src/gui.py:638
+#: src/gui.py:645
 #, python-format
 msgid ""
 "File sent on\n"
 "%s"
 msgstr ""
 
-#: src/gui.py:642
+#: src/gui.py:649
 msgid "Pastebin link"
 msgstr ""
 
-#: src/gui.py:776
+#: src/gui.py:783
 msgid "Open file:"
 msgstr ""
 
-#: src/gui.py:783
+#: src/gui.py:790
 msgid "Save as:"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgid ""
 "\n"
 "Options:\n"
 "\t\t-h or --help: print this help\n"
-"\t\t-l or --list: print a trouble category list\n"
+"\t\t-l or --list: print the category list\n"
 "\t\t-c or --category [arg]: choose a category\n"
 "\t\t-f or --file [arg]: dump file\n"
 "\t\t-p or --pastebin: send the report on pastebin\n"
@@ -203,11 +203,11 @@ msgid ""
 "change server side, try with another pastebin."
 msgstr ""
 
-#: src/readconf.py:53
+#: src/readconf.py:54
 msgid "Error: No categories.conf available.\n"
 msgstr ""
 
-#: src/readconf.py:64
+#: src/readconf.py:65
 msgid "Error: No validator.conf available.\n"
 msgstr ""
 
