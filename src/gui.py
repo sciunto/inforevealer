@@ -526,21 +526,22 @@ class TextViewer:
 
 	
 	def quit_prog(self, widget):
-		gtk.main_quit()
+		self.fenetre.destroy()
+		#gtk.main_quit()
 
 	def __init__(self,output_file):
 		self.output=output_file  
-		fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
-		fenetre.set_icon(pixbuf)
-		fenetre.set_resizable(True)
-		fenetre.set_position(gtk.WIN_POS_CENTER)
-		fenetre.set_default_size(600, 400)
-		fenetre.connect("destroy", self.quit_prog)
-		fenetre.set_title("Inforevealer") #FIXME
-		fenetre.set_border_width(0)
+		self.fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		self.fenetre.set_icon(pixbuf)
+		self.fenetre.set_resizable(True)
+		self.fenetre.set_position(gtk.WIN_POS_CENTER)
+		self.fenetre.set_default_size(600, 400)
+		self.fenetre.connect("destroy", self.quit_prog)
+		self.fenetre.set_title("Inforevealer") #FIXME
+		self.fenetre.set_border_width(0)
 
 		boite1 = gtk.VBox(False, 0)
-		fenetre.add(boite1)
+		self.fenetre.add(boite1)
 		boite1.show()
 
 
@@ -626,7 +627,7 @@ class TextViewer:
 		bouton.set_flags(gtk.CAN_DEFAULT)
 		#bouton.grab_default()
 		bouton.show()
-		fenetre.show()
+		self.fenetre.show()
         
 	def copy_clipboard(self,widget):
 		""" Copy self.text in clipboard """
