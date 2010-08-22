@@ -208,9 +208,9 @@ def General_info(output):
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
-	elif(os.path.isfile("/etc/SuSe-release")):
+	elif(os.path.isfile("/etc/SuSE-release")):
 		myos='suse'
-		fhandler=open("/etc/SuSe-release")
+		fhandler=open("/etc/SuSE-release")
 		foo=fhandler.read()
 		fhandler.close()
 		output.write(foo)
