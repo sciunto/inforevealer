@@ -7,6 +7,10 @@ new features:
 	* inforevealer.desktop added
 	* man page
 	* Makefile/script to (un)install 
+bugfix:
+	* Keep the main window open
+	* center windows
+	* Opensuse installs sudo without configuration: try su before sudo
 
 ################
 VERSION 0.4.1
