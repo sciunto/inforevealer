@@ -56,6 +56,7 @@ class Application(gtk.Window):
 
 		self.set_title("Inforevealer") #FIXME
 		#self.set_default_size(200, 200)
+		self.set_position(gtk.WIN_POS_CENTER)
 		self.set_resizable(False)
 
 		merge = gtk.UIManager()
@@ -532,6 +533,7 @@ class TextViewer:
 		fenetre = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		fenetre.set_icon(pixbuf)
 		fenetre.set_resizable(True)
+		fenetre.set_position(gtk.WIN_POS_CENTER)
 		fenetre.set_default_size(600, 400)
 		fenetre.connect("destroy", self.quit_prog)
 		fenetre.set_title("Inforevealer") #FIXME
@@ -652,7 +654,7 @@ def yesNoDialog(title=" ",question="?"):
 		   '''
 	#create window+ Vbox + question
 	window=gtk.Window()
-
+	window.set_position(gtk.WIN_POS_CENTER)
 	window.set_icon(pixbuf)
 	window.set_title(title)
 	vbox = gtk.VBox(True, 0)
@@ -701,7 +703,7 @@ def askPassword(title=" ",question="?"):
 	return false if the dialog is closed"""
 	#create window+ Vbox + question
 	window=gtk.Window()
-	
+	window.set_position(gtk.WIN_POS_CENTER)	
 	window.set_icon(pixbuf)
 	window.set_title(title)
 	vbox = gtk.VBox(True, 0)
