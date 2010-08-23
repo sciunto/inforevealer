@@ -36,14 +36,14 @@ Install
 ##################################################
 
 run (as root):
-		make install
+	make install
 
 By default, the software is installed in /usr.
 To modify the path, edit the Makefile at the 
 install section:
-		"python setup.py install --dir=/usr"
+	"python setup.py install --dir=/usr"
 by
-		"python setup.py install --dir=/foo/bar"
+	"python setup.py install --dir=/foo/bar"
 
 The desktop file is installed (by default) in
 /usr/share/icons/hicolor/scalable/apps/inforevealer.desktop
@@ -53,7 +53,7 @@ Uninstall
 ##################################################
 
 run (as root):
-		make uninstall
+	make uninstall
 
 By default, the makefile looks at /usr. Modify the
 uninstall section as the install section.
@@ -64,5 +64,8 @@ Acknowledgments
 I deeply thanks
 * Stephane Graber <stgraber@stgraber.org>
 * Daniel Bartlett <dan@f-box.org>
-For their software pastebinit released under the GNU GPL v2 Free licence. Their code has been helpful for a non-negligeable part of this software. Thanks to them.
+For their software pastebinit released under the 
+GNU GPL v2 Free licence. Their code has been helpful 
+for a non-negligeable part of this software. 
+Thanks to them.
 
