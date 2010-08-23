@@ -4,10 +4,12 @@ TODO list
 * integrate root login: done
 * create a GUI interface: done
 * add directory inspection done
-* i18n: 95% done (Makefile...)
+* i18n: 95% done (todo: Makefile)
 
 * add more categories and complete them.
 * add descriptions for each commands/files 
+* improve titles
 * add the possibility to select the report's language
 	> if user_lang = en : no choice
 	> if user_lang != en : choice between en or user_lang 
+* switch to distutils? benefits?
