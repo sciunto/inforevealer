@@ -77,10 +77,9 @@ msgid "Bootloader"
 msgstr "Chargeur de demarrage"
 
 #: inforevealer.d/categories.conf:149
-#, fuzzy, no-wrap
-#| msgid "Everything on grub and partitions"
+#, no-wrap
 msgid "Everything on grub, lilo and partitions"
-msgstr "Tout sur grub et les partitions"
+msgstr "Tout sur grub, lilo et les partitions"
 
 #: inforevealer.d/categories.conf:169
 #, no-wrap

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-21 18:14+0200\n"
+"POT-Creation-Date: 2010-08-23 13:54+0200\n"
 "PO-Revision-Date: 2010-08-21 18:20+0200\n"
 "Last-Translator: Francois Boulogne <fboulogne at april dot org>\n"
 "Language: \n"
@@ -24,13 +24,13 @@ msgstr ""
 "Pour générer un rapport complet, un accès administrateur est nécessaire.\n"
 "Voulez-vous changer d'utilisateur ?"
 
-#: src/action.py:84
-msgid "Please, enter your user password."
-msgstr "S'il vous plaît, entrez votre mot de passe utilisateur."
-
-#: src/action.py:88
+#: src/action.py:85
 msgid "Please, enter the root password."
 msgstr "S'il vous plaît, entrez le mot de passe administrateur."
+
+#: src/action.py:89
+msgid "Please, enter your user password."
+msgstr "S'il vous plaît, entrez votre mot de passe utilisateur."
 
 #: src/action.py:92
 msgid "Error: No substitute user command available.\n"
@@ -61,80 +61,80 @@ msgstr "%s non trouvé ! \n"
 #: src/getinfo.py:237
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
-"output: ls /etc"
+"output: ls /etc\n"
 msgstr ""
 "Votre distribution est inconnue. S'il vous plaît, ouvrez un rapport de bug "
-"avec le résultat de la commande : ls /etc"
+"avec le résultat de la commande : ls /etc\n"
 
-#: src/gui.py:86
+#: src/gui.py:87
 msgid "Select one of the following category:"
 msgstr "Sélectionnez une des catégories suivantes :"
 
-#: src/gui.py:115
+#: src/gui.py:116
 msgid "Options"
 msgstr "Options"
 
-#: src/gui.py:121
-msgid "Verbose mode"
-msgstr "Mode verbeux"
+#: src/gui.py:125
+msgid "Verbose mode: add commands or files producing long output"
+msgstr "Mode verbeux : ajoute des commandes ou des fichiers générant une longue sortie"
 
-#: src/gui.py:134
+#: src/gui.py:139
 msgid "Dumpfile: "
 msgstr "Fichier de sortie : "
 
-#: src/gui.py:141
+#: src/gui.py:146
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/gui.py:185
+#: src/gui.py:190
 msgid "File"
 msgstr "Fichier"
 
-#: src/gui.py:186
+#: src/gui.py:191
 msgid "Help"
 msgstr "Aide"
 
-#: src/gui.py:188
+#: src/gui.py:193
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/gui.py:192
+#: src/gui.py:197
 msgid "About"
 msgstr "A propos"
 
-#: src/gui.py:552
+#: src/gui.py:559
 #, python-format
 msgid "The following report is availlable in %s"
 msgstr "Le rapport suivant est disponible dans %s"
 
-#: src/gui.py:588
+#: src/gui.py:595
 msgid "Send the report on pastebin "
 msgstr "Envoyer le rapport sur pastebin"
 
-#: src/gui.py:604
+#: src/gui.py:611
 msgid "Send"
 msgstr "Envoyer"
 
-#: src/gui.py:616
+#: src/gui.py:623
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papier"
 
-#: src/gui.py:638
+#: src/gui.py:645
 #, python-format
 msgid ""
 "File sent on\n"
 "%s"
 msgstr ""
 
-#: src/gui.py:642
+#: src/gui.py:649
 msgid "Pastebin link"
 msgstr "Lien pastebin"
 
-#: src/gui.py:776
+#: src/gui.py:783
 msgid "Open file:"
 msgstr "Ouvrir un fichier : "
 
-#: src/gui.py:783
+#: src/gui.py:790
 msgid "Save as:"
 msgstr "Sauver comme :"
 
@@ -154,7 +154,7 @@ msgid ""
 "\n"
 "Options:\n"
 "\t\t-h or --help: print this help\n"
-"\t\t-l or --list: print a trouble category list\n"
+"\t\t-l or --list: print the category list\n"
 "\t\t-c or --category [arg]: choose a category\n"
 "\t\t-f or --file [arg]: dump file\n"
 "\t\t-p or --pastebin: send the report on pastebin\n"
@@ -174,7 +174,8 @@ msgstr ""
 "\t\t-p or --pastebin : envoyer le rapport sur pastebin\n"
 "\t\t-w or --website [arg] : specifie un site pastebin\n"
 "\t\t--verbose : augmente la verbosité\n"
-"\t\t--gui : lance une interface graphique (les autres options sont ignorées)\n"
+"\t\t--gui : lance une interface graphique (les autres options sont "
+"ignorées)\n"
 "\t\t"
 
 #: src/io.py:71
@@ -227,11 +228,11 @@ msgid ""
 "change server side, try with another pastebin."
 msgstr ""
 
-#: src/readconf.py:53
+#: src/readconf.py:54
 msgid "Error: No categories.conf available.\n"
 msgstr "Erreur : aucun categories.conf disponible.\n"
 
-#: src/readconf.py:64
+#: src/readconf.py:65
 msgid "Error: No validator.conf available.\n"
 msgstr "Erreur : aucun validator.conf disponible.\n"
 
@@ -243,3 +244,4 @@ msgid ""
 msgstr ""
 "Erreur : le fichier de configuration %(file1)s n'est pas valide.\n"
 "Voir %(file2)s pour avoir un modèle.\n"
+
