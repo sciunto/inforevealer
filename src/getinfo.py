@@ -27,7 +27,7 @@ from pexpect import which
 
 import gettext
 _ = gettext.gettext
-__version__="0.5"
+__version__="0.5.0"
 
 class Command:
 	"get a command output"

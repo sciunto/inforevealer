@@ -27,7 +27,7 @@ import sys
 import configobj
 from validate import Validator
 from configobj import ConfigObj
-__version__="0.5"
+__version__="0.5.0"
 
 def find_categories_conf():
 	""" Find categories.conf's path and return it"""
