@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-24 18:05+0300\n"
+"POT-Creation-Date: 2010-08-24 18:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,97 +180,92 @@ msgstr ""
 msgid "Interface network configuration"
 msgstr ""
 
-#: inforevealer.d/categories.conf:184
-#, no-wrap
-msgid "Interface wireless network configuration"
-msgstr ""
-
-#: inforevealer.d/categories.conf:190 inforevealer.d/categories.conf:195
+#: inforevealer.d/categories.conf:184 inforevealer.d/categories.conf:189
 #, no-wrap
 msgid "Resolver configuration file"
 msgstr ""
 
-#: inforevealer.d/categories.conf:200
+#: inforevealer.d/categories.conf:194
 #, no-wrap
 msgid "If empty, ipv6 support is disabled"
 msgstr ""
 
-#: inforevealer.d/categories.conf:202
+#: inforevealer.d/categories.conf:196
 #, no-wrap
 msgid "ipv6"
 msgstr ""
 
-#: inforevealer.d/categories.conf:204
+#: inforevealer.d/categories.conf:198
 #, no-wrap
 msgid "Package"
 msgstr ""
 
-#: inforevealer.d/categories.conf:205
+#: inforevealer.d/categories.conf:199
 #, no-wrap
 msgid "List of repositories..."
 msgstr ""
 
-#: inforevealer.d/categories.conf:208
+#: inforevealer.d/categories.conf:202
 #, no-wrap
 msgid "Pacman configuration file"
 msgstr ""
 
-#: inforevealer.d/categories.conf:214
+#: inforevealer.d/categories.conf:208
 #, no-wrap
 msgid "Yaourt configuration file"
 msgstr ""
 
-#: inforevealer.d/categories.conf:220
+#: inforevealer.d/categories.conf:214
 #, no-wrap
 msgid "urpmi configuration file"
 msgstr ""
 
-#: inforevealer.d/categories.conf:226
+#: inforevealer.d/categories.conf:220
 #, no-wrap
 msgid "List of packages which are not updated"
 msgstr ""
 
-#: inforevealer.d/categories.conf:232 inforevealer.d/categories.conf:238
+#: inforevealer.d/categories.conf:226 inforevealer.d/categories.conf:232
 #, no-wrap
 msgid "yum configuration file"
 msgstr ""
 
-#: inforevealer.d/categories.conf:244
+#: inforevealer.d/categories.conf:238
 #, no-wrap
 msgid "List of repositories"
 msgstr ""
 
-#: inforevealer.d/categories.conf:250
+#: inforevealer.d/categories.conf:244
 #, no-wrap
 msgid "Preferences for repositories"
 msgstr ""
 
-#: inforevealer.d/categories.conf:256
+#: inforevealer.d/categories.conf:250
 #, no-wrap
 msgid "System"
 msgstr ""
 
-#: inforevealer.d/categories.conf:257
+#: inforevealer.d/categories.conf:251
 #, no-wrap
 msgid "Memory usage, current tasks and specific distribution's configuration files"
 msgstr ""
 
-#: inforevealer.d/categories.conf:260
+#: inforevealer.d/categories.conf:254
 #, no-wrap
 msgid "Load average - Who is logged?"
 msgstr ""
 
-#: inforevealer.d/categories.conf:265
+#: inforevealer.d/categories.conf:259
 #, no-wrap
 msgid "Amount of free and used memory in megabytes"
 msgstr ""
 
-#: inforevealer.d/categories.conf:270
+#: inforevealer.d/categories.conf:264
 #, no-wrap
 msgid "Snapshot of the current processes"
 msgstr ""
 
-#: inforevealer.d/categories.conf:275
+#: inforevealer.d/categories.conf:269
 #, no-wrap
 msgid "Main archlinux configuration file"
 msgstr ""
