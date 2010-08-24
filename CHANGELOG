@@ -1,3 +1,13 @@
+VERSION 
+RELEASE 2010--
+
+new features:
+
+bugfix:
+	* Remove yes/no dialog for password (seems to be confusing)
+	* grab enter key for password dialog window
+
+################
 VERSION 0.5.0
 RELEASE 2010-08-23
 
