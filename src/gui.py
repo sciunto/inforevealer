@@ -171,14 +171,23 @@ class Application(gtk.Window):
 		""" Create the category list """
 		first=True
 		for item in self.check_list:
-			button_label = str(item)+": "+ str(self.check_list[item])
+			tmphbox= gtk.HBox(False, 0)
+			#Radiobutton
 			if first:
-				button = gtk.RadioButton(group=None, label=button_label)
+				button = gtk.RadioButton(group=None, label=None)
 				self.category=item
 			else:
-				button = gtk.RadioButton(group=button, label=button_label)
+				button = gtk.RadioButton(group=button, label=None)
 			button.connect("toggled", self.callback_radio_buttons, item)
-			box.pack_start(button, True, True, 0)
+			tmphbox.pack_start(button,False,False,0)
+
+			#Label
+			text_label = "<b>"+str(item)+"</b> "+ str(self.check_list[item])
+			tmplabel= gtk.Label();
+			tmplabel.set_markup(text_label)
+			tmphbox.pack_start(tmplabel,False,False,0)
+
+			box.pack_start(tmphbox, True, True, 0)
 			button.show()
 			first=False
 		
