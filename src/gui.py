@@ -75,7 +75,7 @@ class Application(gtk.Window):
 		bar = merge.get_widget("/MenuBar")
 
 		# Create TABLE
-		box1 = gtk.VBox(False, 0)
+		box1 = gtk.VBox(False, 4)
 		self.add(box1)
 
 		#Add Menu into TABLE        
@@ -88,6 +88,8 @@ class Application(gtk.Window):
 		box1.pack_start(label, False, False, 0)
 
 		self.__create_radio_buttons(box1)
+		separator = gtk.HSeparator()
+		box1.pack_start(separator,False,False,0)
 		self.__create_option_menu(box1)
 
 		#buttons (bottom)
