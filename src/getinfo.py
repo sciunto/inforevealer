@@ -30,7 +30,7 @@ _ = gettext.gettext
 __version__="devel"
 
 
-#TODO implement grep 
+#TODO implement grep for File & Directory 
 
 
 class Command:
@@ -71,12 +71,24 @@ class Command:
 							config_out.write("dumpfile="+str(output_path)+"\n")
 						elif run_as == 'root':
 							io.write_title(output,self.command,self.description)
-							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-							output.write( proc.stdout.read() )
+							#Redirect stderr to stdout
+							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+							#check if we have to filter the output
+							if self.grep!=0: 
+								proc2=subprocess.Popen(["grep",self.grep],stdin=proc.stdout,stdout=subprocess.PIPE)
+								output.write( proc2.communicate()[0] )
+							else:
+								output.write( proc.communicate()[0] )
 					else:
 						io.write_title(output,self.command,self.description)
-						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
-						output.write( proc.stdout.read() )
+						#Redirect stderr to stdout
+						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+						#check if we have to filter the output
+						if self.grep!=0: 
+							proc2=subprocess.Popen(["grep",self.grep],stdin=proc.stdout,stdout=subprocess.PIPE)
+							output.write( proc2.communicate()[0] )
+						else:
+							output.write( proc.communicate()[0] )
 				else:
 					io.write_title(output,self.command,self.description)
 					output.write(_("%s not found! \n") %self.command[0])
