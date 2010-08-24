@@ -109,11 +109,11 @@ def LoadCategoryInfo(config,category):
 		linux=config[category][subsection]['distribution']
 
 		if e_type == 'command':	
-			ret_list.append(getinfo.Command(subsection,execu.split(" "),root,verb,linux))
+			ret_list.append(getinfo.Command(subsection,execu.split(" "),descr,root,verb,linux))
 		elif e_type == 'file':
-			ret_list.append(getinfo.File(subsection,execu,root,verb,linux))
+			ret_list.append(getinfo.File(subsection,execu,descr,root,verb,linux))
 		elif e_type == 'directory':
-			ret_list.append(getinfo.Directory(subsection,execu,root,verb,linux))
+			ret_list.append(getinfo.Directory(subsection,execu,descr,root,verb,linux))
 		#could not be something else thanks to the config check
 	return ret_list
 

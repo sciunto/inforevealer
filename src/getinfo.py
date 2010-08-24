@@ -31,9 +31,10 @@ __version__="devel"
 
 class Command:
 	"get a command output"
-	def __init__(self, category, com, root=False,verb=False,linux=None):
+	def __init__(self, category, com, desc, root=False,verb=False,linux=None):
 		self.category=category
 		self.command=com
+		self.description=desc
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific os?
@@ -82,11 +83,12 @@ class Command:
 	
 class File:
 	"get a file"
-	def __init__(self, category, file, root=False,verb=False,linux=None):
+	def __init__(self, category, file, desc, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.file=os.path.expanduser(file)			
 		self.root=root # need root?
+		self.description=desc
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 
@@ -133,11 +135,12 @@ class File:
 
 class Directory:
 	"get the content of a directory"
-	def __init__(self, category, directory, root=False,verb=False,linux=None):
+	def __init__(self, category, directory, desc, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.directory=os.path.expanduser(directory)			
 		self.root=root # need root?
+		self.description=desc
 		self.verb=verb # is it verbose?
 		self.linux_dependant=linux # need a specific distribution?
 	
