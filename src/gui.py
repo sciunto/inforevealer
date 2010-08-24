@@ -99,13 +99,13 @@ class Application(gtk.Window):
 		bouton = gtk.Button(stock=gtk.STOCK_CLOSE)
 		bouton.connect("clicked", self.quit_prog,self, None)
 		box2.pack_start(bouton, True, True, 0)
-		bouton.set_flags(gtk.CAN_DEFAULT)
-		bouton.grab_default()
 		bouton.show()
 		#apply
 		bouton = gtk.Button(stock=gtk.STOCK_APPLY)
 		bouton.connect("clicked", self.generate,self, None)
 		box2.pack_start(bouton, True, True, 0)
+		bouton.set_flags(gtk.CAN_DEFAULT)
+		bouton.grab_default()
 		bouton.show()
 
 		box2.show()
