@@ -668,13 +668,13 @@ def yesNoDialog(title=" ",question="?"):
         label.set_markup(question)
         vbox.pack_start(label, False, False, 0)
 	
-	
 	hbox = gtk.HButtonBox()
+	vbox.pack_start(hbox, False, False, 0)
+
 	def delete_event(widget, event, window):
 		window.callback_return=-1
 		return False
 	window.connect("delete_event", delete_event, window)
-	vbox.pack_start(hbox, False, False, 0)
 	
 	
 	def callback(widget, data):
