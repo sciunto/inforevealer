@@ -7,9 +7,10 @@ Stuffs that should be done before releasing:
 * i10n: make mo
 * i10n: complete langs= in setup.py
 * Update version in PACKAGER
-* Update version in all src/*py
+* Update version in all src/*py : perl -ni -e 's/(__version__=)\"devel\"/$1\"0.5.0\"/;print' src/*py
 * Complete CHANGELOG
 * Check TODO stuffs
 * Check README file
 * commit and push
 * merge with master branch
+* devel branch: perl -ni -e 's/(__version__=)\"\d\.\d\.\d\"/$1\"devel\"/;print' src/*py
