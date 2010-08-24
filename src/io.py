@@ -48,7 +48,7 @@ def write_title(output, string, substring=None):
 
 	header= '============================================'
 	header= header + '\n' + '|   ' + title + '\n'
-	if (substring!=None):
+	if (substring!=None and substring!='True'): #FIXME
 		header=header+'|-------------------------------------------\n'
 		header=header+'| '+substring+"\n"
 	header=header+'============================================\n'

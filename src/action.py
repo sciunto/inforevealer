@@ -110,6 +110,7 @@ def CompleteReportAsRoot(run_as,tmp_configfile,gui=False):
 				child.sendline(password)
 				ret = child.readlines() 
 				if ret ==[' \r\n']: return 0
+				if ret ==0: return 0
 		message=_("Wrong password.\nThe log will be generated without root priviledge.")
 		if gui:
 			import gtk

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-21 18:14+0300\n"
+"POT-Creation-Date: 2010-08-24 17:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,16 @@ msgstr ""
 #: inforevealer.d/categories.conf:2
 #, no-wrap
 msgid "Volumes, sizes, UUID..."
+msgstr ""
+
+#: inforevealer.d/categories.conf:5
+#, no-wrap
+msgid "Disk space"
+msgstr ""
+
+#: inforevealer.d/categories.conf:10
+#, no-wrap
+msgid "Partition table"
 msgstr ""
 
 #: inforevealer.d/categories.conf:34

@@ -52,7 +52,7 @@ class Command:
 					self.command[0]=path_command
 					if self.root:
 						if run_as == "user":
-							io.write_title(output,self.command)
+							io.write_title(output,self.command,self.description)
 							output.write("To get this, run the script as root\n")
 						elif run_as == "substitute":
 							config_out.write("["+self.category+"]\n")
@@ -64,18 +64,18 @@ class Command:
 							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 							config_out.write("dumpfile="+str(output_path)+"\n")
 						elif run_as == 'root':
-							io.write_title(output,self.command)
+							io.write_title(output,self.command,self.description)
 							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 							output.write( proc.stdout.read() )
 					else:
-						io.write_title(output,self.command)
+						io.write_title(output,self.command,self.description)
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 						output.write( proc.stdout.read() )
 				else:
-					io.write_title(output,self.command)
+					io.write_title(output,self.command,self.description)
 					output.write(_("%s not found! \n") %self.command[0])
 		else:
-			io.write_title(output,self.command)
+			io.write_title(output,self.command,self.description)
 			output.write('Use verbose option (-v) to print this command.\n')
 			
 		
@@ -101,7 +101,7 @@ class File:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_title(output,self.file)
+						io.write_title(output,self.file,self.description)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -113,7 +113,7 @@ class File:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == "root":
-						io.write_title(output,self.file)
+						io.write_title(output,self.file,self.description)
 						if os.path.isfile(self.file):
 							fhandler= open(self.file,'r')
 							output.write( fhandler.read() )
@@ -121,7 +121,7 @@ class File:
 						else:
 							output.write("The file "+str(self.file)+ " does not exist!\n")
 				else:
-					io.write_title(output,self.file)
+					io.write_title(output,self.file,self.description)
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
@@ -129,7 +129,7 @@ class File:
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!\n")
 		else:
-			io.write_title(output,self.file)
+			io.write_title(output,self.file,self.description)
 			output.write('Use verbose option (-v) to print this file.\n')		
 
 
@@ -155,7 +155,7 @@ class Directory:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_title(output,self.file)
+						io.write_title(output,self.file,self.description)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -170,7 +170,7 @@ class Directory:
 						dirList=os.listdir(self.directory)
 						for fname in dirList:
 							fname=os.path.join(self.directory,fname)		
-							io.write_title(output,fname)
+							io.write_title(output,fname,self.description)
 							fhandler= open(fname,'r')
 							output.write( fhandler.read() )
 							fhandler.close()
@@ -178,12 +178,12 @@ class Directory:
 					dirList=os.listdir(self.directory)
 					for fname in dirList:
 						fname=os.path.join(self.directory,fname)		
-						io.write_title(output,fname)
+						io.write_title(output,fname,self.description)
 						fhandler= open(fname,'r')
 						output.write( fhandler.read() )
 						fhandler.close()
 		else:
-			io.write_title(output,self.directory)
+			io.write_title(output,self.directory,self.description)
 			output.write('Use verbose option (-v) to print this directory content.\n')
 		
 
