@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-24 17:02+0300\n"
+"POT-Creation-Date: 2010-08-24 18:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,21 @@ msgstr ""
 msgid "Partition table"
 msgstr ""
 
+#: inforevealer.d/categories.conf:16
+#, no-wrap
+msgid "Static information about the filesystems"
+msgstr ""
+
+#: inforevealer.d/categories.conf:21
+#, no-wrap
+msgid "Block device attributes"
+msgstr ""
+
+#: inforevealer.d/categories.conf:27
+#, no-wrap
+msgid "Information about devices"
+msgstr ""
+
 #: inforevealer.d/categories.conf:34
 #, no-wrap
 msgid "CPU"
@@ -45,6 +60,21 @@ msgstr ""
 msgid "All CPU info"
 msgstr ""
 
+#: inforevealer.d/categories.conf:38
+#, no-wrap
+msgid "CPU architecture information helper"
+msgstr ""
+
+#: inforevealer.d/categories.conf:44
+#, no-wrap
+msgid "CPU information"
+msgstr ""
+
+#: inforevealer.d/categories.conf:50
+#, no-wrap
+msgid "cpufreq kernel information"
+msgstr ""
+
 #: inforevealer.d/categories.conf:56
 #, no-wrap
 msgid "Hardware"
@@ -53,6 +83,31 @@ msgstr ""
 #: inforevealer.d/categories.conf:57
 #, no-wrap
 msgid "General hardware information which are not included in other items"
+msgstr ""
+
+#: inforevealer.d/categories.conf:60
+#, no-wrap
+msgid "Status of modules in the Linux Kernel"
+msgstr ""
+
+#: inforevealer.d/categories.conf:66
+#, no-wrap
+msgid "Information about USB buses"
+msgstr ""
+
+#: inforevealer.d/categories.conf:72
+#, no-wrap
+msgid "PCI devices list"
+msgstr ""
+
+#: inforevealer.d/categories.conf:78
+#, no-wrap
+msgid "HAL devices list"
+msgstr ""
+
+#: inforevealer.d/categories.conf:85
+#, no-wrap
+msgid "Detailed information on the hardware configuration"
 msgstr ""
 
 #: inforevealer.d/categories.conf:91
@@ -90,6 +145,21 @@ msgstr ""
 msgid "Everything on grub, lilo and partitions"
 msgstr ""
 
+#: inforevealer.d/categories.conf:152
+#, no-wrap
+msgid "Grub configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:158
+#, no-wrap
+msgid "Grub2 configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:164
+#, no-wrap
+msgid "Lilo configuration file"
+msgstr ""
+
 #: inforevealer.d/categories.conf:169
 #, no-wrap
 msgid "Internet"
@@ -100,22 +170,107 @@ msgstr ""
 msgid "Wifi, ethernet..."
 msgstr ""
 
+#: inforevealer.d/categories.conf:173
+#, no-wrap
+msgid "Check internet connection by reaching kernel.org website"
+msgstr ""
+
+#: inforevealer.d/categories.conf:178
+#, no-wrap
+msgid "Interface network configuration"
+msgstr ""
+
+#: inforevealer.d/categories.conf:184
+#, no-wrap
+msgid "Interface wireless network configuration"
+msgstr ""
+
+#: inforevealer.d/categories.conf:190 inforevealer.d/categories.conf:195
+#, no-wrap
+msgid "Resolver configuration file"
+msgstr ""
+
 #: inforevealer.d/categories.conf:200
+#, no-wrap
+msgid "If empty, ipv6 support is disabled"
+msgstr ""
+
+#: inforevealer.d/categories.conf:202
+#, no-wrap
+msgid "ipv6"
+msgstr ""
+
+#: inforevealer.d/categories.conf:204
 #, no-wrap
 msgid "Package"
 msgstr ""
 
-#: inforevealer.d/categories.conf:201
+#: inforevealer.d/categories.conf:205
 #, no-wrap
 msgid "List of repositories..."
 msgstr ""
 
-#: inforevealer.d/categories.conf:245
+#: inforevealer.d/categories.conf:208
+#, no-wrap
+msgid "Pacman configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:214
+#, no-wrap
+msgid "Yaourt configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:220
+#, no-wrap
+msgid "urpmi configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:226
+#, no-wrap
+msgid "List of packages which are not updated"
+msgstr ""
+
+#: inforevealer.d/categories.conf:232 inforevealer.d/categories.conf:238
+#, no-wrap
+msgid "yum configuration file"
+msgstr ""
+
+#: inforevealer.d/categories.conf:244
+#, no-wrap
+msgid "List of repositories"
+msgstr ""
+
+#: inforevealer.d/categories.conf:250
+#, no-wrap
+msgid "Preferences for repositories"
+msgstr ""
+
+#: inforevealer.d/categories.conf:256
 #, no-wrap
 msgid "System"
 msgstr ""
 
-#: inforevealer.d/categories.conf:246
+#: inforevealer.d/categories.conf:257
 #, no-wrap
 msgid "Memory usage, current tasks and specific distribution's configuration files"
+msgstr ""
+
+#: inforevealer.d/categories.conf:260
+#, no-wrap
+msgid "Load average - Who is logged?"
+msgstr ""
+
+#: inforevealer.d/categories.conf:265
+#, no-wrap
+msgid "Amount of free and used memory in megabytes"
+msgstr ""
+
+#: inforevealer.d/categories.conf:270
+#, no-wrap
+msgid "Snapshot of the current processes"
+msgstr ""
+
+#: inforevealer.d/categories.conf:275
+#, no-wrap
+msgid "Main archlinux configuration file"
 msgstr ""

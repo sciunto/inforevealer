@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-24 17:02+0200\n"
+"POT-Creation-Date: 2010-08-24 18:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Error: Wrong category"
 msgstr ""
 
-#: src/io.py:58
+#: src/io.py:59
 #, python-format
 msgid ""
 "\n"
@@ -159,13 +159,13 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: src/io.py:74
+#: src/io.py:75
 msgid ""
 "\n"
 "List of categories:"
 msgstr ""
 
-#: src/io.py:79
+#: src/io.py:80
 #, python-format
 msgid ""
 "\n"
