@@ -31,7 +31,7 @@ from pastebin import sendFileContent
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
 
-__version__="0.5.1"
+__version__="devel"
 
 #####################
 #Main part

@@ -20,7 +20,7 @@
 import gettext, sys
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
-__version__="0.5.1"
+__version__="devel"
 
 def print_write_header(fhandler):
         header=''' 
