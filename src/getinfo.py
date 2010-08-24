@@ -64,7 +64,8 @@ class Command:
 							config_out.write("description=\n")
 							config_out.write("type=command\n")
 							config_out.write("exec="+' '.join(self.command) +"\n")
-							config_out.write("pipe="+self.pipe+"\n")
+							formated_pipe=re.sub('\[|\]','',str(self.pipe)) #Remove brackets for config file
+							config_out.write("pipe="+str(formated_pipe+',')+"\n")#add a coma for the list type
 							config_out.write("root="+str(self.root)+"\n")
 							config_out.write("verb="+str(self.verb)+"\n")
 							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
@@ -74,8 +75,9 @@ class Command:
 							#Redirect stderr to stdout
 							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 							#check if we have to filter the output
-							if self.pipe!=0: 
-								proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
+							if self.pipe!=['0']: 
+								#proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
+								proc2=subprocess.Popen(self.pipe,stdin=proc.stdout,stdout=subprocess.PIPE)
 								output.write( proc2.communicate()[0] )
 							else:
 								output.write( proc.communicate()[0] )
@@ -84,8 +86,9 @@ class Command:
 						#Redirect stderr to stdout
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 						#check if we have to filter the output
-						if self.pipe!=0: 
-							proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
+						if self.pipe!=['0']: 
+							#proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
+							proc2=subprocess.Popen(self.pipe,stdin=proc.stdout,stdout=subprocess.PIPE)
 							output.write( proc2.communicate()[0] )
 						else:
 							output.write( proc.communicate()[0] )
