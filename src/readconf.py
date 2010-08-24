@@ -137,11 +137,11 @@ def ReadAndMakeInternalDesire(tmp_configfile):
 		linux=config[section]['linux_distribution']
 		dumpfile=config[section]['dumpfile']
 		if e_type == 'command':
-			com=getinfo.Command(section,execu.split(" "),grep,root,verb,linux)
+			com=getinfo.Command(section,execu.split(" "),descr,grep,root,verb,linux)
 		elif e_type == 'file':
-			com=getinfo.File(section,execu,grep,root,verb,linux)
+			com=getinfo.File(section,execu,descr,grep,root,verb,linux)
 		elif e_type == 'directory':
-			com=getinfo.Directory(section,execu,grep,root,verb,linux)
+			com=getinfo.Directory(section,execu,descr,grep,root,verb,linux)
 		dumpfile_handler= open(dumpfile,'a')
 		com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
 		dumpfile_handler.close()
