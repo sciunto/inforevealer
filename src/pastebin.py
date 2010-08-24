@@ -29,7 +29,7 @@ import configobj
 gettext.textdomain("pastebinit")
 
 defaultPB = "http://pastebin.com" #Default pastebin
-__version__="devel"
+__version__="0.5.1"
 
 
 class pasteURLopener(urllib.FancyURLopener):
