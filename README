@@ -28,7 +28,7 @@ Dependances
 
 * make
 * pygtk 2.6 or greater
-* python-configobj 4.3.0 or greater
+* python-configobj 4.6.0 or greater
 * python-pexpect
 
 ##################################################
