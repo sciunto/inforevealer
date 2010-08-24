@@ -75,13 +75,16 @@ class Application(gtk.Window):
 		bar = merge.get_widget("/MenuBar")
 
 		# Create TABLE
-		box1 = gtk.VBox(False, 4)
-		self.add(box1)
+		mainbox = gtk.VBox(False, 0)
+		self.add(mainbox)
 
 		#Add Menu into TABLE        
-		box1.pack_start(bar, False, False, 0)
+		mainbox.pack_start(bar, False, False, 0)
 		bar.show()
 
+		box1 = gtk.VBox(False, 4)
+		box1.set_border_width(10)
+		mainbox.pack_start(box1, False, False, 0)
 		#Add info
 		label = gtk.Label();
 		label.set_markup(_("Select one of the following category:"))
