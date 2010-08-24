@@ -30,15 +30,15 @@ _ = gettext.gettext
 __version__="devel"
 
 
-#TODO implement grep for File & Directory 
+#TODO implement pipe for File & Directory 
 
 
 class Command:
 	"get a command output"
-	def __init__(self, category, com, desc, grep, root=False,verb=False,linux=None):
+	def __init__(self, category, com, desc, pipe, root=False,verb=False,linux=None):
 		self.category=category
 		self.command=com
-		self.grep=grep
+		self.pipe=pipe
 		self.description=desc
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
@@ -64,7 +64,7 @@ class Command:
 							config_out.write("description=\n")
 							config_out.write("type=command\n")
 							config_out.write("exec="+' '.join(self.command) +"\n")
-							config_out.write("grep="+self.grep+"\n")
+							config_out.write("pipe="+self.pipe+"\n")
 							config_out.write("root="+str(self.root)+"\n")
 							config_out.write("verb="+str(self.verb)+"\n")
 							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
@@ -74,8 +74,8 @@ class Command:
 							#Redirect stderr to stdout
 							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 							#check if we have to filter the output
-							if self.grep!=0: 
-								proc2=subprocess.Popen(["grep",self.grep],stdin=proc.stdout,stdout=subprocess.PIPE)
+							if self.pipe!=0: 
+								proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
 								output.write( proc2.communicate()[0] )
 							else:
 								output.write( proc.communicate()[0] )
@@ -84,8 +84,8 @@ class Command:
 						#Redirect stderr to stdout
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 						#check if we have to filter the output
-						if self.grep!=0: 
-							proc2=subprocess.Popen(["grep",self.grep],stdin=proc.stdout,stdout=subprocess.PIPE)
+						if self.pipe!=0: 
+							proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
 							output.write( proc2.communicate()[0] )
 						else:
 							output.write( proc.communicate()[0] )
@@ -101,11 +101,11 @@ class Command:
 	
 class File:
 	"get a file"
-	def __init__(self, category, file, desc, grep, root=False,verb=False,linux=None):
+	def __init__(self, category, file, desc, pipe, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.file=os.path.expanduser(file)			
-		self.grep=grep
+		self.pipe=pipe
 		self.root=root # need root?
 		self.description=desc
 		self.verb=verb # is it verbose?
@@ -127,7 +127,7 @@ class File:
 						config_out.write("description=\n")
 						config_out.write("type=file\n")
 						config_out.write("exec="+str(self.file)+"\n")
-						config_out.write("grep="+self.grep+"\n")
+						config_out.write("pipe="+self.pipe+"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
@@ -155,11 +155,11 @@ class File:
 
 class Directory:
 	"get the content of a directory"
-	def __init__(self, category, directory, desc, grep, root=False,verb=False,linux=None):
+	def __init__(self, category, directory, desc, pipe, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.directory=os.path.expanduser(directory)			
-		self.grep=grep
+		self.pipe=pipe
 		self.root=root # need root?
 		self.description=desc
 		self.verb=verb # is it verbose?
@@ -181,7 +181,7 @@ class Directory:
 						config_out.write("description=\n")
 						config_out.write("type=directory\n")
 						config_out.write("exec="+str(self.directory)+"\n")
-						config_out.write("grep="+self.grep+"\n")
+						config_out.write("pipe="+self.pipe+"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
