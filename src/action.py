@@ -62,9 +62,11 @@ def RunAs(category_info,gui=False):
 			question=_("""To generate a complete report, root access is needed.
 Do you want to substitute user?""")
 			if gui:
-				substitute=yesNoDialog(question=question)
+				#substitute=yesNoDialog(question=question)
+				substitute=True #It seems more confortable to remove the question
 			else:
-				substitute=askYesNo(question)
+				#substitute=askYesNo(question)
+				substitute=True #It seems more confortable to remove the question
 			if substitute:
 				run_as="substitute"
 			else:
