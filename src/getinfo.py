@@ -51,7 +51,7 @@ class Command:
 					self.command[0]=path_command
 					if self.root:
 						if run_as == "user":
-							io.write_title(self.command,output)
+							io.write_title(output,self.command)
 							output.write("To get this, run the script as root\n")
 						elif run_as == "substitute":
 							config_out.write("["+self.category+"]\n")
@@ -63,18 +63,18 @@ class Command:
 							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 							config_out.write("dumpfile="+str(output_path)+"\n")
 						elif run_as == 'root':
-							io.write_title(self.command,output)
+							io.write_title(output,self.command)
 							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 							output.write( proc.stdout.read() )
 					else:
-						io.write_title(self.command,output)
+						io.write_title(output,self.command)
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE)
 						output.write( proc.stdout.read() )
 				else:
-					io.write_title(self.command,output)
+					io.write_title(output,self.command)
 					output.write(_("%s not found! \n") %self.command[0])
 		else:
-			io.write_title(self.command,output)
+			io.write_title(output,self.command)
 			output.write('Use verbose option (-v) to print this command.\n')
 			
 		
@@ -99,7 +99,7 @@ class File:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_title(self.file,output)
+						io.write_title(output,self.file)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -111,7 +111,7 @@ class File:
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
 						config_out.write("dumpfile="+str(output_path)+"\n")
 					elif run_as == "root":
-						io.write_title(self.file,output)
+						io.write_title(output,self.file)
 						if os.path.isfile(self.file):
 							fhandler= open(self.file,'r')
 							output.write( fhandler.read() )
@@ -119,7 +119,7 @@ class File:
 						else:
 							output.write("The file "+str(self.file)+ " does not exist!\n")
 				else:
-					io.write_title(self.file,output)
+					io.write_title(output,self.file)
 					if os.path.isfile(self.file):
 						fhandler= open(self.file,'r')
 						output.write( fhandler.read() )
@@ -127,7 +127,7 @@ class File:
 					else:
 						output.write("The file "+str(self.file)+ " does not exist!\n")
 		else:
-			io.write_title(self.file,output)
+			io.write_title(output,self.file)
 			output.write('Use verbose option (-v) to print this file.\n')		
 
 
@@ -152,7 +152,7 @@ class Directory:
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
 					if run_as == "user":
-						io.write_title(self.file,output)
+						io.write_title(output,self.file)
 						output.write("To get this, run the script as root\n")
 					elif run_as == "substitute":
 						config_out.write("["+self.category+"]\n")
@@ -167,7 +167,7 @@ class Directory:
 						dirList=os.listdir(self.directory)
 						for fname in dirList:
 							fname=os.path.join(self.directory,fname)		
-							io.write_title(fname,output)
+							io.write_title(output,fname)
 							fhandler= open(fname,'r')
 							output.write( fhandler.read() )
 							fhandler.close()
@@ -175,19 +175,19 @@ class Directory:
 					dirList=os.listdir(self.directory)
 					for fname in dirList:
 						fname=os.path.join(self.directory,fname)		
-						io.write_title(fname,output)
+						io.write_title(output,fname)
 						fhandler= open(fname,'r')
 						output.write( fhandler.read() )
 						fhandler.close()
 		else:
-			io.write_title(self.directory,output)
+			io.write_title(output,self.directory)
 			output.write('Use verbose option (-v) to print this directory content.\n')
 		
 
 
 def General_info(output):
 
-	io.write_title('General information',output)
+	io.write_title(output,'General information')
 
 	mytime = time.gmtime()
 	output.write("date: "+ str(mytime[0])+"-"+str(mytime[1])+"-"+str(mytime[2])+" "+str(mytime[3])+ ":"+str(mytime[4])+"\n")

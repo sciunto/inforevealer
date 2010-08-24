@@ -38,7 +38,7 @@ def print_write_header(fhandler):
                 
 
 
-def write_title(string,output):
+def write_title(output, string, substring=None):
 	title=""
 	if string.__class__ != str:
 		for i in string:
@@ -46,9 +46,12 @@ def write_title(string,output):
         else:
 		title=string
 
-	header= '#############################################'
-	header= header + '\n' + '#   ' + title + '\n'
-	header=header+'#############################################\n'
+	header= '============================================'
+	header= header + '\n' + '|   ' + title + '\n'
+	if (substring!=None):
+		header=header+'|-------------------------------------------\n'
+		header=header+'| '+substring+"\n"
+	header=header+'============================================\n'
 	output.write(header)
 
 def usage():
