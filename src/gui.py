@@ -731,6 +731,7 @@ def askPassword(title=" ",question="?"):
 	# Message for the window 
 	pword = gtk.Entry()
 	pword.set_visibility(False)
+	pword.set_activates_default(True)
 	vbox.pack_start(pword, False, False, 0)
 	
 	
