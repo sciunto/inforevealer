@@ -29,11 +29,16 @@ import gettext
 _ = gettext.gettext
 __version__="devel"
 
+
+#TODO implement grep 
+
+
 class Command:
 	"get a command output"
-	def __init__(self, category, com, desc, root=False,verb=False,linux=None):
+	def __init__(self, category, com, desc, grep, root=False,verb=False,linux=None):
 		self.category=category
 		self.command=com
+		self.grep=grep
 		self.description=desc
 		self.root=root # need root?
 		self.verb=verb # is it verbose?
@@ -59,6 +64,7 @@ class Command:
 							config_out.write("description=\n")
 							config_out.write("type=command\n")
 							config_out.write("exec="+' '.join(self.command) +"\n")
+							config_out.write("grep="+self.grep+"\n")
 							config_out.write("root="+str(self.root)+"\n")
 							config_out.write("verb="+str(self.verb)+"\n")
 							config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
@@ -83,10 +89,11 @@ class Command:
 	
 class File:
 	"get a file"
-	def __init__(self, category, file, desc, root=False,verb=False,linux=None):
+	def __init__(self, category, file, desc, grep, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.file=os.path.expanduser(file)			
+		self.grep=grep
 		self.root=root # need root?
 		self.description=desc
 		self.verb=verb # is it verbose?
@@ -108,6 +115,7 @@ class File:
 						config_out.write("description=\n")
 						config_out.write("type=file\n")
 						config_out.write("exec="+str(self.file)+"\n")
+						config_out.write("grep="+self.grep+"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")
@@ -135,10 +143,11 @@ class File:
 
 class Directory:
 	"get the content of a directory"
-	def __init__(self, category, directory, desc, root=False,verb=False,linux=None):
+	def __init__(self, category, directory, desc, grep, root=False,verb=False,linux=None):
 		self.category=category
 		#replace ~ by $HOME if needed
 		self.directory=os.path.expanduser(directory)			
+		self.grep=grep
 		self.root=root # need root?
 		self.description=desc
 		self.verb=verb # is it verbose?
@@ -149,8 +158,6 @@ class Directory:
 		# if user asks verbosity, then print all
 		# else print not verb only
 		if not (not verbosity and self.verb):
-			pass
-			#TODO
 			# correct OS or this info does not dependant on distrib ?
 			if self.linux_dependant == user_os or self.linux_dependant == None:
 				if self.root:
@@ -162,6 +169,7 @@ class Directory:
 						config_out.write("description=\n")
 						config_out.write("type=directory\n")
 						config_out.write("exec="+str(self.directory)+"\n")
+						config_out.write("grep="+self.grep+"\n")
 						config_out.write("root="+str(self.root)+"\n")
 						config_out.write("verb="+str(self.verb)+"\n")
 						config_out.write("linux_distribution="+str(self.linux_dependant)+"\n")

@@ -104,12 +104,13 @@ def LoadCategoryInfo(config,category):
 		descr=config[category][subsection]['description']
 		e_type=config[category][subsection]['type']
 		execu=config[category][subsection]['exec']
+		grep=config[category][subsection]['grep']
 		root=config[category][subsection]['root']
 		verb=config[category][subsection]['verbose']
 		linux=config[category][subsection]['distribution']
 
 		if e_type == 'command':	
-			ret_list.append(getinfo.Command(subsection,execu.split(" "),descr,root,verb,linux))
+			ret_list.append(getinfo.Command(subsection,execu.split(" "),descr,grep,root,verb,linux))
 		elif e_type == 'file':
 			ret_list.append(getinfo.File(subsection,execu,descr,root,verb,linux))
 		elif e_type == 'directory':
@@ -130,16 +131,17 @@ def ReadAndMakeInternalDesire(tmp_configfile):
 		descr=config[section]['description']
 		e_type=config[section]['type']
 		execu=config[section]['exec']
+		grep=config[section]['grep']
 		root=config[section]['root']
 		verb=config[section]['verb']
 		linux=config[section]['linux_distribution']
 		dumpfile=config[section]['dumpfile']
 		if e_type == 'command':
-			com=getinfo.Command(section,execu.split(" "),root,verb,linux)
+			com=getinfo.Command(section,execu.split(" "),grep,root,verb,linux)
 		elif e_type == 'file':
-			com=getinfo.File(section,execu,root,verb,linux)
+			com=getinfo.File(section,execu,grep,root,verb,linux)
 		elif e_type == 'directory':
-			com=getinfo.Directory(section,execu,root,verb,linux)
+			com=getinfo.Directory(section,execu,grep,root,verb,linux)
 		dumpfile_handler= open(dumpfile,'a')
 		com.write(linux,verb,dumpfile_handler,dumpfile,"root",None)
 		dumpfile_handler.close()
