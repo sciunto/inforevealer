@@ -9,7 +9,7 @@ import action,pastebin
 import gettext,os
 gettext.textdomain('inforevealer')
 _ = gettext.gettext
-__version__="0.5.0"
+__version__="devel"
 
 pixbuf=None
 for icon_file in ['/usr/share/icons/hicolor/scalable/apps/inforevealer.svg','icons/inforevealer.svg']:
