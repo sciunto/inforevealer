@@ -23,6 +23,11 @@ import os
 import re
 import locale
 import sys
+import gettext
+
+gettext.textdomain('inforevealer')
+_ = gettext.gettext
+
 
 import configobj
 from validate import Validator
