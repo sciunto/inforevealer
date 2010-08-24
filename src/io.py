@@ -48,7 +48,8 @@ def write_title(output, string, substring=None):
 
 	header= '============================================'
 	header= header + '\n' + '|   ' + title + '\n'
-	if (substring!=None and substring!='True'): #FIXME
+	#Condition FIXME stuffs returned when 'description=' is found in conf file
+	if (substring!=None and substring!='True' and substring!=""): 
 		header=header+'|-------------------------------------------\n'
 		header=header+'| '+substring+"\n"
 	header=header+'============================================\n'
