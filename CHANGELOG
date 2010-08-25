@@ -1,6 +1,9 @@
 VERSION 0. 
 RELEASE 2010--
 
+New features:
+	* Add a pipe option (only) for commands.
+
 Improvements:
 	* Better title style
 	* Description of content in a subtitle
