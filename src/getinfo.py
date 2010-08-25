@@ -76,7 +76,6 @@ class Command:
 							proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 							#check if we have to filter the output
 							if self.pipe!=['0']: 
-								#proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
 								proc2=subprocess.Popen(self.pipe,stdin=proc.stdout,stdout=subprocess.PIPE)
 								output.write( proc2.communicate()[0] )
 							else:
@@ -87,7 +86,6 @@ class Command:
 						proc = subprocess.Popen(self.command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 						#check if we have to filter the output
 						if self.pipe!=['0']: 
-							#proc2=subprocess.Popen(["grep",self.pipe],stdin=proc.stdout,stdout=subprocess.PIPE)
 							proc2=subprocess.Popen(self.pipe,stdin=proc.stdout,stdout=subprocess.PIPE)
 							output.write( proc2.communicate()[0] )
 						else:
