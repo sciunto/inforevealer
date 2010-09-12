@@ -4,7 +4,7 @@ TODO list
 * integrate root login: done
 * create a GUI interface: done
 * add directory inspection done
-* i18n: 95% done (todo: Makefile)
+* i18n: 95% done (todo: Makefile, accents in config files)
 * add descriptions for each commands/files 60% done
 
 * add more categories and complete them.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-23 13:54+0200\n"
+"POT-Creation-Date: 2010-09-12 16:19+0200\n"
 "PO-Revision-Date: 2010-08-21 18:20+0200\n"
 "Last-Translator: Francois Boulogne <fboulogne at april dot org>\n"
 "Language: \n"
@@ -24,19 +24,19 @@ msgstr ""
 "Pour générer un rapport complet, un accès administrateur est nécessaire.\n"
 "Voulez-vous changer d'utilisateur ?"
 
-#: src/action.py:85
+#: src/action.py:87
 msgid "Please, enter the root password."
 msgstr "S'il vous plaît, entrez le mot de passe administrateur."
 
-#: src/action.py:89
+#: src/action.py:91
 msgid "Please, enter your user password."
 msgstr "S'il vous plaît, entrez votre mot de passe utilisateur."
 
-#: src/action.py:92
+#: src/action.py:94
 msgid "Error: No substitute user command available.\n"
 msgstr "Erreur : Aucune commande de substitution d'utilisateur disponible.\n"
 
-#: src/action.py:111
+#: src/action.py:116
 msgid ""
 "Wrong password.\n"
 "The log will be generated without root priviledge."
@@ -44,21 +44,21 @@ msgstr ""
 "Mauvais mot de passe.\n"
 "Le journal sera généré sans les proviledges administrateur."
 
-#: src/action.py:115
+#: src/action.py:120
 msgid "Error"
 msgstr "Erreur"
 
-#: src/action.py:163
+#: src/action.py:168
 #, python-format
 msgid "The output has been dumped in %s"
 msgstr "La sortie a été mise dans %s"
 
-#: src/getinfo.py:75
+#: src/getinfo.py:95
 #, python-format
 msgid "%s not found! \n"
 msgstr "%s non trouvé ! \n"
 
-#: src/getinfo.py:237
+#: src/getinfo.py:261
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
 "output: ls /etc\n"
@@ -66,75 +66,79 @@ msgstr ""
 "Votre distribution est inconnue. S'il vous plaît, ouvrez un rapport de bug "
 "avec le résultat de la commande : ls /etc\n"
 
-#: src/gui.py:87
+#: src/gui.py:90
 msgid "Select one of the following category:"
 msgstr "Sélectionnez une des catégories suivantes :"
 
-#: src/gui.py:116
+#: src/gui.py:121
 msgid "Options"
 msgstr "Options"
 
-#: src/gui.py:125
+#: src/gui.py:130
 msgid "Verbose mode: add commands or files producing long output"
-msgstr "Mode verbeux : ajoute des commandes ou des fichiers générant une longue sortie"
+msgstr ""
+"Mode verbeux : ajoute des commandes ou des fichiers générant une longue "
+"sortie"
 
-#: src/gui.py:139
+#: src/gui.py:144
 msgid "Dumpfile: "
 msgstr "Fichier de sortie : "
 
-#: src/gui.py:146
+#: src/gui.py:151
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/gui.py:190
+#: src/gui.py:204
 msgid "File"
 msgstr "Fichier"
 
-#: src/gui.py:191
+#: src/gui.py:205
 msgid "Help"
 msgstr "Aide"
 
-#: src/gui.py:193
+#: src/gui.py:207
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/gui.py:197
+#: src/gui.py:211
 msgid "About"
 msgstr "A propos"
 
-#: src/gui.py:559
+#: src/gui.py:573
 #, python-format
 msgid "The following report is availlable in %s"
 msgstr "Le rapport suivant est disponible dans %s"
 
-#: src/gui.py:595
+#: src/gui.py:609
 msgid "Send the report on pastebin "
 msgstr "Envoyer le rapport sur pastebin"
 
-#: src/gui.py:611
+#: src/gui.py:625
 msgid "Send"
 msgstr "Envoyer"
 
-#: src/gui.py:623
+#: src/gui.py:637
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papier"
 
-#: src/gui.py:645
+#: src/gui.py:659
 #, python-format
 msgid ""
 "File sent on\n"
 "%s"
 msgstr ""
+"Fichier envoyé sur\n"
+"%s"
 
-#: src/gui.py:649
+#: src/gui.py:663
 msgid "Pastebin link"
 msgstr "Lien pastebin"
 
-#: src/gui.py:783
+#: src/gui.py:798
 msgid "Open file:"
 msgstr "Ouvrir un fichier : "
 
-#: src/gui.py:790
+#: src/gui.py:805
 msgid "Save as:"
 msgstr "Sauver comme :"
 
@@ -146,7 +150,7 @@ msgstr "Arguments invalides."
 msgid "Error: Wrong category"
 msgstr "Erreur : Mauvaise catégorie"
 
-#: src/io.py:55
+#: src/io.py:59
 #, python-format
 msgid ""
 "\n"
@@ -178,7 +182,7 @@ msgstr ""
 "ignorées)\n"
 "\t\t"
 
-#: src/io.py:71
+#: src/io.py:75
 msgid ""
 "\n"
 "List of categories:"
@@ -186,7 +190,7 @@ msgstr ""
 "\n"
 "Liste des catégories :"
 
-#: src/io.py:76
+#: src/io.py:80
 #, python-format
 msgid ""
 "\n"
@@ -228,15 +232,15 @@ msgid ""
 "change server side, try with another pastebin."
 msgstr ""
 
-#: src/readconf.py:54
+#: src/readconf.py:59
 msgid "Error: No categories.conf available.\n"
 msgstr "Erreur : aucun categories.conf disponible.\n"
 
-#: src/readconf.py:65
+#: src/readconf.py:70
 msgid "Error: No validator.conf available.\n"
 msgstr "Erreur : aucun validator.conf disponible.\n"
 
-#: src/readconf.py:88
+#: src/readconf.py:92
 #, python-format
 msgid ""
 "Error: the configuration file %(file1)s is not valid.\n"
@@ -244,4 +248,3 @@ msgid ""
 msgstr ""
 "Erreur : le fichier de configuration %(file1)s n'est pas valide.\n"
 "Voir %(file2)s pour avoir un modèle.\n"
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-24 19:00+0200\n"
+"POT-Creation-Date: 2010-09-12 16:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,27 +35,27 @@ msgstr ""
 msgid "Error: No substitute user command available.\n"
 msgstr ""
 
-#: src/action.py:114
+#: src/action.py:116
 msgid ""
 "Wrong password.\n"
 "The log will be generated without root priviledge."
 msgstr ""
 
-#: src/action.py:118
+#: src/action.py:120
 msgid "Error"
 msgstr ""
 
-#: src/action.py:166
+#: src/action.py:168
 #, python-format
 msgid "The output has been dumped in %s"
 msgstr ""
 
-#: src/getinfo.py:76
+#: src/getinfo.py:95
 #, python-format
 msgid "%s not found! \n"
 msgstr ""
 
-#: src/getinfo.py:240
+#: src/getinfo.py:261
 msgid ""
 "Your distribution is unknown. Please, open a bug report with the command "
 "output: ls /etc\n"
@@ -203,15 +203,15 @@ msgid ""
 "change server side, try with another pastebin."
 msgstr ""
 
-#: src/readconf.py:54
+#: src/readconf.py:59
 msgid "Error: No categories.conf available.\n"
 msgstr ""
 
-#: src/readconf.py:65
+#: src/readconf.py:70
 msgid "Error: No validator.conf available.\n"
 msgstr ""
 
-#: src/readconf.py:88
+#: src/readconf.py:92
 #, python-format
 msgid ""
 "Error: the configuration file %(file1)s is not valid.\n"
